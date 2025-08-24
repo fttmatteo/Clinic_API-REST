@@ -2,7 +2,7 @@ package app.domain.model;
 
 import java.sql.Date;
 
-public class Patient{
+public class Patient {
     private long id;
     private String fullName;
     private int document;
@@ -16,10 +16,7 @@ public class Patient{
     private String emergencyLastName;
     private String relationShip;
     private int emergencyPhone;
-    private MedicalInsurance companyName;
-    private MedicalInsurance numberPolicy;
-    private MedicalInsurance statusPolicy;
-    private MedicalInsurance endDatePolicy;
+    private MedicalInsurance insurancePolicy;
     private User role;
 
     public long getId() {
@@ -126,36 +123,12 @@ public class Patient{
         this.emergencyPhone = emergencyPhone;
     }
 
-    public MedicalInsurance getCompanyName() {
-        return companyName;
+    public MedicalInsurance getInsurancePolicy() {
+        return insurancePolicy;
     }
 
-    public void setCompanyName(MedicalInsurance companyName) {
-        this.companyName = companyName;
-    }
-
-    public MedicalInsurance getNumberPolicy() {
-        return numberPolicy;
-    }
-
-    public void setNumberPolicy(MedicalInsurance numberPolicy) {
-        this.numberPolicy = numberPolicy;
-    }
-
-    public MedicalInsurance getStatusPolicy() {
-        return statusPolicy;
-    }
-
-    public void setStatusPolicy(MedicalInsurance statusPolicy) {
-        this.statusPolicy = statusPolicy;
-    }
-
-    public MedicalInsurance getEndDatePolicy() {
-        return endDatePolicy;
-    }
-
-    public void setEndDatePolicy(MedicalInsurance endDatePolicy) {
-        this.endDatePolicy = endDatePolicy;
+    public void setInsurancePolicy(MedicalInsurance insurancePolicy) {
+        this.insurancePolicy = insurancePolicy;
     }
 
     public User getRole() {
