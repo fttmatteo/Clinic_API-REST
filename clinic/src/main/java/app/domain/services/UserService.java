@@ -8,7 +8,6 @@ import app.domain.ports.UserPort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.Objects;
 import static app.domain.services.validation.Validators.*;
 
@@ -42,8 +41,8 @@ public class UserService {
         user.setFullName(cmd.fullName);
         user.setDocument(parseLong(cmd.document));
         user.setEmail(cmd.email);
-        user.setTelephone(parseInt(cmd.phone));
-        user.setBirth(java.sql.Date.valueOf(cmd.birthDate));
+        user.setPhone(parseInt(cmd.phone));
+        user.setBirthDate(java.sql.Date.valueOf(cmd.birthDate));
         user.setAddress(cmd.address);
         user.setUserName(cmd.username);
         user.setPassword(passwordEncoder.encode(cmd.password));
@@ -84,8 +83,8 @@ public class UserService {
 
         if (cmd.fullName != null) existing.setFullName(cmd.fullName);
         if (cmd.email != null) existing.setEmail(cmd.email);
-        if (cmd.phone != null) existing.setTelephone(parseInt(cmd.phone));
-        if (cmd.birthDate != null) existing.setBirth(java.sql.Date.valueOf(cmd.birthDate));
+        if (cmd.phone != null) existing.setPhone(parseInt(cmd.phone));
+        if (cmd.birthDate != null) existing.setBirthDate(java.sql.Date.valueOf(cmd.birthDate));
         if (cmd.address != null) existing.setAddress(cmd.address);
         if (cmd.username != null) existing.setUserName(cmd.username);
         if (cmd.password != null) existing.setPassword(passwordEncoder.encode(cmd.password));

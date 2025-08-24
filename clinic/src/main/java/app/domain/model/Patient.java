@@ -1,26 +1,25 @@
 package app.domain.model;
 
-import app.domain.model.emuns.Role;
 import java.sql.Date;
 
 public class Patient{
     private long id;
     private String fullName;
-    private long document;
+    private int document;
     private int age;
-    private Date birth;
+    private Date birthDate;
     private String gender;
     private String address;
-    private int telephone;
+    private int phone;
     private String email;
     private String emergencyFirstName;
     private String emergencyLastName;
     private String relationShip;
-    private int emergencyContact;
-    private String companyName;
-    private long companyNumber;
-    private boolean status;
-    private Date validity;
+    private int emergencyPhone;
+    private MedicalInsurance companyName;
+    private MedicalInsurance numberPolicy;
+    private MedicalInsurance statusPolicy;
+    private MedicalInsurance endDatePolicy;
     private User role;
 
     public long getId() {
@@ -39,11 +38,11 @@ public class Patient{
         this.fullName = fullName;
     }
 
-    public long getDocument() {
+    public int getDocument() {
         return document;
     }
 
-    public void setDocument(long document) {
+    public void setDocument(int document) {
         this.document = document;
     }
 
@@ -55,12 +54,12 @@ public class Patient{
         this.age = age;
     }
 
-    public Date getBirth() {
-        return birth;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirth(Date birth) {
-        this.birth = birth;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getGender() {
@@ -79,12 +78,12 @@ public class Patient{
         this.address = address;
     }
 
-    public int getTelephone() {
-        return telephone;
+    public int getPhone() {
+        return phone;
     }
 
-    public void setTelephone(int telephone) {
-        this.telephone = telephone;
+    public void setPhone(int phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
@@ -119,44 +118,44 @@ public class Patient{
         this.relationShip = relationShip;
     }
 
-    public int getEmergencyContact() {
-        return emergencyContact;
+    public int getEmergencyPhone() {
+        return emergencyPhone;
     }
 
-    public void setEmergencyContact(int emergencyContact) {
-        this.emergencyContact = emergencyContact;
+    public void setEmergencyPhone(int emergencyPhone) {
+        this.emergencyPhone = emergencyPhone;
     }
 
-    public String getCompanyName() {
+    public MedicalInsurance getCompanyName() {
         return companyName;
     }
 
-    public void setCompanyName(String companyName) {
+    public void setCompanyName(MedicalInsurance companyName) {
         this.companyName = companyName;
     }
 
-    public long getCompanyNumber() {
-        return companyNumber;
+    public MedicalInsurance getNumberPolicy() {
+        return numberPolicy;
     }
 
-    public void setCompanyNumber(long companyNumber) {
-        this.companyNumber = companyNumber;
+    public void setNumberPolicy(MedicalInsurance numberPolicy) {
+        this.numberPolicy = numberPolicy;
     }
 
-    public boolean isStatus() {
-        return status;
+    public MedicalInsurance getStatusPolicy() {
+        return statusPolicy;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setStatusPolicy(MedicalInsurance statusPolicy) {
+        this.statusPolicy = statusPolicy;
     }
 
-    public Date getValidity() {
-        return validity;
+    public MedicalInsurance getEndDatePolicy() {
+        return endDatePolicy;
     }
 
-    public void setValidity(Date validity) {
-        this.validity = validity;
+    public void setEndDatePolicy(MedicalInsurance endDatePolicy) {
+        this.endDatePolicy = endDatePolicy;
     }
 
     public User getRole() {

@@ -9,7 +9,6 @@ import app.domain.ports.PatientPort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.Objects;
 import static app.domain.services.validation.Validators.*;
 
@@ -35,10 +34,10 @@ public class PatientService {
         Patient p = new Patient();
         p.setDocument(parseLong(cmd.document));
         p.setFullName(cmd.fullName);
-        p.setBirth(java.sql.Date.valueOf(cmd.birthDate));
+        p.setBirthDate(java.sql.Date.valueOf(cmd.birthDate));
         p.setGender(cmd.gender);
         p.setAddress(cmd.address);
-        p.setTelephone(parsePhone(cmd.phone));
+        p.setPhone(parsePhone(cmd.phone));
         p.setEmail(cmd.email);
         if (cmd.username != null) {
             p.setUserName(cmd.username);
@@ -49,11 +48,11 @@ public class PatientService {
         if (cmd.emergencyContact != null) {
             p.setEmergencyFirstName(cmd.emergencyContact.name);
             p.setRelationShip(cmd.emergencyContact.relationship);
-            p.setEmergencyContact(parsePhone(cmd.emergencyContact.phone));
+            p.setEmergencyPhone(parsePhone(cmd.emergencyContact.phone));
         }
         if (cmd.insurancePolicy != null) {
             p.setCompanyName(cmd.insurancePolicy.company);
-            p.setCompanyNumber(parseLong(cmd.insurancePolicy.policyNumber));
+            p.setNumberPolicy(parseLong(cmd.insurancePolicy.policyNumber));
             p.setStatus(cmd.insurancePolicy.active);
             p.setValidity(java.sql.Date.valueOf(cmd.insurancePolicy.validUntil));
         }
@@ -74,13 +73,13 @@ public class PatientService {
         if (cmd.fullName != null) existing.setFullName(cmd.fullName);
         if (cmd.birthDate != null) {
             validateAge150(cmd.birthDate);
-            existing.setBirth(java.sql.Date.valueOf(cmd.birthDate));
+            existing.setBirthDate(java.sql.Date.valueOf(cmd.birthDate));
         }
         if (cmd.gender != null) existing.setGender(cmd.gender);
         if (cmd.address != null) existing.setAddress(cmd.address);
         if (cmd.phone != null) {
             validatePatientPhone(cmd.phone);
-            existing.setTelephone(parsePhone(cmd.phone));
+            existing.setPhone(parsePhone(cmd.phone));
         }
         if (cmd.email != null) {
             validateEmail(cmd.email);
@@ -110,7 +109,7 @@ public class PatientService {
         if (p == null) throw new NotFoundException("Patient not found");
         p.setEmergencyFirstName(dto.name);
         p.setRelationShip(dto.relationship);
-        p.setEmergencyContact(parsePhone(dto.phone));
+        p.setEmergencyPhone(parsePhone(dto.phone));
         try { patientPort.update(p); } catch (Exception e) { throw new RuntimeException(e); }
         return p;
     }
@@ -125,7 +124,7 @@ public class PatientService {
         } catch (Exception e) { throw new RuntimeException(e); }
         if (p == null) throw new NotFoundException("Patient not found");
         p.setCompanyName(dto.company);
-        p.setCompanyNumber(parseLong(dto.policyNumber));
+        p.setNumberPolicy(parseLong(dto.policyNumber));
         p.setStatus(dto.active);
         p.setValidity(java.sql.Date.valueOf(dto.validUntil));
         try { patientPort.update(p); } catch (Exception e) { throw new RuntimeException(e); }

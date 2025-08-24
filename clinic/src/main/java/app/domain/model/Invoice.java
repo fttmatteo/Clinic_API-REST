@@ -8,10 +8,10 @@ public class Invoice {
     private Patient age;
     private Patient document;
     private Employee fullName;
-    private Patient companyName;
-    private Patient companyNumber;
-    private int validityDays;
-    private Patient validity;
+    private MedicalInsurance companyName;
+    private MedicalInsurance numberPolicy;
+    private MedicalInsurance validityDaysPolicy;
+    private MedicalInsurance endDatePolicy;
 
     public long getId() {
         return id;
@@ -53,35 +53,35 @@ public class Invoice {
         this.fullName = fullName;
     }
 
-    public Patient getCompanyName() {
+    public MedicalInsurance getCompanyName() {
         return companyName;
     }
 
-    public void setCompanyName(Patient companyName) {
+    public void setCompanyName(MedicalInsurance companyName) {
         this.companyName = companyName;
     }
 
-    public Patient getCompanyNumber() {
-        return companyNumber;
+    public MedicalInsurance getNumberPolicy() {
+        return numberPolicy;
     }
 
-    public void setCompanyNumber(Patient companyNumber) {
-        this.companyNumber = companyNumber;
+    public void setNumberPolicy(MedicalInsurance numberPolicy) {
+        this.numberPolicy = numberPolicy;
     }
 
-    public int getValidityDays() {
-        return validityDays;
+    public MedicalInsurance getValidityDaysPolicy() {
+        return validityDaysPolicy;
     }
 
-    public void setValidityDays(int validityDays) {
-        this.validityDays = validityDays;
+    public void setValidityDaysPolicy(MedicalInsurance validityDaysPolicy) {
+        this.validityDaysPolicy = validityDaysPolicy;
     }
 
-    public Patient getValidity() {
-        return validity;
+    public MedicalInsurance getEndDatePolicy() {
+        return endDatePolicy;
     }
 
-    public void setValidity(Patient validity) {
-        this.validity = validity;
+    public void setEndDatePolicy(MedicalInsurance endDatePolicy) {
+        this.endDatePolicy = endDatePolicy;
     }
 }
