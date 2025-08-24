@@ -3,7 +3,7 @@ package app.domain.model;
 import java.sql.Date;
 
 public class ClinicalOrder {
-    private long id;
+    private int id;
     private Patient fullName;
     private User patient;
     private User medic;
@@ -15,7 +15,7 @@ public class ClinicalOrder {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
