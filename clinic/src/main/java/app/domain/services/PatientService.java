@@ -7,7 +7,6 @@ import app.domain.common.exceptions.ValidationException;
 import app.domain.model.Patient;
 import app.domain.model.MedicalInsurance;
 import app.domain.ports.PatientPort;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -16,7 +15,6 @@ import static app.domain.services.validation.Validators.*;
 public class PatientService {
 
     private final PatientPort patientPort;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public PatientService(PatientPort patientPort) {
         this.patientPort = Objects.requireNonNull(patientPort);
@@ -43,7 +41,9 @@ public class PatientService {
         p.setPhone(parsePhone(cmd.phone));
         p.setEmail(cmd.email);
         if (cmd.emergencyContact != null) {
-            p.setEmergencyFirstName(cmd.emergencyContact.name);
+            String[] nameParts = splitName(cmd.emergencyContact.name);
+            p.setEmergencyFirstName(nameParts[0]);
+            p.setEmergencyLastName(nameParts[1]);
             p.setRelationShip(cmd.emergencyContact.relationship);
             p.setEmergencyPhone(parsePhone(cmd.emergencyContact.phone));
         }
@@ -115,7 +115,9 @@ public class PatientService {
         }
         if (p == null)
             throw new NotFoundException("Patient not found");
-        p.setEmergencyFirstName(dto.name);
+        String[] nameParts = splitName(dto.name);
+        p.setEmergencyFirstName(nameParts[0]);
+        p.setEmergencyLastName(nameParts[1]);
         p.setRelationShip(dto.relationship);
         p.setEmergencyPhone(parsePhone(dto.phone));
         try {
@@ -220,6 +222,18 @@ public class PatientService {
         } catch (Exception e) {
             throw new ValidationException("Invalid number");
         }
+    }
+
+    private static String[] splitName(String fullName) {
+        if (isBlank(fullName)) return new String[]{"", ""};
+        String trimmed = fullName.trim();
+        int lastSpace = trimmed.lastIndexOf(' ');
+        if (lastSpace <= 0 || lastSpace == trimmed.length() - 1) {
+            return new String[]{trimmed, ""};
+        }
+        String firstNames = trimmed.substring(0, lastSpace).trim();
+        String lastNames = trimmed.substring(lastSpace + 1).trim();
+        return new String[]{firstNames, lastNames};
     }
 
     public static class PatientRegisterCommand {
