@@ -5,6 +5,7 @@ import app.domain.common.exceptions.ConflictException;
 import app.domain.common.exceptions.NotFoundException;
 import app.domain.common.exceptions.ValidationException;
 import app.domain.model.Patient;
+import app.domain.model.MedicalInsurance;
 import app.domain.ports.PatientPort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -25,39 +26,41 @@ public class PatientService {
         validateRegister(cmd);
         try {
             Patient probe = new Patient();
-            probe.setDocument(parseLong(cmd.document));
+            probe.setDocument(parseInt(cmd.document));
             if (patientPort.findByDocument(probe) != null) {
                 throw new ConflictException("Document already exists");
             }
-        } catch (Exception e) { throw new RuntimeException(e); }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         Patient p = new Patient();
-        p.setDocument(parseLong(cmd.document));
+        p.setDocument(parseInt(cmd.document));
         p.setFullName(cmd.fullName);
         p.setBirthDate(java.sql.Date.valueOf(cmd.birthDate));
         p.setGender(cmd.gender);
         p.setAddress(cmd.address);
         p.setPhone(parsePhone(cmd.phone));
         p.setEmail(cmd.email);
-        if (cmd.username != null) {
-            p.setUserName(cmd.username);
-        }
-        if (cmd.password != null) {
-            p.setPassword(passwordEncoder.encode(cmd.password));
-        }
         if (cmd.emergencyContact != null) {
             p.setEmergencyFirstName(cmd.emergencyContact.name);
             p.setRelationShip(cmd.emergencyContact.relationship);
             p.setEmergencyPhone(parsePhone(cmd.emergencyContact.phone));
         }
         if (cmd.insurancePolicy != null) {
-            p.setCompanyName(cmd.insurancePolicy.company);
-            p.setNumberPolicy(parseLong(cmd.insurancePolicy.policyNumber));
-            p.setStatus(cmd.insurancePolicy.active);
-            p.setValidity(java.sql.Date.valueOf(cmd.insurancePolicy.validUntil));
+            MedicalInsurance insurance = new MedicalInsurance();
+            insurance.setCompanyName(cmd.insurancePolicy.company);
+            insurance.setNumberPolicy(parseLong(cmd.insurancePolicy.policyNumber));
+            insurance.setStatusPolicy(cmd.insurancePolicy.active);
+            insurance.setEndDatePolicy(java.sql.Date.valueOf(cmd.insurancePolicy.validUntil));
+            p.setInsurancePolicy(insurance);
         }
 
-        try { patientPort.save(p); } catch (Exception e) { throw new RuntimeException(e); }
+        try {
+            patientPort.save(p);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return p;
     }
 
@@ -65,18 +68,24 @@ public class PatientService {
         Patient existing;
         try {
             Patient probe = new Patient();
-            probe.setDocument(parseLong(document));
+            probe.setDocument(parseInt(document));
             existing = patientPort.findByDocument(probe);
-        } catch (Exception e) { throw new RuntimeException(e); }
-        if (existing == null) throw new NotFoundException("Patient not found");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        if (existing == null)
+            throw new NotFoundException("Patient not found");
 
-        if (cmd.fullName != null) existing.setFullName(cmd.fullName);
+        if (cmd.fullName != null)
+            existing.setFullName(cmd.fullName);
         if (cmd.birthDate != null) {
             validateAge150(cmd.birthDate);
             existing.setBirthDate(java.sql.Date.valueOf(cmd.birthDate));
         }
-        if (cmd.gender != null) existing.setGender(cmd.gender);
-        if (cmd.address != null) existing.setAddress(cmd.address);
+        if (cmd.gender != null)
+            existing.setGender(cmd.gender);
+        if (cmd.address != null)
+            existing.setAddress(cmd.address);
         if (cmd.phone != null) {
             validatePatientPhone(cmd.phone);
             existing.setPhone(parsePhone(cmd.phone));
@@ -85,16 +94,12 @@ public class PatientService {
             validateEmail(cmd.email);
             existing.setEmail(cmd.email);
         }
-        if (cmd.username != null) {
-            validateUsername(cmd.username);
-            existing.setUserName(cmd.username);
-        }
-        if (cmd.password != null) {
-            validateStrongPassword(cmd.password);
-            existing.setPassword(passwordEncoder.encode(cmd.password));
-        }
 
-        try { patientPort.update(existing); } catch (Exception e) { throw new RuntimeException(e); }
+        try {
+            patientPort.update(existing);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return existing;
     }
 
@@ -103,42 +108,62 @@ public class PatientService {
         Patient p;
         try {
             Patient probe = new Patient();
-            probe.setDocument(parseLong(document));
+            probe.setDocument(parseInt(document));
             p = patientPort.findByDocument(probe);
-        } catch (Exception e) { throw new RuntimeException(e); }
-        if (p == null) throw new NotFoundException("Patient not found");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        if (p == null)
+            throw new NotFoundException("Patient not found");
         p.setEmergencyFirstName(dto.name);
         p.setRelationShip(dto.relationship);
         p.setEmergencyPhone(parsePhone(dto.phone));
-        try { patientPort.update(p); } catch (Exception e) { throw new RuntimeException(e); }
+        try {
+            patientPort.update(p);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return p;
     }
 
     public Patient assignInsurancePolicy(String document, InsurancePolicyDto dto) {
-        if (dto.validUntil == null) throw new ValidationException("Valid until is required");
+        if (dto.validUntil == null)
+            throw new ValidationException("Valid until is required");
         Patient p;
         try {
             Patient probe = new Patient();
-            probe.setDocument(parseLong(document));
+            probe.setDocument(parseInt(document));
             p = patientPort.findByDocument(probe);
-        } catch (Exception e) { throw new RuntimeException(e); }
-        if (p == null) throw new NotFoundException("Patient not found");
-        p.setCompanyName(dto.company);
-        p.setNumberPolicy(parseLong(dto.policyNumber));
-        p.setStatus(dto.active);
-        p.setValidity(java.sql.Date.valueOf(dto.validUntil));
-        try { patientPort.update(p); } catch (Exception e) { throw new RuntimeException(e); }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        if (p == null)
+            throw new NotFoundException("Patient not found");
+        MedicalInsurance insurance = new MedicalInsurance();
+        insurance.setCompanyName(dto.company);
+        insurance.setNumberPolicy(parseLong(dto.policyNumber));
+        insurance.setStatusPolicy(dto.active);
+        insurance.setEndDatePolicy(java.sql.Date.valueOf(dto.validUntil));
+        p.setInsurancePolicy(insurance);
+        try {
+            patientPort.update(p);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return p;
     }
 
     public Patient getPatientByDocument(String document) {
         try {
             Patient probe = new Patient();
-            probe.setDocument(parseLong(document));
+            probe.setDocument(parseInt(document));
             Patient found = patientPort.findByDocument(probe);
-            if (found == null) throw new NotFoundException("Patient not found");
+            if (found == null)
+                throw new NotFoundException("Patient not found");
             return found;
-        } catch (Exception e) { throw new RuntimeException(e); }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Patient> searchPatients(String query) {
@@ -146,24 +171,56 @@ public class PatientService {
             Patient probe = new Patient();
             probe.setFullName(query);
             return patientPort.searchByName(probe);
-        } catch (Exception e) { throw new RuntimeException(e); }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void validateRegister(PatientRegisterCommand cmd) {
-        if (cmd == null) throw new ValidationException("Command is required");
+        if (cmd == null)
+            throw new ValidationException("Command is required");
         if (isBlank(cmd.document) || isBlank(cmd.fullName) || cmd.birthDate == null
-                || isBlank(cmd.phone)) throw new ValidationException("Missing required fields");
+                || isBlank(cmd.phone))
+            throw new ValidationException("Missing required fields");
         validateAge150(cmd.birthDate);
         validatePatientPhone(cmd.phone);
-        if (cmd.email != null) validateEmail(cmd.email);
-        if (cmd.username != null) validateUsername(cmd.username);
-        if (cmd.password != null) validateStrongPassword(cmd.password);
-        if (cmd.emergencyContact != null) validatePatientPhone(cmd.emergencyContact.phone);
+        if (cmd.email != null)
+            validateEmail(cmd.email);
+        if (cmd.username != null)
+            validateUsername(cmd.username);
+        if (cmd.password != null)
+            validateStrongPassword(cmd.password);
+        if (cmd.emergencyContact != null)
+            validatePatientPhone(cmd.emergencyContact.phone);
     }
 
-    private static boolean isBlank(String s) { return s == null || s.trim().isEmpty(); }
-    private static long parseLong(String v) { try { return Long.parseLong(v); } catch (Exception e) { throw new ValidationException("Invalid number"); } }
-    private static int parsePhone(String v) { try { return Integer.parseInt(v); } catch (Exception e) { throw new ValidationException("Invalid phone"); } }
+    private static boolean isBlank(String s) {
+        return s == null || s.trim().isEmpty();
+    }
+
+    private static int parseInt(String v) {
+        try {
+            return Integer.parseInt(v);
+        } catch (Exception e) {
+            throw new ValidationException("Invalid number");
+        }
+    }
+
+    private static int parsePhone(String v) {
+        try {
+            return Integer.parseInt(v);
+        } catch (Exception e) {
+            throw new ValidationException("Invalid phone");
+        }
+    }
+
+    private static long parseLong(String v) {
+        try {
+            return Long.parseLong(v);
+        } catch (Exception e) {
+            throw new ValidationException("Invalid number");
+        }
+    }
 
     public static class PatientRegisterCommand {
         public String document;
@@ -203,5 +260,3 @@ public class PatientService {
         public LocalDate validUntil;
     }
 }
-
-

@@ -25,7 +25,7 @@ public class UserService {
 
         try {
             User probe = new User();
-            probe.setDocument(parseLong(cmd.document));
+            probe.setDocument(parseInt(cmd.document));
             if (userPort.findByDocument(probe) != null) {
                 throw new ConflictException("Document already exists");
             }
@@ -39,7 +39,7 @@ public class UserService {
 
         User user = new User();
         user.setFullName(cmd.fullName);
-        user.setDocument(parseLong(cmd.document));
+        user.setDocument(parseInt(cmd.document));
         user.setEmail(cmd.email);
         user.setPhone(parseInt(cmd.phone));
         user.setBirthDate(java.sql.Date.valueOf(cmd.birthDate));
@@ -59,7 +59,7 @@ public class UserService {
         User existing;
         try {
             User probe = new User();
-            probe.setDocument(parseLong(document));
+            probe.setDocument(parseInt(document));
             existing = userPort.findByDocument(probe);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -98,7 +98,7 @@ public class UserService {
     public User getUserByDocument(String document) {
         try {
             User probe = new User();
-            probe.setDocument(parseLong(document));
+            probe.setDocument(parseInt(document));
             User u = userPort.findByDocument(probe);
             if (u == null) throw new NotFoundException("User not found");
             return u;
@@ -108,7 +108,7 @@ public class UserService {
     public void deleteUserByDocument(String document) {
         try {
             User probe = new User();
-            probe.setDocument(parseLong(document));
+            probe.setDocument(parseInt(document));
             userPort.delete(probe);
         } catch (Exception e) { throw new RuntimeException(e); }
     }
@@ -127,7 +127,6 @@ public class UserService {
     }
 
     private static boolean isBlank(String s) { return s == null || s.trim().isEmpty(); }
-    private static long parseLong(String v) { try { return Long.parseLong(v); } catch (Exception e) { throw new ValidationException("Invalid document"); } }
     private static int parseInt(String v) { if (v == null) return 0; try { return Integer.parseInt(v); } catch (Exception e) { throw new ValidationException("Invalid phone"); } }
 
     public static class UserCreateCommand {
