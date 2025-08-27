@@ -1,21 +1,21 @@
 package app.domain.services;
 
 import app.domain.model.Employee;
-import app.domain.ports.UserPort;
+import app.domain.ports.EmployeePort;
 
-public class CreateUser {
+public class CreateEmployee {
 
-	private UserPort userPort;
+	private EmployeePort employeePort;
 
 	public void create(Employee user) throws Exception {
-		if (userPort.findByDocument(user) != null) {
+		if (employeePort.findByDocument(user) != null) {
 			throw new Exception("ya existe una persona registrada con esa cedula");
 		}
 
-		if (userPort.findByUserName(user) != null) {
+		if (employeePort.findByUserName(user) != null) {
 			throw new Exception("ya existe una persona registrada con ese nombre de usuario");
 		}
-		userPort.save(user);
+		employeePort.save(user);
 	}
 
 }
