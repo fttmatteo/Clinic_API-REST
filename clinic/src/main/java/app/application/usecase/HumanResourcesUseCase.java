@@ -8,21 +8,21 @@ public class HumanResourcesUseCase {
 
     private CreateEmployee CreateEmployee;
     
-    public void createDoctor(Employee user) throws Exception {
-        user.setRole(Role.DOCTOR);
-        CreateEmployee.create(user);
+    public void createDoctor(Employee employee) throws Exception {
+        employee.setRole(Role.DOCTOR);
+        CreateEmployee.create(employee);
     }
-    public void createNurse(Employee user) throws Exception {
-        user.setRole(Role.NURSE);
-        CreateEmployee.create(user);
+    public void createNurse(Employee employee) throws Exception {
+        employee.setRole(Role.NURSE);
+        CreateEmployee.create(employee);
     }
-    public void createPersonalAdministrative(Employee user) throws Exception {
-        user.setRole(Role.PERSONAL_ADMINISTRATIVE);
-        CreateEmployee.create(user);
+    public void createPersonalAdministrative(Employee employee) throws Exception {
+        employee.setRole(Role.PERSONAL_ADMINISTRATIVE);
+        CreateEmployee.create(employee);
     }
-    public void createInformationSupport(Employee user) throws Exception {
-        user.setRole(Role.INFORMATION_SUPPORT);
-        CreateEmployee.create(user);
+    public void createInformationSupport(Employee employee) throws Exception {
+        employee.setRole(Role.INFORMATION_SUPPORT);
+        CreateEmployee.create(employee);
     }
     
 

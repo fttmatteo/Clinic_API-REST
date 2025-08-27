@@ -7,15 +7,15 @@ public class CreateEmployee {
 
 	private EmployeePort employeePort;
 
-	public void create(Employee user) throws Exception {
-		if (employeePort.findByDocument(user) != null) {
+	public void create(Employee employee) throws Exception {
+		if (employeePort.findByDocument(employee) != null) {
 			throw new Exception("ya existe una persona registrada con esa cedula");
 		}
 
-		if (employeePort.findByUserName(user) != null) {
+		if (employeePort.findByUserName(employee) != null) {
 			throw new Exception("ya existe una persona registrada con ese nombre de usuario");
 		}
-		employeePort.save(user);
+		employeePort.save(employee);
 	}
 
 }
