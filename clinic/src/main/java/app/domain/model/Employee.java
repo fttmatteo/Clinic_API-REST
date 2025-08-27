@@ -4,8 +4,8 @@ import app.domain.model.emuns.Role;
 
 public class Employee extends Person {
     private Role role;
-    private Employee username;
-    private Employee password;
+    private String username;
+    private String password;
 
     public Role getRole() {
         return role;
@@ -13,16 +13,16 @@ public class Employee extends Person {
     public void setRole(Role role) {
         this.role = role;
     }
-    public Employee getUsername() {
+    public String getUsername() {
         return username;
     }
-    public void setUsername(Employee username) {
+    public void setUsername(String username) {
         this.username = username;
     }
-    public Employee getPassword() {
+    public String getPassword() {
         return password;
     }
-    public void setPassword(Employee password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }
