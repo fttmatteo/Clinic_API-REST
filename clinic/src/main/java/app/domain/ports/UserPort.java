@@ -1,13 +1,11 @@
 package app.domain.ports;
 
-import app.domain.model.User;
+import app.domain.model.Employee;
 
 public interface UserPort {
-	public User findByDocument(User user) throws Exception;
-	public User findByUserName(User user) throws Exception;
-	public void save(User user) throws Exception;
-	public void update(User user) throws Exception;
-	public void delete(User user) throws Exception;
+	public Employee findByDocument(Employee user) throws Exception;
+	public Employee findByUserName(Employee user) throws Exception;
+	public void save(Employee user) throws Exception;
 }
 
 
