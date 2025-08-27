@@ -24,6 +24,4 @@ public class HumanResourcesUseCase {
         user.setRole(Role.INFORMATION_SUPPORT);
         CreateUser.create(user);
     }
-    
-
 }

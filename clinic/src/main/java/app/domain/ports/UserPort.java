@@ -6,6 +6,5 @@ public interface UserPort {
 	public Employee findByDocument(Employee user) throws Exception;
 	public Employee findByUserName(Employee user) throws Exception;
 	public void save(Employee user) throws Exception;
+    public void update(Employee user);
 }
-
-
