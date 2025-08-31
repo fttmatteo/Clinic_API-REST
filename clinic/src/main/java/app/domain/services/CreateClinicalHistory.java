@@ -5,10 +5,10 @@ import app.domain.ports.ClinicalHistoryPort;
 
 import java.sql.Date;
 
-public class ClinicalHistoryService {
+public class CreateClinicalHistory {
     private final ClinicalHistoryPort clinicalHistoryPort;
 
-    public ClinicalHistoryService(ClinicalHistoryPort clinicalHistoryPort) {
+    public CreateClinicalHistory(ClinicalHistoryPort clinicalHistoryPort) {
         this.clinicalHistoryPort = clinicalHistoryPort;
     }
 

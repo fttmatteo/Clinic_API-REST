@@ -1,12 +1,12 @@
-package app.domain.services;
+package app.application.usecase;
 
 import app.domain.model.Patient;
 import app.domain.ports.PatientPort;
 
-public class PatientService {
+public class PatientUseCase {
     private PatientPort patientPort;
 
-    public PatientService(PatientPort patientPort) {
+    public PatientUseCase(PatientPort patientPort) {
         this.patientPort = patientPort;
     }
 

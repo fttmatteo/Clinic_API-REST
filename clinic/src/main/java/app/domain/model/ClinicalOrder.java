@@ -5,10 +5,10 @@ import java.sql.Date;
 public class ClinicalOrder {
     private int id;
     private Patient fullName;
-    private User patient;
-    private User medic;
+    private Employee patient;
+    private Employee doctor;
     private String medicine;
-    private String doce;
+    private int doce;
     private Date date;
 
     public long getId() {
@@ -27,20 +27,20 @@ public class ClinicalOrder {
         this.fullName = fullName;
     }
 
-    public User getPatient() {
+    public Employee getPatient() {
         return patient;
     }
 
-    public void setPatient(User patient) {
+    public void setPatient(Employee patient) {
         this.patient = patient;
     }
 
-    public User getMedic() {
-        return medic;
+    public Employee getMedic() {
+        return doctor;
     }
 
-    public void setMedic(User medic) {
-        this.medic = medic;
+    public void setMedic(Employee medic) {
+        this.doctor = medic;
     }
 
     public String getMedicine() {
@@ -51,11 +51,11 @@ public class ClinicalOrder {
         this.medicine = medicine;
     }
 
-    public String getDoce() {
+    public int getDoce() {
         return doce;
     }
 
-    public void setDoce(String doce) {
+    public void setDoce(int doce) {
         this.doce = doce;
     }
 

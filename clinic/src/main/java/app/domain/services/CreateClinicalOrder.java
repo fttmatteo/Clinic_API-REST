@@ -7,11 +7,11 @@ import app.domain.ports.PatientPort;
 
 import java.sql.Date;
 
-public class ClinicalOrderService {
+public class CreateClinicalOrder {
     private final PatientPort patientPort;
     private final ClinicalOrderPort clinicalOrderPort;
 
-    public ClinicalOrderService(PatientPort patientPort, ClinicalOrderPort clinicalOrderPort) {
+    public CreateClinicalOrder(PatientPort patientPort, ClinicalOrderPort clinicalOrderPort) {
         this.patientPort = patientPort;
         this.clinicalOrderPort = clinicalOrderPort;
     }

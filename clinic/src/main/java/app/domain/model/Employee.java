@@ -1,96 +1,28 @@
 package app.domain.model;
 
-import java.sql.Date;
+import app.domain.model.emuns.Role;
 
-public class Employee {
-    private long id;
-    private String fullName;
-    private int document;
-    private String email;
-    private String phone;
-    private Date birthDate;
-    private String address;
-    private User role;
-    private User username;
-    private User password;
+public class Employee extends Person {
+    private Role role;
+    private String username;
+    private String password;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public int getDocument() {
-        return document;
-    }
-
-    public void setDocument(int document) {
-        this.document = document;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public User getRole() {
+    public Role getRole() {
         return role;
     }
-
-    public void setRole(User role) {
+    public void setRole(Role role) {
         this.role = role;
     }
-
-    public User getUsername() {
+    public String getUsername() {
         return username;
     }
-
-    public void setUsername(User username) {
+    public void setUsername(String username) {
         this.username = username;
     }
-
-    public User getPassword() {
+    public String getPassword() {
         return password;
     }
-
-    public void setPassword(User password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }

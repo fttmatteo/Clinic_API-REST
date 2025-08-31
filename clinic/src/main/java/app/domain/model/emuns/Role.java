@@ -1,8 +1,9 @@
 package app.domain.model.emuns;
 
 public enum Role {
-    MEDIC,
+    DOCTOR,
     NURSE,
-    ADMIN,
-    HUMAN_RESOURCES
+    PERSONAL_ADMINISTRATIVE,
+    HUMAN_RESOURCES,
+    INFORMATION_SUPPORT
 }
