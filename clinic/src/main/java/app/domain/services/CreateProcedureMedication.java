@@ -12,12 +12,4 @@ public class CreateProcedureMedication {
         }
         procedureMedicationPort.save(procedureMedication);
     }
-
-    public ProcedureMedication findById(Long id) throws Exception {
-        ProcedureMedication found = procedureMedicationPort.findById(id);
-        if (found == null) {
-            throw new Exception("No existe un procedimiento/medicamento registrado con ese ID");
-        }
-        return found;
-    }
 }

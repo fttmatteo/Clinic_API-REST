@@ -14,7 +14,7 @@ public class ProcedureMedicationUseCase {
         procedureMedicationPort.save(procedureMedication);
     }
 
-    public ProcedureMedication findProcedureMedicationById(Long id) throws Exception {
-        return procedureMedicationPort.findById(id);
+    public ProcedureMedication findProcedureMedicationById(ProcedureMedication procedureMedication) throws Exception {
+        return procedureMedicationPort.findById(procedureMedication);
     }
 }

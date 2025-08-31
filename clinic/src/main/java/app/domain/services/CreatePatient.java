@@ -12,12 +12,4 @@ public class CreatePatient {
         }
         patientPort.save(patient);
     }
-
-    public Patient findByDocument(Patient patient) throws Exception {
-        Patient found = patientPort.findByDocument(patient);
-        if (found == null) {
-            throw new Exception("No existe un paciente registrado con esa cédula");
-        }
-        return found;
-    }
 }

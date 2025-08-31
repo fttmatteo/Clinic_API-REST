@@ -12,20 +12,20 @@ public class CreateClinicalHistory {
         this.clinicalHistoryPort = clinicalHistoryPort;
     }
 
-    public void create(ClinicalHistory history) throws Exception {
-        if (history.getDate() == null) {
-            history.setDate(new Date(System.currentTimeMillis()));
+    public void create(ClinicalHistory clinicalHistory) throws Exception {
+        if (clinicalHistory.getDate() == null) {
+            clinicalHistory.setDate(new Date(System.currentTimeMillis()));
         }
-        if (history.getMotive() == null || history.getMotive().isEmpty()) {
+        if (clinicalHistory.getMotive() == null || clinicalHistory.getMotive().isEmpty()) {
             throw new Exception("El motivo de la consulta es obligatorio");
         }
-        if (history.getSymptoms() == null || history.getSymptoms().isEmpty()) {
+        if (clinicalHistory.getSymptoms() == null || clinicalHistory.getSymptoms().isEmpty()) {
             throw new Exception("La sintomatología es obligatoria");
         }
-        if (history.getDiagnosis() == null || history.getDiagnosis().isEmpty()) {
+        if (clinicalHistory.getDiagnosis() == null || clinicalHistory.getDiagnosis().isEmpty()) {
             throw new Exception("El diagnóstico es obligatorio");
         }
 
-        clinicalHistoryPort.save(history);
+        clinicalHistoryPort.save(clinicalHistory);
     }
 }

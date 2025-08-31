@@ -12,12 +12,4 @@ public class CreateDiagnostic {
         }
         diagnosticPort.save(diagnostic);
     }
-
-    public Diagnostic findById(Long id) throws Exception {
-        Diagnostic found = diagnosticPort.findById(id);
-        if (found == null) {
-            throw new Exception("No existe un diagnóstico registrado con ese ID");
-        }
-        return found;
-    }
 }

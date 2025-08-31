@@ -14,7 +14,7 @@ public class MedicineUseCase {
         medicinePort.save(medicine);
     }
 
-    public Medicine findMedicineById(Long id) throws Exception {
-        return medicinePort.findById(id);
+    public Medicine findMedicineById(Medicine medicine) throws Exception {
+        return medicinePort.findById(medicine);
     }
 }

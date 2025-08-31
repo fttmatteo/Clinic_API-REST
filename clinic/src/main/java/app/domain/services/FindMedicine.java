@@ -10,8 +10,8 @@ public class FindMedicine {
         this.medicinePort = medicinePort;
     }
 
-    public Medicine findById(Long id) throws Exception {
-        Medicine found = medicinePort.findById(id);
+    public Medicine findById(Medicine medicine) throws Exception {
+        Medicine found = medicinePort.findById(medicine);
         if (found == null) {
             throw new Exception("No existe un medicamento registrado con ese ID");
         }

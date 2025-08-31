@@ -13,10 +13,10 @@ public class Employee extends Person {
     public void setRole(Role role) {
         this.role = role;
     }
-    public String getUsername() {
+    public String getUserName() {
         return username;
     }
-    public void setUsername(String username) {
+    public void setUserName(String username) {
         this.username = username;
     }
     public String getPassword() {

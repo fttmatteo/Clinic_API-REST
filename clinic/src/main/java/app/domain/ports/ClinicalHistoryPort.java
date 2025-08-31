@@ -4,9 +4,9 @@ import app.domain.model.ClinicalHistory;
 import java.util.List;
 
 public interface ClinicalHistoryPort {
-    ClinicalHistory findByDate(ClinicalHistory history) throws Exception;
+    ClinicalHistory findByDate(ClinicalHistory clinicalHistory) throws Exception;
     List<ClinicalHistory> findAll() throws Exception;
-    void save(ClinicalHistory history) throws Exception;
-    void update(ClinicalHistory history) throws Exception;
-    void delete(ClinicalHistory history) throws Exception;
+    void save(ClinicalHistory clinicalHistory) throws Exception;
+    void update(ClinicalHistory clinicalHistory) throws Exception;
+    void delete(ClinicalHistory clinicalHistory) throws Exception;
 }

@@ -10,8 +10,8 @@ public class FindProcedureMedication {
         this.procedureMedicationPort = procedureMedicationPort;
     }
 
-    public ProcedureMedication findById(Long id) throws Exception {
-        ProcedureMedication found = procedureMedicationPort.findById(id);
+    public ProcedureMedication findById(ProcedureMedication procedureMedication) throws Exception {
+        ProcedureMedication found = procedureMedicationPort.findById(procedureMedication);
         if (found == null) {
             throw new Exception("No existe un procedimiento/medicamento registrado con ese ID");
         }

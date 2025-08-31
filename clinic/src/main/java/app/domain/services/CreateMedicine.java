@@ -12,12 +12,4 @@ public class CreateMedicine {
         }
         medicinePort.save(medicine);
     }
-
-    public Medicine findById(Long id) throws Exception {
-        Medicine found = medicinePort.findById(id);
-        if (found == null) {
-            throw new Exception("No existe un medicamento registrado con ese ID");
-        }
-        return found;
-    }
 }

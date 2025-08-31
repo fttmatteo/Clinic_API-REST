@@ -10,8 +10,8 @@ public class FindInvoice {
         this.invoicePort = invoicePort;
     }
 
-    public Invoice findById(Long id) throws Exception {
-        Invoice found = invoicePort.findById(id);
+    public Invoice findById(Invoice invoice) throws Exception {
+        Invoice found = invoicePort.findById(invoice);
         if (found == null) {
             throw new Exception("No existe una factura registrada con ese ID");
         }

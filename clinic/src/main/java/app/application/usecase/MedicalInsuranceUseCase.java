@@ -10,11 +10,11 @@ public class MedicalInsuranceUseCase {
         this.medicalInsurancePort = medicalInsurancePort;
     }
 
-    public void saveMedicalInsurance(MedicalInsurance insurance) throws Exception {
-        medicalInsurancePort.save(insurance);
+    public void saveMedicalInsurance(MedicalInsurance medicalInsurance) throws Exception {
+        medicalInsurancePort.save(medicalInsurance);
     }
 
-    public MedicalInsurance findMedicalInsuranceById(Long id) throws Exception {
-        return medicalInsurancePort.findById(id);
+    public MedicalInsurance findMedicalInsuranceById(MedicalInsurance medicalInsurance) throws Exception {
+        return medicalInsurancePort.findById(medicalInsurance);
     }
 }

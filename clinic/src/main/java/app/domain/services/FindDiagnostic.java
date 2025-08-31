@@ -10,8 +10,8 @@ public class FindDiagnostic {
         this.diagnosticPort = diagnosticPort;
     }
 
-    public Diagnostic findById(Long id) throws Exception {
-        Diagnostic found = diagnosticPort.findById(id);
+    public Diagnostic findById(Diagnostic diagnostic) throws Exception {
+        Diagnostic found = diagnosticPort.findById(diagnostic);
         if (found == null) {
             throw new Exception("No existe un diagnóstico registrado con ese ID");
         }

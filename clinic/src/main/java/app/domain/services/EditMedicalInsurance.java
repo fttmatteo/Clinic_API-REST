@@ -10,10 +10,10 @@ public class EditMedicalInsurance {
         this.medicalInsurancePort = medicalInsurancePort;
     }
 
-    public void edit(MedicalInsurance insurance) throws Exception {
-        if (insurance == null) {
+    public void edit(MedicalInsurance medicalInsurance) throws Exception {
+        if (medicalInsurance == null) {
             throw new Exception("El seguro médico es nulo");
         }
-        medicalInsurancePort.save(insurance);
+        medicalInsurancePort.save(medicalInsurance);
     }
 }

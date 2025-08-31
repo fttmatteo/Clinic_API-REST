@@ -10,8 +10,8 @@ public class FindMedicalInsurance {
         this.medicalInsurancePort = medicalInsurancePort;
     }
 
-    public MedicalInsurance findById(Long id) throws Exception {
-        MedicalInsurance found = medicalInsurancePort.findById(id);
+    public MedicalInsurance findById(MedicalInsurance medicalInsurance) throws Exception {
+        MedicalInsurance found = medicalInsurancePort.findById(medicalInsurance);
         if (found == null) {
             throw new Exception("No existe un seguro médico registrado con ese ID");
         }

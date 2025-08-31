@@ -10,6 +10,7 @@ public class Person {
     private int  phone;
     private Date birthDate;
     private String address;
+    private int age;
 
     public long getId() {
         return id;
@@ -52,5 +53,11 @@ public class Person {
     }
     public void setAddress(String address) {
         this.address = address;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
     }
 }
