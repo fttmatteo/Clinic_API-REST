@@ -17,7 +17,7 @@ public class OrderMedicationItemBuilder {
         String idMedication,
         String dose,
         String treatmentDuration,
-        String cost
+        String price
     ) throws Exception {
 
         OrderMedicationItem orderMedicationItem = new OrderMedicationItem();
@@ -26,7 +26,7 @@ public class OrderMedicationItemBuilder {
         orderMedicationItem.setIdMedication(validator.idMedicationValidator(idMedication));
         orderMedicationItem.setDose(validator.intValidator("dosis", dose));
         orderMedicationItem.setTreatmentDuration(validator.treatmentDurationValidator(treatmentDuration));
-        orderMedicationItem.setPrice(validator.costValidator(cost));
+        orderMedicationItem.setPrice(validator.costValidator(price));
         return orderMedicationItem;
     }
 }

@@ -19,7 +19,7 @@ public class OrderProcedureItemBuilder {
         String frequency,
         String specialistRequired,
         String specialistTypeId,
-        String cost
+        String price
     ) throws Exception {
 
         OrderProcedureItem orderProcedureItem = new OrderProcedureItem();
@@ -30,7 +30,7 @@ public class OrderProcedureItemBuilder {
         orderProcedureItem.setFrequency(validator.frequencyValidator(frequency));
         orderProcedureItem.setSpecialistRequired(validator.specialistRequiredValidator(specialistRequired));
         orderProcedureItem.setSpecialistTypeId(validator.specialistTypeIdValidator(specialistTypeId));
-        orderProcedureItem.setPrice(validator.costValidator(cost));
+        orderProcedureItem.setPrice(validator.costValidator(price));
         return orderProcedureItem;
     }
 }
