@@ -111,10 +111,10 @@ public class DoctorController {
             @RequestParam String price
     ) {
         try {
-            OrderDiagnosticAidItem it = orderDiagnosticAidItemBuilder.build(
+            OrderDiagnosticAidItem orderDiagnosticAidItem = orderDiagnosticAidItemBuilder.build(
                 numberOrder, item, idDiagnosticAid, quantity, specialistRequired, specialistTypeId, price
             );
-            doctorUseCase.addDiagnosticAidItem(it);
+            doctorUseCase.addDiagnosticAidItem(orderDiagnosticAidItem);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (InputsException ie) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
@@ -128,17 +128,17 @@ public class DoctorController {
     @PostMapping("/clinical-history")
     public ResponseEntity<?> recordClinicalHistory(
             @RequestParam String patientDocument,
-            @RequestParam String date,                  // yyyy-MM-dd
-            @RequestParam String professionalDocument,
+            @RequestParam String date,               
+            @RequestParam String doctorDocument,
             @RequestParam String motive,
             @RequestParam String symptoms,
             @RequestParam String diagnosis
     ) {
         try {
-            ClinicalHistory h = clinicalHistoryBuilder.build(
-                patientDocument, date, professionalDocument, motive, symptoms, diagnosis
+            ClinicalHistory clinicalHistory = clinicalHistoryBuilder.build(
+                patientDocument, date, doctorDocument, motive, symptoms, diagnosis
             );
-            doctorUseCase.recordClinicalHistory(h);
+            doctorUseCase.recordClinicalHistory(clinicalHistory);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (InputsException ie) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
