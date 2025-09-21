@@ -13,7 +13,6 @@ public class EmployeeBuilder {
 		Employee employee = new Employee();
 		employee.setFullName(EmployeeValidator.nameValidator(name));
 		employee.setDocument(EmployeeValidator.documentValidator(document));
-		employee.setAge(EmployeeValidator.ageValidator(age));
 		employee.setUserName(EmployeeValidator.userNameValidator(userName));
 		employee.setPassword(EmployeeValidator.passwordValidator(password));
 		return employee;

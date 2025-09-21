@@ -1,39 +1,26 @@
 package app.domain.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import app.application.exceptions.BusinessException;
 import app.domain.model.ClinicalOrder;
-import app.domain.model.Patient;
 import app.domain.ports.ClinicalOrderPort;
 import app.domain.ports.PatientPort;
 
-import java.sql.Date;
-
+@Service
 public class CreateClinicalOrder {
-    private final PatientPort patientPort;
-    private final ClinicalOrderPort clinicalOrderPort;
 
-    public CreateClinicalOrder(PatientPort patientPort, ClinicalOrderPort clinicalOrderPort) {
-        this.patientPort = patientPort;
-        this.clinicalOrderPort = clinicalOrderPort;
-    }
+    @Autowired private ClinicalOrderPort clinicalOrderPort;
+    @Autowired private PatientPort patientPort;
 
-    public void create(ClinicalOrder clinicalOrder) throws Exception {
-        if (clinicalOrder.getMedic() == null || clinicalOrder.getMedic().getDocument() == 0) {
-            throw new Exception("Debe indicar el documento del médico");
+    public ClinicalOrder create(ClinicalOrder clinicalOrder) throws Exception {
+        if (clinicalOrderPort.findById(clinicalOrder.getId()) != null) {
+            throw new BusinessException("ya existe una orden con ese número");
         }
-        if (clinicalOrder.getPatient() == null || clinicalOrder.getPatient().getDocument() == 0) {
-            throw new Exception("Debe indicar el documento del paciente");
+        if (patientPort.findByPatient(clinicalOrder.getPatientDocument()) == null) {
+            throw new BusinessException("el paciente no existe");
         }
-        Patient patientQuery = new Patient();
-        patientQuery.setDocument(clinicalOrder.getPatient().getDocument());
-        Patient patient = patientPort.findByDocument(patientQuery);
-        if (patient == null) {
-            throw new Exception("La orden debe asociarse a un paciente registrado");
-        }
-
-        if (clinicalOrder.getDate() == null) {
-            clinicalOrder.setDate(new Date(System.currentTimeMillis()));
-        }
-
-        clinicalOrderPort.save(clinicalOrder);
+        return clinicalOrderPort.save(clinicalOrder);
     }
 }
