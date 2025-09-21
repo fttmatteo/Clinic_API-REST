@@ -15,11 +15,11 @@ public class EmployeeValidator extends SimpleValidator {
 	}
 	
 	public int documentValidator(String value) throws Exception {
-		return integerValidator("el documento de la persona", value);
+		return intValidator("el documento de la persona", value);
 	}
 	
 	public int ageValidator(String value) throws Exception {
-		return integerValidator("edad de la persona", value);
+		return intValidator("edad de la persona", value);
 	}
 
 }

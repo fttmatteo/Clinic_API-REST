@@ -1,5 +1,6 @@
 package app.adapter.in.validators;
 
+import java.sql.Date;
 import java.util.regex.Pattern;
 
 import app.application.exceptions.InputsException;
@@ -48,10 +49,10 @@ public abstract class SimpleValidator {
         return Boolean.parseBoolean(value);
     }
 
-    public java.sql.Date dateValidator(String element, String value) throws Exception {
+    public Date dateValidator(String element, String value) throws Exception {
         stringValidator(element, value);
         try {
-            return java.sql.Date.valueOf(value);
+            return Date.valueOf(value);
         } catch (Exception e) {
             throw new InputsException(element + " debe tener formato yyyy-MM-dd");
         }
