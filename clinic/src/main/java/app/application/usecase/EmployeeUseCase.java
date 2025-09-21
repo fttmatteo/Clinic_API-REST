@@ -32,4 +32,9 @@ public class EmployeeUseCase {
         employee.setRole(Role.HUMAN_RESOURCES);
         createEmployee.create(employee);
     }
+
+    public void createIS(Employee employee) throws Exception {
+        employee.setRole(Role.INFORMATION_SUPPORT);
+        createEmployee.create(employee);
+    }
 }
