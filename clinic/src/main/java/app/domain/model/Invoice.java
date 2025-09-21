@@ -1,15 +1,21 @@
 package app.domain.model;
 
+import java.sql.Date;
+
 public class Invoice {
     private long id;
-    private Patient name;
-    private Patient age;
-    private Patient document;
-    private Employee fullName;
-    private MedicalInsurance companyName;
-    private MedicalInsurance numberPolicy;
-    private MedicalInsurance validityDaysPolicy;
-    private MedicalInsurance endDatePolicy;
+    private String patientName;
+    private int patientAge;
+    private int patientDocument;
+    private String doctorName;
+    private String companyName;
+    private long numberPolicy;
+    private int validityDaysPolicy;
+    private Date endDatePolicy;
+    private String serviceDescription;
+    private long copayment;
+    private long totalPatient;
+    private long totalInsurance;    
 
     public long getId() {
         return id;
@@ -19,67 +25,98 @@ public class Invoice {
         this.id = id;
     }
 
-    public Patient getName() {
-        return name;
+    public String getPatientName() {
+        return patientName;
     }
 
-    public void setName(Patient name) {
-        this.name = name;
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 
-    public Patient getAge() {
-        return age;
+    public int getPatientAge() {
+        return patientAge;
     }
 
-    public void setAge(Patient age) {
-        this.age = age;
+    public void setPatientAge(int patientAge) {
+        this.patientAge = patientAge;
     }
 
-    public Patient getDocument() {
-        return document;
+    public int getPatientDocument() {
+        return patientDocument;
     }
 
-    public void setDocument(Patient document) {
-        this.document = document;
+    public void setPatientDocument(int patientDocument) {
+        this.patientDocument = patientDocument;
     }
 
-    public Employee getFullName() {
-        return fullName;
+    public String getDoctorName() {
+        return doctorName;
     }
 
-    public void setFullName(Employee fullName) {
-        this.fullName = fullName;
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
     }
 
-    public MedicalInsurance getCompanyName() {
+    public String getCompanyName() {
         return companyName;
     }
 
-    public void setCompanyName(MedicalInsurance companyName) {
+    public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
-    public MedicalInsurance getNumberPolicy() {
+    public long getNumberPolicy() {
         return numberPolicy;
     }
 
-    public void setNumberPolicy(MedicalInsurance numberPolicy) {
+    public void setNumberPolicy(long numberPolicy) {
         this.numberPolicy = numberPolicy;
     }
 
-    public MedicalInsurance getValidityDaysPolicy() {
+    public int getValidityDaysPolicy() {
         return validityDaysPolicy;
     }
 
-    public void setValidityDaysPolicy(MedicalInsurance validityDaysPolicy) {
+    public void setValidityDaysPolicy(int validityDaysPolicy) {
         this.validityDaysPolicy = validityDaysPolicy;
     }
 
-    public MedicalInsurance getEndDatePolicy() {
+    public Date getEndDatePolicy() {
         return endDatePolicy;
     }
 
-    public void setEndDatePolicy(MedicalInsurance endDatePolicy) {
+    public void setEndDatePolicy(Date endDatePolicy) {
         this.endDatePolicy = endDatePolicy;
     }
-}
+    public String getServiceDescription() {
+        return serviceDescription;
+    }
+
+    public void setServiceDescription(String serviceDescription) {
+        this.serviceDescription = serviceDescription;
+    }
+
+    public long getCopayment() {
+        return copayment;
+    }
+
+    public void setCopayment(long copayment) {
+        this.copayment = copayment;
+    }
+
+    public long getTotalPatient() {
+        return totalPatient;
+    }
+
+    public void setTotalPatient(long totalPatient) {
+        this.totalPatient = totalPatient;
+    }
+
+    public long getTotalInsurance() {
+        return totalInsurance;
+    }
+
+    public void setTotalInsurance(long totalInsurance) {
+        this.totalInsurance = totalInsurance;
+    }
+    }
