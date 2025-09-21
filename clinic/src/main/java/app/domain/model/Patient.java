@@ -1,7 +1,6 @@
 package app.domain.model;
 
 public class Patient extends Person {
-    private int age;
     private String gender;
     private String emergencyFirstName;
     private String emergencyLastName;
@@ -9,12 +8,6 @@ public class Patient extends Person {
     private int emergencyPhone;
     private MedicalInsurance insurancePolicy;
 
-    public int getAge() {
-        return age;
-    }
-    public void setAge(int age) {
-        this.age = age;
-    }
     public String getGender() {
         return gender;
     }
