@@ -6,7 +6,7 @@ public class VitalSigns {
     private int patientDocument;
     private Date registrationDate;
     private String bloodPressure;
-    private float temperature;
+    private double temperature;
     private int pulse;
     private int oxygenSaturation;
 
@@ -34,11 +34,11 @@ public class VitalSigns {
         this.bloodPressure = bloodPressure;
     }
 
-    public float getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(float temperature) {
+    public void setTemperature(double temperature) {
         this.temperature = temperature;
     }
 
