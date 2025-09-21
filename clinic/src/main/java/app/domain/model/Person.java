@@ -3,7 +3,6 @@ package app.domain.model;
 import java.sql.Date;
 
 public class Person {
-    private long id;
     private String fullName;
     private int document;
     private String email;
@@ -12,12 +11,6 @@ public class Person {
     private String address;
     private int age;
 
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
-    }
     public String getFullName() {
         return fullName;
     }
