@@ -1,7 +1,7 @@
 package app.domain.services;
 
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,7 @@ import app.domain.model.MedicalInsurance;
 import app.domain.model.Patient;
 import app.domain.ports.InvoicePort;
 import app.domain.ports.PatientPort;
+import app.application.exceptions.BusinessException;
 
 @Service
 public class GenerateInvoice {
@@ -18,41 +19,37 @@ public class GenerateInvoice {
     @Autowired private PatientPort patientPort;
     @Autowired private InvoicePort invoicePort;
 
-    public Invoice generate(Invoice invoice, long totalService,Date invoiceDate) throws Exception {
+    public Invoice generate(Invoice invoice, long totalService, Date invoiceDate) throws Exception {
         Patient patient = patientPort.findByPatient(invoice.getPatientDocument());
-        if (p == null) throw new app.application.exceptions.BusinessException("el paciente no existe");
+        if (patient == null) throw new BusinessException("el paciente no existe");
 
-        // Snapshot de datos del paciente
-        invoice.setPatientName(p.getFullName());
-        invoice.setPatientAge(calcAge(p.getBirthDate()));
+        invoice.setPatientName(patient.getFullName());
+        invoice.setPatientAge(calcAge(patient.getBirthDate()));
 
-        // Datos de la póliza (si existe y está activa)
-        MedicalInsurance mi = p.getInsurancePolicy();
-        boolean active = (mi != null && mi.isStatusPolicy());
+        MedicalInsurance medicalInsurance = patient.getInsurancePolicy();
+        boolean active = (medicalInsurance != null && medicalInsurance.isStatusPolicy());
         if (active) {
-            invoice.setCompanyName(mi.getCompanyName());
-            // en tu modelo numberPolicy es long
-            invoice.setNumberPolicy(mi.getNumberPolicy());
-            invoice.setEndDatePolicy(mi.getEndDatePolicy());
-            // calcular días de vigencia restantes al momento de la factura
-            invoice.setValidityDaysPolicy(daysBetween(invoiceDate, mi.getEndDatePolicy()));
+            invoice.setCompanyName(medicalInsurance.getCompanyName());
+            invoice.setNumberPolicy(medicalInsurance.getNumberPolicy());
+            invoice.setEndDatePolicy(medicalInsurance.getEndDatePolicy());
+            invoice.setValidityDaysPolicy(daysBetween(invoiceDate, medicalInsurance.getEndDatePolicy()));
         }
 
-        long copay;
+        long copayment;
         long totalPatient;
         long totalInsurance;
 
         if (active) {
-            copay = 50_000L;
-            totalPatient = copay;
-            totalInsurance = Math.max(0L, totalService - copay);
+            copayment = 50_000L;
+            totalPatient = copayment;
+            totalInsurance = Math.max(0L, totalService - copayment);
         } else {
-            copay = totalService;
+            copayment = totalService;
             totalPatient = totalService;
             totalInsurance = 0L;
         }
 
-        invoice.setCopay(copay);
+        invoice.setCopayment(copayment);
         invoice.setTotalPatient(totalPatient);
         invoice.setTotalInsurance(totalInsurance);
 
