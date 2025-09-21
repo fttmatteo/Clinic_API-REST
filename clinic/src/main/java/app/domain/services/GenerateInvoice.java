@@ -56,7 +56,7 @@ public class GenerateInvoice {
         return invoicePort.save(invoice);
     }
 
-    private int calcAge(java.sql.Date birthDate) {
+    private int calcAge(Date birthDate) {
         if (birthDate == null) return 0;
         Calendar b = Calendar.getInstance(); b.setTime(birthDate);
         Calendar now = Calendar.getInstance();
@@ -65,7 +65,7 @@ public class GenerateInvoice {
         return Math.max(age, 0);
     }
 
-    private int daysBetween(java.sql.Date from, java.sql.Date to) {
+    private int daysBetween(Date from, Date to) {
         if (from == null || to == null) return 0;
         long ms = to.getTime() - from.getTime();
         return (int) Math.max(ms / (1000L*60*60*24), 0);
