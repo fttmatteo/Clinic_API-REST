@@ -3,7 +3,7 @@ package app.domain.model;
 public class OrderMedicationItem {
     private int numberOrder;
     private int item;
-    private int idMedication;
+    private int medicineId;
     private int dose;
     private String treatmentDuration;
     private long price;
@@ -24,12 +24,12 @@ public class OrderMedicationItem {
         this.item = item;
     }
 
-    public int getIdMedication() {
-        return idMedication;
+    public int getMedicineId() {
+        return medicineId;
     }
 
-    public void setIdMedication(int idMedication) {
-        this.idMedication = idMedication;
+    public void setMedicineId(int medicineId) {
+        this.medicineId = medicineId;
     }
 
     public int getDose() {

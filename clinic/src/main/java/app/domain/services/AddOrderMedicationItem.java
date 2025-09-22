@@ -17,7 +17,7 @@ public class AddOrderMedicationItem {
     @Autowired private OrderMedicationItemPort orderMedicationItemPort;
 
     public OrderMedicationItem add(OrderMedicationItem orderMedicationItem) throws Exception {
-        if (clinicalOrderPort.findById(orderMedicationItem.getNumberOrder()) == null) {
+        if (clinicalOrderPort.findByOrderId(orderMedicationItem.getNumberOrder()) == null) {
             throw new BusinessException("la orden no existe");
         }
         List<OrderMedicationItem> items = orderMedicationItemPort.listByNumberOrder(orderMedicationItem.getNumberOrder());

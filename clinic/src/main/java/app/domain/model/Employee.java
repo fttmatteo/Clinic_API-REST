@@ -12,7 +12,7 @@ public class Employee {
     private Date birthDate;
     private String address;
     private Role role;
-    private String username;
+    private String userName;
     private String password;
 
     public String getFullName() {
@@ -58,10 +58,10 @@ public class Employee {
         this.role = role;
     }
     public String getUserName() {
-        return username;
+        return userName;
     }
     public void setUserName(String username) {
-        this.username = username;
+        this.userName = username;
     }
     public String getPassword() {
         return password;

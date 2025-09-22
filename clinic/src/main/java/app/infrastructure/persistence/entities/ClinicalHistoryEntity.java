@@ -8,25 +8,24 @@ import java.sql.Date;
 public class ClinicalHistoryEntity {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long historyId;
 
   @Column(nullable=false) private int patientDocument;
-  @Column(nullable=false) private Date date;
-  @Column(nullable=false) private int professionalDocument;
+  @Column(nullable=false) private Date attentionDate;
+  @Column(nullable=false) private int doctorDocument;
 
   @Column(length=250) private String motive;
   @Column(length=500) private String symptoms;
   @Column(length=500) private String diagnosis;
 
-  // getters/setters...
-  public Long getId() { return id; }
-  public void setId(Long id) { this.id = id; }
+  public Long getHistoryId() { return historyId; }
+  public void setHistoryId(Long historyId) { this.historyId = historyId; }
   public int getPatientDocument() { return patientDocument; }
   public void setPatientDocument(int patientDocument) { this.patientDocument = patientDocument; }
-  public Date getDate() { return date; }
-  public void setDate(Date date) { this.date = date; }
-  public int getProfessionalDocument() { return professionalDocument; }
-  public void setProfessionalDocument(int professionalDocument) { this.professionalDocument = professionalDocument; }
+  public Date getAttentionDate() { return attentionDate; }
+  public void setAttentionDate(Date attentionDate) { this.attentionDate = attentionDate; }
+  public int getDoctorDocument() { return doctorDocument; }
+  public void setDoctorDocument(int doctorDocument) { this.doctorDocument = doctorDocument; }
   public String getMotive() { return motive; }
   public void setMotive(String motive) { this.motive = motive; }
   public String getSymptoms() { return symptoms; }

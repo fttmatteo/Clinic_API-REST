@@ -15,7 +15,7 @@ public class CreateClinicalOrder {
     @Autowired private PatientPort patientPort;
 
     public ClinicalOrder create(ClinicalOrder clinicalOrder) throws Exception {
-        if (clinicalOrderPort.findById(clinicalOrder.getId()) != null) {
+        if (clinicalOrderPort.findByOrderId(clinicalOrder.getNumberOrder()) != null) {
             throw new BusinessException("ya existe una orden con ese número");
         }
         if (patientPort.findByPatient(clinicalOrder.getPatientDocument()) == null) {

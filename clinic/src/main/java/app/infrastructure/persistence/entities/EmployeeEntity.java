@@ -12,7 +12,7 @@ import app.domain.model.emuns.Role;
        })
 public class EmployeeEntity {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long employeeId;
 
   @Column(nullable=false) private int document;
   @Column(nullable=false, length=120) private String fullName;
@@ -24,11 +24,11 @@ public class EmployeeEntity {
   @Enumerated(EnumType.STRING)
   @Column(nullable=false, length=40) private Role role;
 
-  @Column(nullable=false, length=30) private String username;
+  @Column(nullable=false, length=30) private String userName;
   @Column(nullable=false, length=100) private String password;
 
-  public Long getId() { return id; }
-  public void setId(Long id) { this.id = id; }
+  public Long getEmployeeId() { return employeeId; }
+  public void setId(Long employeeId) { this.employeeId = employeeId; }
   public int getDocument() { return document; }
   public void setDocument(int document) { this.document = document; }
   public String getFullName() { return fullName; }
@@ -43,8 +43,8 @@ public class EmployeeEntity {
   public void setEmail(String email) { this.email = email; }
   public Role getRole() { return role; }
   public void setRole(Role role) { this.role = role; }
-  public String getUsername() { return username; }
-  public void setUsername(String username) { this.username = username; }
+  public String getUserName() { return userName; }
+  public void setUserName(String userName) { this.userName = userName; }
   public String getPassword() { return password; }
   public void setPassword(String password) { this.password = password; }
 }

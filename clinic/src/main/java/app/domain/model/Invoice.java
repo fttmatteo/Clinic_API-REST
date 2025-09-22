@@ -3,7 +3,7 @@ package app.domain.model;
 import java.sql.Date;
 
 public class Invoice {
-    private long id;
+    private long invoiceId;
     private String patientName;
     private int patientAge;
     private int patientDocument;
@@ -17,12 +17,12 @@ public class Invoice {
     private long totalPatient;
     private long totalInsurance;    
 
-    public long getId() {
-        return id;
+    public long getInvoiceId() {
+        return invoiceId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setInvoiceId(long id) {
+        this.invoiceId = id;
     }
 
     public String getPatientName() {

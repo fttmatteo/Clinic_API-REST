@@ -12,9 +12,9 @@ import java.sql.Date;
 public class PatientEntity {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long patientId;
 
-  @Column(nullable=false) private int document;
+  @Column(nullable=false) private int patientDocument;
   @Column(nullable=false, length=120) private String fullName;
   @Column(nullable=false) private Date birthDate;
   @Column(length=20) private String gender;
@@ -33,10 +33,10 @@ public class PatientEntity {
   private int validityDaysPolicy;
   private Date endDatePolicy;
 
-  public Long getId() { return id; }
-  public void setId(Long id) { this.id = id; }
-  public int getDocument() { return document; }
-  public void setDocument(int document) { this.document = document; }
+  public Long getPatientId() { return patientId; }
+  public void setPatientId(Long patientId) { this.patientId = patientId; }
+  public int getPatientDocument() { return patientDocument; }
+  public void setPatientDocument(int patientDocument) { this.patientDocument = patientDocument; }
   public String getFullName() { return fullName; }
   public void setFullName(String fullName) { this.fullName = fullName; }
   public Date getBirthDate() { return birthDate; }

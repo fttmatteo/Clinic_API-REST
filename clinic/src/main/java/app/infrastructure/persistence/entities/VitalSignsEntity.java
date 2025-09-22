@@ -7,15 +7,15 @@ import jakarta.persistence.*;
 public class VitalSignsEntity {
 
   @EmbeddedId
-  private VitalSignsKey id;
+  private VitalSignsKey vitalId;
 
   @Column(length=7) private String bloodPressure; // NN/NN
   private float temperature;
   private int pulse;
   private int oxygenSaturation;
 
-  public VitalSignsKey getId() { return id; }
-  public void setId(VitalSignsKey id) { this.id = id; }
+  public VitalSignsKey getVitalId() { return vitalId; }
+  public void setVitalId(VitalSignsKey vitalId) { this.vitalId = vitalId; }
   public String getBloodPressure() { return bloodPressure; }
   public void setBloodPressure(String bloodPressure) { this.bloodPressure = bloodPressure; }
   public float getTemperature() { return temperature; }

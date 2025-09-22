@@ -3,10 +3,10 @@ package app.domain.model;
 public class OrderDiagnosticAidItem {
     private int numberOrder;
     private int item;
-    private int idDiagnosticAid;
+    private int diagnosticAidId;
     private int quantity;
     private boolean specialistRequired;
-    private int specialistTypeId;
+    private int specialistId;
     private long price;
 
     public int getNumberOrder() {
@@ -25,12 +25,12 @@ public class OrderDiagnosticAidItem {
         this.item = item;
     }
 
-    public int getIdDiagnosticAid() {
-        return idDiagnosticAid;
+    public int getDiagnosticAid() {
+        return diagnosticAidId;
     }
 
-    public void setIdDiagnosticAid(int idDiagnosticAid) {
-        this.idDiagnosticAid = idDiagnosticAid;
+    public void setDiagnosticAid(int idDiagnosticAid) {
+        this.diagnosticAidId = idDiagnosticAid;
     }
 
     public int getQuantity() {
@@ -49,12 +49,12 @@ public class OrderDiagnosticAidItem {
         this.specialistRequired = specialistRequired;
     }
 
-    public int getSpecialistTypeId() {
-        return specialistTypeId;
+    public int getSpecialistId() {
+        return specialistId;
     }
 
-    public void setSpecialistTypeId(int specialistTypeId) {
-        this.specialistTypeId = specialistTypeId;
+    public void setSpecialistId(int specialistTypeId) {
+        this.specialistId = specialistTypeId;
     }
 
     public long getPrice() {

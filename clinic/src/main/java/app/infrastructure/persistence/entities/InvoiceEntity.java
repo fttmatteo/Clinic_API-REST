@@ -8,33 +8,32 @@ import java.sql.Date;
 public class InvoiceEntity {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long invoiceId;
 
   @Column(nullable=false) private int patientDocument;
-  @Column(nullable=false, length=120) private String professionalName;
-  @Column(length=1000) private String clinicalDetail;
+  @Column(nullable=false, length=120) private String doctorName;
+  @Column(length=1000) private String serviceDescription;
 
-  @Column(nullable=false) private long totalService;
-  @Column(nullable=false) private long copay;
-  @Column(nullable=false) private long totalPayable;
+  @Column(nullable=false) private long copayment;
+  @Column(nullable=false) private long totalPatient;
+  @Column(nullable=false) private long totalInsurance;
 
-  @Column(nullable=false) private Date invoiceDate;
+  @Column(nullable=false) private Date endDatePolicy;
 
-  // getters/setters...
-  public Long getId() { return id; }
-  public void setId(Long id) { this.id = id; }
+  public Long getInvoiceId() { return invoiceId; }
+  public void setInvoiceId(Long invoiceId) { this.invoiceId = invoiceId; }
   public int getPatientDocument() { return patientDocument; }
   public void setPatientDocument(int patientDocument) { this.patientDocument = patientDocument; }
-  public String getProfessionalName() { return professionalName; }
-  public void setProfessionalName(String professionalName) { this.professionalName = professionalName; }
-  public String getClinicalDetail() { return clinicalDetail; }
-  public void setClinicalDetail(String clinicalDetail) { this.clinicalDetail = clinicalDetail; }
-  public long getTotalService() { return totalService; }
-  public void setTotalService(long totalService) { this.totalService = totalService; }
-  public long getCopay() { return copay; }
-  public void setCopay(long copay) { this.copay = copay; }
-  public long getTotalPayable() { return totalPayable; }
-  public void setTotalPayable(long totalPayable) { this.totalPayable = totalPayable; }
-  public Date getInvoiceDate() { return invoiceDate; }
-  public void setInvoiceDate(Date invoiceDate) { this.invoiceDate = invoiceDate; }
+  public String getDoctorName() { return doctorName; }
+  public void setDoctorName(String doctorName) { this.doctorName = doctorName; }
+  public String getServiceDescription() { return serviceDescription; }
+  public void setServiceDescription(String serviceDescription) { this.serviceDescription = serviceDescription; }
+  public long getCopayment() { return copayment; }
+  public void setCopayment(long copayment) { this.copayment = copayment; }
+  public long getTotalPatient() { return totalPatient; }
+  public void setTotalPatient(long totalPatient) { this.totalPatient = totalPatient; }
+  public long getTotalInsurance() { return totalInsurance; }
+  public void setTotalPayable(long totalPayable) { this.totalInsurance = totalPayable; }
+  public Date getEndDatePolicy() { return endDatePolicy; }
+  public void setEndDatePolicy(Date endDatePolicy) { this.endDatePolicy = endDatePolicy; }
 }

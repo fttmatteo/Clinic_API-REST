@@ -9,13 +9,13 @@ public class ClinicalOrderEntity {
 
   @Id
   @Column(nullable=false)
-  private int numberOrder; // asignado por la app
+  private int numberOrder;
 
   @Column(nullable=false)
   private int patientDocument;
 
   @Column(nullable=false)
-  private int professionalDocument;
+  private int doctorDocument;
 
   @Column(nullable=false)
   private Date creationDate;
@@ -24,8 +24,8 @@ public class ClinicalOrderEntity {
   public void setNumberOrder(int numberOrder) { this.numberOrder = numberOrder; }
   public int getPatientDocument() { return patientDocument; }
   public void setPatientDocument(int patientDocument) { this.patientDocument = patientDocument; }
-  public int getProfessionalDocument() { return professionalDocument; }
-  public void setProfessionalDocument(int professionalDocument) { this.professionalDocument = professionalDocument; }
+  public int getDoctorDocument() { return doctorDocument; }
+  public void setDoctorDocument(int doctorDocument) { this.doctorDocument = doctorDocument; }
   public Date getCreationDate() { return creationDate; }
   public void setCreationDate(Date creationDate) { this.creationDate = creationDate; }
 }

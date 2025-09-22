@@ -17,7 +17,7 @@ public class AddOrderProcedureItem {
     @Autowired private OrderProcedureItemPort orderProcedureItemPort;
 
     public OrderProcedureItem add(OrderProcedureItem orderProcedureItem) throws Exception {
-        if (clinicalOrderPort.findById(orderProcedureItem.getNumberOrder()) == null) {
+        if (clinicalOrderPort.findByOrderId(orderProcedureItem.getNumberOrder()) == null) {
             throw new BusinessException("la orden no existe");
         }
         List<OrderProcedureItem> items = orderProcedureItemPort.listByNumberOrder(orderProcedureItem.getNumberOrder());

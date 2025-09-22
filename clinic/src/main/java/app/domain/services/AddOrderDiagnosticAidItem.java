@@ -17,7 +17,7 @@ public class AddOrderDiagnosticAidItem {
     @Autowired private OrderDiagnosticAidItemPort orderDiagnosticAidItemPort;
 
     public OrderDiagnosticAidItem add(OrderDiagnosticAidItem orderDiagnosticAidItem) throws Exception {
-        if (clinicalOrderPort.findById(orderDiagnosticAidItem.getNumberOrder()) == null) {
+        if (clinicalOrderPort.findByOrderId(orderDiagnosticAidItem.getNumberOrder()) == null) {
             throw new BusinessException("la orden no existe");
         }
         List<OrderDiagnosticAidItem> items = orderDiagnosticAidItemPort.listByNumberOrder(orderDiagnosticAidItem.getNumberOrder());

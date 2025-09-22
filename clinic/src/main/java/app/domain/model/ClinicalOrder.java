@@ -6,12 +6,13 @@ public class ClinicalOrder {
     private int numberOrder;
     private int patientDocument;
     private int doctorDocument;
-    private Date dateCreation;
-    public int getId() {
+    private Date creationDate;
+
+    public int getNumberOrder() {
         return numberOrder;
     }
 
-    public void setId(int id) {
+    public void setNumberOrder(int id) {
         this.numberOrder = id;
     }
 
@@ -31,11 +32,11 @@ public class ClinicalOrder {
         this.doctorDocument = doctorDocument;
     }
 
-    public Date getDateCreation() {
-        return dateCreation;
+    public Date getCrationDate() {
+        return creationDate;
     }
 
-    public void setDateCreation(Date dateCreation) {
-        this.dateCreation = dateCreation;
+    public void setCreationDate(Date dateCreation) {
+        this.creationDate = dateCreation;
     }
     }

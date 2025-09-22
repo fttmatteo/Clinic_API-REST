@@ -3,7 +3,7 @@ package app.domain.model;
 import java.sql.Date;
 
 public class Patient {
-    private int document;
+    private int patientDocument;
     private String fullName;
     private Date birthDate;
     private String gender;
@@ -14,14 +14,14 @@ public class Patient {
     private String emergencyLastName;
     private String relationShip;
     private int emergencyPhone;
-    private MedicalInsurance insurancePolicy; //Preguntale al profesor
+    private MedicalInsurance insurancePolicy;
 
-    public int getDocument() {
-        return document;
+    public int getPatientDocument() {
+        return patientDocument;
     }
 
-    public void setDocument(int document) {
-        this.document = document;
+    public void setPatientDocument(int document) {
+        this.patientDocument = document;
     }
 
     public String getFullName() {

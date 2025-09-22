@@ -3,11 +3,11 @@ package app.domain.model;
 public class OrderProcedureItem {
     private int numberOrder;
     private int item;
-    private int idProcedure;
+    private int procedureId;
     private int quantity;
     private String frequency;
     private boolean specialistRequired;
-    private int specialistTypeId;
+    private int specialistId;
     private long price;
 
     public int getNumberOrder() {
@@ -26,12 +26,12 @@ public class OrderProcedureItem {
         this.item = item;
     }
 
-    public int getIdProcedure() {
-        return idProcedure;
+    public int getProcedureId() {
+        return procedureId;
     }
 
-    public void setIdProcedure(int idProcedure) {
-        this.idProcedure = idProcedure;
+    public void setProcedureId(int procedureId) {
+        this.procedureId = procedureId;
     }
 
     public int getQuantity() {
@@ -58,12 +58,12 @@ public class OrderProcedureItem {
         this.specialistRequired = specialistRequired;
     }
 
-    public int getSpecialistTypeId() {
-        return specialistTypeId;
+    public int getSpecialistId() {
+        return specialistId;
     }
 
-    public void setSpecialistTypeId(int specialistTypeId) {
-        this.specialistTypeId = specialistTypeId;
+    public void setSpecialistId(int specialistId) {
+        this.specialistId = specialistId;
     }
 
     public long getPrice() {

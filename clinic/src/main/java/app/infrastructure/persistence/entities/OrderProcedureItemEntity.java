@@ -7,27 +7,27 @@ import jakarta.persistence.*;
 public class OrderProcedureItemEntity {
 
   @EmbeddedId
-  private OrderProcedureItemKey id;
+  private OrderProcedureItemKey procedureItemId;
 
-  @Column(nullable=false) private int idProcedure;
+  @Column(nullable=false) private int procedureId;
   @Column(nullable=false) private int quantity;
   @Column(length=60) private String frequency;
   @Column(nullable=false) private boolean specialistRequired;
-  @Column(nullable=false) private int specialistTypeId; // 0 si no aplica
-  @Column(nullable=false) private long cost;
+  @Column(nullable=false) private int specialistId; 
+  @Column(nullable=false) private long price;
 
-  public OrderProcedureItemKey getId() { return id; }
-  public void setId(OrderProcedureItemKey id) { this.id = id; }
-  public int getIdProcedure() { return idProcedure; }
-  public void setIdProcedure(int idProcedure) { this.idProcedure = idProcedure; }
+  public OrderProcedureItemKey getProcedureItemId() { return procedureItemId; }
+  public void setProcedureItemId(OrderProcedureItemKey procedureItemId) { this.procedureItemId = procedureItemId; }
+  public int getProcedureId() { return procedureId; }
+  public void setProcedureId(int procedureId) { this.procedureId = procedureId; }
   public int getQuantity() { return quantity; }
   public void setQuantity(int quantity) { this.quantity = quantity; }
   public String getFrequency() { return frequency; }
   public void setFrequency(String frequency) { this.frequency = frequency; }
   public boolean isSpecialistRequired() { return specialistRequired; }
   public void setSpecialistRequired(boolean specialistRequired) { this.specialistRequired = specialistRequired; }
-  public int getSpecialistTypeId() { return specialistTypeId; }
-  public void setSpecialistTypeId(int specialistTypeId) { this.specialistTypeId = specialistTypeId; }
-  public long getCost() { return cost; }
-  public void setCost(long cost) { this.cost = cost; }
+  public int getSpecialistId() { return specialistId; }
+  public void setSpecialistId(int specialistId) { this.specialistId = specialistId; }
+  public long getPrice() { return price; }
+  public void setPrice(long price) { this.price = price; }
 }

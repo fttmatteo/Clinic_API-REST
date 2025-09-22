@@ -17,7 +17,7 @@ public class CreateEmployee {
         if (employeePort.findByDocument(employee.getDocument()) != null) {
             throw new BusinessException("ya existe un empleado con esa cédula");
         }
-        if (employeePort.findByUsername(employee.getUserName()) != null) {
+        if (employeePort.findByUserName(employee.getUserName()) != null) {
             throw new BusinessException("ya existe un empleado con ese nombre de usuario");
         }
         return employeePort.save(employee);

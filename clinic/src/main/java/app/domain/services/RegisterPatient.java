@@ -14,7 +14,7 @@ public class RegisterPatient {
     private PatientPort patientPort;
 
     public Patient create(Patient patient) throws Exception {
-        Patient existing = patientPort.findByPatient(patient.getDocument());
+        Patient existing = patientPort.findByPatient(patient.getPatientDocument());
         if (existing != null) {
             throw new BusinessException("ya existe un paciente con esa cédula");
         }

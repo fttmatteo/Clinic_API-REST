@@ -7,24 +7,24 @@ import jakarta.persistence.*;
 public class OrderDiagnosticAidItemEntity {
 
   @EmbeddedId
-  private OrderDiagnosticAidItemKey id;
+  private OrderDiagnosticAidItemKey diagnosticId;
 
-  @Column(nullable=false) private int idDiagnosticAid;
+  @Column(nullable=false) private int diagnosticAid;
   @Column(nullable=false) private int quantity;
   @Column(nullable=false) private boolean specialistRequired;
-  @Column(nullable=false) private int specialistTypeId; // 0 si no aplica
-  @Column(nullable=false) private long cost;
+  @Column(nullable=false) private int specialistId;
+  @Column(nullable=false) private long price;
 
-  public OrderDiagnosticAidItemKey getId() { return id; }
-  public void setId(OrderDiagnosticAidItemKey id) { this.id = id; }
-  public int getIdDiagnosticAid() { return idDiagnosticAid; }
-  public void setIdDiagnosticAid(int idDiagnosticAid) { this.idDiagnosticAid = idDiagnosticAid; }
+  public OrderDiagnosticAidItemKey getDiagnosticId() { return diagnosticId; }
+  public void setDiagnosticId(OrderDiagnosticAidItemKey diagnosticId) { this.diagnosticId = diagnosticId; }
+  public int getDiagnosticAid() { return diagnosticAid; }
+  public void setDiagnosticAid(int diagnosticAid) { this.diagnosticAid = diagnosticAid; }
   public int getQuantity() { return quantity; }
   public void setQuantity(int quantity) { this.quantity = quantity; }
   public boolean isSpecialistRequired() { return specialistRequired; }
   public void setSpecialistRequired(boolean specialistRequired) { this.specialistRequired = specialistRequired; }
-  public int getSpecialistTypeId() { return specialistTypeId; }
-  public void setSpecialistTypeId(int specialistTypeId) { this.specialistTypeId = specialistTypeId; }
-  public long getCost() { return cost; }
-  public void setCost(long cost) { this.cost = cost; }
+  public int getSpecialistId() { return specialistId; }
+  public void setSpecialistId(int specialistId) { this.specialistId = specialistId; }
+  public long getPrice() { return price; }
+  public void setPrice(long price) { this.price = price; }
 }

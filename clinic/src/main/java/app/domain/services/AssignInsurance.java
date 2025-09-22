@@ -14,10 +14,10 @@ public class AssignInsurance {
     @Autowired
     private PatientPort patientPort;
 
-    public Patient assign(int patientDocument, MedicalInsurance insurance) throws Exception {
-        Patient patient = patientPort.findByPatient(patientDocument);
+    public Patient assign(int documentPatient, MedicalInsurance medicalInsurance) throws Exception {
+        Patient patient = patientPort.findByPatient(documentPatient);
         if (patient == null) throw new BusinessException("el paciente no existe");
-        patient.setInsurancePolicy(insurance);
+        patient.setInsurancePolicy(medicalInsurance);
         return patientPort.save(patient);
     }
 }
