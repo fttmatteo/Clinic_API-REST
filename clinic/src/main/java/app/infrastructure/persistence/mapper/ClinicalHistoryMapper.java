@@ -7,15 +7,15 @@ import app.infrastructure.persistence.entities.ClinicalHistoryEntity;
 
 @Component
 public class ClinicalHistoryMapper {
-  public ClinicalHistory toDomain(ClinicalHistory e){
-    if(e==null) return null;
+  public ClinicalHistory toDomain(ClinicalHistoryEntity saved){
+    if(saved==null) return null;
     ClinicalHistory d = new ClinicalHistory();
-    d.setPatientDocument(e.getPatientDocument());
-    d.setAttentionDate(e.getAttentionDate());
-    d.setDoctorDocument(e.getDoctorDocument());
-    d.setMotive(e.getMotive());
-    d.setSymptoms(e.getSymptoms());
-    d.setDiagnosis(e.getDiagnosis());
+    d.setPatientDocument(saved.getPatientDocument());
+    d.setAttentionDate(saved.getAttentionDate());
+    d.setDoctorDocument(saved.getDoctorDocument());
+    d.setMotive(saved.getMotive());
+    d.setSymptoms(saved.getSymptoms());
+    d.setDiagnosis(saved.getDiagnosis());
     return d;
   }
   public ClinicalHistoryEntity toEntity(ClinicalHistory d){
