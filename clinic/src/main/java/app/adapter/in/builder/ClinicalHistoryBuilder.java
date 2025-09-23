@@ -22,8 +22,8 @@ public class ClinicalHistoryBuilder {
 
         ClinicalHistory clinicalHistory = new ClinicalHistory();
         clinicalHistory.setPatientDocument(validator.patientDocumentValidator(patientDocument));
-        clinicalHistory.setAttentionDate(validator.dateValidatorField(attentionDate));
-        clinicalHistory.setDoctorDocument(validator.professionalDocumentValidator(doctorDocument));
+        clinicalHistory.setAttentionDate(validator.attentionDateValidator(attentionDate));
+        clinicalHistory.setDoctorDocument(validator.doctorDocumentValidator(doctorDocument));
         clinicalHistory.setMotive(validator.motiveValidator(motive));
         clinicalHistory.setSymptoms(validator.symptomsValidator(symptoms));
         clinicalHistory.setDiagnosis(validator.diagnosisValidator(diagnosis));

@@ -17,7 +17,7 @@ public class OrderMedicationItemValidator extends SimpleValidator {
         return n;
     }
 
-    public int idMedicationValidator(String value) throws Exception {
+    public int medicineIdValidator(String value) throws Exception {
         return intValidator("id del medicamento", value);
     }
 
@@ -29,7 +29,7 @@ public class OrderMedicationItemValidator extends SimpleValidator {
         return maxLength("duración del tratamiento", value, 80);
     }
 
-    public long costValidator(String value) throws Exception {
+    public long priceValidator(String value) throws Exception {
         long c = longValidator("costo", value);
         if (c < 0) throw new InputsException("costo no puede ser negativo");
         return c;

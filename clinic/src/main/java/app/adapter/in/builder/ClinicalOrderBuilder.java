@@ -21,7 +21,7 @@ public class ClinicalOrderBuilder {
         ClinicalOrder clinicalOrder = new ClinicalOrder();
         clinicalOrder.setNumberOrder(validator.numberOrderValidator(numberOrder));
         clinicalOrder.setPatientDocument(validator.patientDocumentValidator(patientDocument));
-        clinicalOrder.setDoctorDocument(validator.professionalDocumentValidator(doctorDocument));
+        clinicalOrder.setDoctorDocument(validator.doctorDocumentValidator(doctorDocument));
         clinicalOrder.setCreationDate(validator.creationDateValidator(creationDate));
         return clinicalOrder;
     }

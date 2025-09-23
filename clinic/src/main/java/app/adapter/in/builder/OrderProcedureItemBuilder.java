@@ -25,12 +25,12 @@ public class OrderProcedureItemBuilder {
         OrderProcedureItem orderProcedureItem = new OrderProcedureItem();
         orderProcedureItem.setNumberOrder(validator.numberOrderValidator(numberOrder));
         orderProcedureItem.setItem(validator.itemValidator(item));
-        orderProcedureItem.setProcedureId(validator.idProcedureValidator(procedureId));
+        orderProcedureItem.setProcedureId(validator.procedureIdValidator(procedureId));
         orderProcedureItem.setQuantity(validator.quantityValidator(quantity));
         orderProcedureItem.setFrequency(validator.frequencyValidator(frequency));
         orderProcedureItem.setSpecialistRequired(validator.specialistRequiredValidator(specialistRequired));
-        orderProcedureItem.setSpecialistId(validator.specialistTypeIdValidator(specialistId));
-        orderProcedureItem.setPrice(validator.costValidator(price));
+        orderProcedureItem.setSpecialistId(validator.specialistIdValidator(specialistId));
+        orderProcedureItem.setPrice(validator.priceValidator(price));
         return orderProcedureItem;
     }
 }

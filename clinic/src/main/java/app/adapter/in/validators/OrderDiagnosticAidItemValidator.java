@@ -17,7 +17,7 @@ public class OrderDiagnosticAidItemValidator extends SimpleValidator {
         return n;
     }
 
-    public int idDiagnosticAidValidator(String value) throws Exception {
+    public int diagnosticAidValidator(String value) throws Exception {
         return intValidator("id de la ayuda diagnóstica", value);
     }
 
@@ -31,11 +31,11 @@ public class OrderDiagnosticAidItemValidator extends SimpleValidator {
         return booleanValidator("requiere especialista", value);
     }
 
-    public int specialistTypeIdValidator(String value) throws Exception {
+    public int specialistIdValidator(String value) throws Exception {
         return intValidator("tipo de especialista", value);
     }
 
-    public long costValidator(String value) throws Exception {
+    public long priceValidator(String value) throws Exception {
         long c = longValidator("costo", value);
         if (c < 0) throw new InputsException("costo no puede ser negativo");
         return c;

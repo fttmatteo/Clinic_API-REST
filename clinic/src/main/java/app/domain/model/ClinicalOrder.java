@@ -32,11 +32,11 @@ public class ClinicalOrder {
         this.doctorDocument = doctorDocument;
     }
 
-    public Date getCrationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date dateCreation) {
-        this.creationDate = dateCreation;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
     }

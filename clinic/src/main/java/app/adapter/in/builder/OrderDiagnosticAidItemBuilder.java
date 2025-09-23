@@ -24,11 +24,11 @@ public class OrderDiagnosticAidItemBuilder {
         OrderDiagnosticAidItem orderDiagnosticAidItem = new OrderDiagnosticAidItem();
         orderDiagnosticAidItem.setNumberOrder(validator.numberOrderValidator(numberOrder));
         orderDiagnosticAidItem.setItem(validator.itemValidator(item));
-        orderDiagnosticAidItem.setDiagnosticAid(validator.idDiagnosticAidValidator(diagnosticAid));
+        orderDiagnosticAidItem.setDiagnosticAid(validator.diagnosticAidValidator(diagnosticAid));
         orderDiagnosticAidItem.setQuantity(validator.quantityValidator(quantity));
         orderDiagnosticAidItem.setSpecialistRequired(validator.specialistRequiredValidator(specialistRequired));
-        orderDiagnosticAidItem.setSpecialistId(validator.specialistTypeIdValidator(specialistId));
-        orderDiagnosticAidItem.setPrice(validator.costValidator(price));
+        orderDiagnosticAidItem.setSpecialistId(validator.specialistIdValidator(specialistId));
+        orderDiagnosticAidItem.setPrice(validator.priceValidator(price));
         return orderDiagnosticAidItem;
     }
 }

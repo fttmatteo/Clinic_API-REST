@@ -12,7 +12,7 @@ public class VitalSignsValidator extends SimpleValidator {
         return intValidator("documento del paciente", value);
     }
 
-    public Date dateValidatorField(String value) throws Exception {
+    public Date attentionDateValidator(String value) throws Exception {
         return dateValidator("fecha de registro", value);
     }
 

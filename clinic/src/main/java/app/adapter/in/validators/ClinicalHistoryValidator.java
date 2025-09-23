@@ -11,11 +11,11 @@ public class ClinicalHistoryValidator extends SimpleValidator {
         return intValidator("documento del paciente", value);
     }
 
-    public Date dateValidatorField(String value) throws Exception {
+    public Date attentionDateValidator(String value) throws Exception {
         return dateValidator("fecha de atención", value);
     }
 
-    public int professionalDocumentValidator(String value) throws Exception {
+    public int doctorDocumentValidator(String value) throws Exception {
         digitsMax("documento del profesional", value, 10);
         return intValidator("documento del profesional", value);
     }

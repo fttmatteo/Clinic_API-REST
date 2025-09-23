@@ -22,7 +22,7 @@ public class VitalSignsBuilder {
 
         VitalSigns vitalSigns = new VitalSigns();
         vitalSigns.setPatientDocument(validator.patientDocumentValidator(patientDocument));
-        vitalSigns.setRegistrationDate(validator.dateValidatorField(registrationDate));
+        vitalSigns.setRegistrationDate(validator.attentionDateValidator(registrationDate));
         vitalSigns.setBloodPressure(validator.bloodPressureValidatorField(bloodPressure));
         vitalSigns.setTemperature(validator.temperatureValidator(temperature));
         vitalSigns.setPulse(validator.pulseValidator(pulse));

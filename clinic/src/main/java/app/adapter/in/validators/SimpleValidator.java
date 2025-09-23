@@ -80,7 +80,6 @@ public abstract class SimpleValidator {
 
     public String emailValidator(String value) throws Exception {
         String v = stringValidator("email", value);
-        // Regex sencilla y suficiente para capa presentación
         String regex = "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$";
         if (!Pattern.compile(regex).matcher(v).matches()) {
             throw new InputsException("email no tiene un formato válido");

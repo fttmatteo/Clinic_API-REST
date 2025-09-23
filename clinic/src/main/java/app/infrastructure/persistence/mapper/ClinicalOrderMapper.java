@@ -21,7 +21,7 @@ public class ClinicalOrderMapper {
     e.setNumberOrder(d.getNumberOrder());
     e.setPatientDocument(d.getPatientDocument());
     e.setDoctorDocument(d.getDoctorDocument());
-    e.setCreationDate(d.getCrationDate());
+    e.setCreationDate(d.getCreationDate());
     return e;
   }
 }

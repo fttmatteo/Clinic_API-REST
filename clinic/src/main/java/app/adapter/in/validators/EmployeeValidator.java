@@ -33,15 +33,11 @@ public class EmployeeValidator extends SimpleValidator {
         return emailValidator(value);
     }
 
-    public String usernameValidator(String value) throws Exception {
+    public String userNameValidator(String value) throws Exception {
         return maxLength("usuario", value, 15); // regla: ≤ 15
     }
 
     public String passwordValidator(String value) throws Exception {
         return maxLength("contraseña", value, 100);
-    }
-
-    public String roleValidator(String value) throws Exception {
-        return maxLength("rol", value, 30);
     }
 }

@@ -23,10 +23,10 @@ public class OrderMedicationItemBuilder {
         OrderMedicationItem orderMedicationItem = new OrderMedicationItem();
         orderMedicationItem.setNumberOrder(validator.numberOrderValidator(numberOrder));
         orderMedicationItem.setItem(validator.itemValidator(item));
-        orderMedicationItem.setMedicineId(validator.idMedicationValidator(medicineId));
-        orderMedicationItem.setDose(validator.intValidator("dosis", dose));
+        orderMedicationItem.setMedicineId(validator.medicineIdValidator(medicineId));
+        orderMedicationItem.setDose(validator.doseValidator(dose));
         orderMedicationItem.setTreatmentDuration(validator.treatmentDurationValidator(treatmentDuration));
-        orderMedicationItem.setPrice(validator.costValidator(price));
+        orderMedicationItem.setPrice(validator.priceValidator(price));
         return orderMedicationItem;
     }
 }

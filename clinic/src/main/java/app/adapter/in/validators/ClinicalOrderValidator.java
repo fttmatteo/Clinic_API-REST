@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 public class ClinicalOrderValidator extends SimpleValidator {
 
     public int numberOrderValidator(String value) throws Exception {
-        // ≤ 6 dígitos
         digitsMax("número de orden", value, 6);
         return intValidator("número de orden", value);
     }
@@ -16,7 +15,7 @@ public class ClinicalOrderValidator extends SimpleValidator {
         return intValidator("documento del paciente", value);
     }
 
-    public int professionalDocumentValidator(String value) throws Exception {
+    public int doctorDocumentValidator(String value) throws Exception {
         digitsMax("documento del profesional", value, 10);
         return intValidator("documento del profesional", value);
     }

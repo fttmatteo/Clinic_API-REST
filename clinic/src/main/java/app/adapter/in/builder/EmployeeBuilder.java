@@ -30,7 +30,7 @@ public class EmployeeBuilder {
         employee.setPhoneNumber(validator.phoneNumberValidator(phoneNumber));
         employee.setBirthDate(validator.birthDateValidator(birthDate));
         employee.setAddress(validator.addressValidator(address));
-        employee.setUserName(validator.usernameValidator(userName));
+        employee.setUserName(validator.userNameValidator(userName));
         employee.setPassword(validator.passwordValidator(password));
         return employee;
     }
