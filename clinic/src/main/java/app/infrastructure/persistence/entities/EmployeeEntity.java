@@ -2,7 +2,7 @@ package app.infrastructure.persistence.entities;
 
 import jakarta.persistence.*;
 import java.sql.Date;
-import app.domain.model.emuns.Role;
+import app.domain.model.enums.Role;
 
 @Entity
 @Table(name="employees",

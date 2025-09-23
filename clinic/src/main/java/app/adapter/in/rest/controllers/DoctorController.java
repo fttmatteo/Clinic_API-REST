@@ -8,21 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import app.application.usecase.DoctorUseCase;
 import app.adapter.in.builder.ClinicalOrderBuilder;
-import app.adapter.in.builder.OrderMedicationItemBuilder;
-import app.adapter.in.builder.OrderProcedureItemBuilder;
-import app.adapter.in.builder.OrderDiagnosticAidItemBuilder;
 import app.adapter.in.builder.ClinicalHistoryBuilder;
 
 import app.adapter.in.rest.request.ClinicalOrderRequest;
-import app.adapter.in.rest.request.OrderMedicationItemRequest;
-import app.adapter.in.rest.request.OrderProcedureItemRequest;
-import app.adapter.in.rest.request.OrderDiagnosticAidItemRequest;
 import app.adapter.in.rest.request.ClinicalHistoryRequest;
 
 import app.domain.model.ClinicalOrder;
-import app.domain.model.OrderMedicationItem;
-import app.domain.model.OrderProcedureItem;
-import app.domain.model.OrderDiagnosticAidItem;
 import app.domain.model.ClinicalHistory;
 import app.application.exceptions.InputsException;
 import app.application.exceptions.BusinessException;
@@ -33,9 +24,6 @@ public class DoctorController {
 
     @Autowired private DoctorUseCase doctorUseCase;
     @Autowired private ClinicalOrderBuilder clinicalOrderBuilder;
-    @Autowired private OrderMedicationItemBuilder orderMedicationItemBuilder;
-    @Autowired private OrderProcedureItemBuilder orderProcedureItemBuilder;
-    @Autowired private OrderDiagnosticAidItemBuilder orderDiagnosticAidItemBuilder;
     @Autowired private ClinicalHistoryBuilder clinicalHistoryBuilder;
 
     @PostMapping("/orders")
@@ -45,63 +33,6 @@ public class DoctorController {
                 req.getNumberOrder(), req.getPatientDocument(), req.getProfessionalDocument(), req.getCreationDate()
             );
             doctorUseCase.createOrder(order);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (InputsException ie) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
-        } catch (BusinessException be) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(be.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }
-
-    @PostMapping("/orders/medications")
-    public ResponseEntity<?> addMedicationItem(@RequestBody OrderMedicationItemRequest req) {
-        try {
-            OrderMedicationItem it = orderMedicationItemBuilder.build(
-                req.getNumberOrder(), req.getItem(), req.getIdMedication(),
-                req.getDose(), req.getTreatmentDuration(), req.getCost()
-            );
-            doctorUseCase.addMedicationItem(it);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (InputsException ie) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
-        } catch (BusinessException be) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(be.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }
-
-    @PostMapping("/orders/procedures")
-    public ResponseEntity<?> addProcedureItem(@RequestBody OrderProcedureItemRequest req) {
-        try {
-            OrderProcedureItem it = orderProcedureItemBuilder.build(
-                req.getNumberOrder(), req.getItem(), req.getIdProcedure(),
-                req.getQuantity(), req.getFrequency(),
-                req.getSpecialistRequired(), req.getSpecialistTypeId(),
-                req.getCost()
-            );
-            doctorUseCase.addProcedureItem(it);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (InputsException ie) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
-        } catch (BusinessException be) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(be.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }
-
-    @PostMapping("/orders/diagnostics")
-    public ResponseEntity<?> addDiagnosticAidItem(@RequestBody OrderDiagnosticAidItemRequest req) {
-        try {
-            OrderDiagnosticAidItem it = orderDiagnosticAidItemBuilder.build(
-                req.getNumberOrder(), req.getItem(), req.getIdDiagnosticAid(),
-                req.getQuantity(), req.getSpecialistRequired(),
-                req.getSpecialistTypeId(), req.getCost()
-            );
-            doctorUseCase.addDiagnosticAidItem(it);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (InputsException ie) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
