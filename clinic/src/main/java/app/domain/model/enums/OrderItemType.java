@@ -1,4 +1,4 @@
-package app.domain.model.emuns;
+package app.domain.model.enums;
 
 public enum OrderItemType {
     MEDICINE,
