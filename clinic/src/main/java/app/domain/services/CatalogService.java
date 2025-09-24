@@ -15,16 +15,10 @@ import app.domain.ports.DiagnosticAidPort;
 @Service
 public class CatalogService {
     
-    @Autowired
-    private MedicinePort medicinePort;
-    
-    @Autowired
-    private ProcedurePort procedurePort;
-    
-    @Autowired
-    private DiagnosticAidPort diagnosticAidPort;
+    @Autowired private MedicinePort medicinePort;
+    @Autowired private ProcedurePort procedurePort;
+    @Autowired private DiagnosticAidPort diagnosticAidPort;
 
-    // ====== MEDICINES ======
     public Medicine findMedicineById(Long id) throws Exception {
         if (id == null) throw new Exception("El id del medicamento es obligatorio");
         Medicine m = medicinePort.findById(id);
@@ -60,7 +54,6 @@ public class CatalogService {
         medicinePort.delete(id);
     }
 
-    // ====== PROCEDURES ======
     public Procedure findProcedureById(Long id) throws Exception {
         if (id == null) throw new Exception("El id del procedimiento es obligatorio");
         Procedure p = procedurePort.findById(id);
@@ -96,7 +89,6 @@ public class CatalogService {
         procedurePort.delete(id);
     }
 
-    // ====== DIAGNOSTIC AIDS ======
     public DiagnosticAid findDiagnosticAidById(Long id) throws Exception {
         if (id == null) throw new Exception("El id de la ayuda diagnóstica es obligatorio");
         DiagnosticAid d = diagnosticAidPort.findById(id);

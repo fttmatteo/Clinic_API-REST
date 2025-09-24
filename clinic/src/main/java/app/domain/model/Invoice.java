@@ -43,11 +43,11 @@ public class Invoice {
         this.patientName = patientName;
     }
 
-    public int getPatientAge() {
+    public Integer getPatientAge() {
         return patientAge;
     }
 
-    public void setPatientAge(int patientAge) {
+    public void setPatientAge(Integer patientAge) {
         this.patientAge = patientAge;
     }
 
@@ -75,19 +75,19 @@ public class Invoice {
         this.companyName = companyName;
     }
 
-    public long getNumberPolicy() {
+    public Long getNumberPolicy() {
         return numberPolicy;
     }
 
-    public void setNumberPolicy(long numberPolicy) {
+    public void setNumberPolicy(Long numberPolicy) {
         this.numberPolicy = numberPolicy;
     }
 
-    public int getValidityDaysPolicy() {
+    public Integer getValidityDaysPolicy() {
         return validityDaysPolicy;
     }
 
-    public void setValidityDaysPolicy(int validityDaysPolicy) {
+    public void setValidityDaysPolicy(Integer validityDaysPolicy) {
         this.validityDaysPolicy = validityDaysPolicy;
     }
 
