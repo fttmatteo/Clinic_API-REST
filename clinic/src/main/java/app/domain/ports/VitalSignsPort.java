@@ -4,6 +4,6 @@ import java.util.List;
 import app.domain.model.VitalSigns;
 
 public interface VitalSignsPort {
-    public VitalSigns save(VitalSigns vitalSigns) throws Exception;
-    public List<VitalSigns> listByPatient (int documentPatient) throws Exception;
+    VitalSigns save(VitalSigns vitalSigns) throws Exception;
+    List<VitalSigns> listByPatient(Integer documentPatient) throws Exception;
 }
