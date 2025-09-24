@@ -10,11 +10,11 @@ public class ClinicalHistory {
     private String symptoms;
     private String diagnosis;
 
-    public int getPatientDocument() {
+    public Integer getPatientDocument() {
         return patientDocument;
     }
 
-    public void setPatientDocument(int patientDocument) {
+    public void setPatientDocument(Integer patientDocument) {
         this.patientDocument = patientDocument;
     }
 
@@ -26,11 +26,11 @@ public class ClinicalHistory {
         this.attentionDate = attentionDate;
     }
 
-    public int getDoctorDocument() {
+    public Integer getDoctorDocument() {
         return doctorDocument;
     }
 
-    public void setDoctorDocument(int doctorDocument) {
+    public void setDoctorDocument(Integer doctorDocument) {
         this.doctorDocument = doctorDocument;
     }
 

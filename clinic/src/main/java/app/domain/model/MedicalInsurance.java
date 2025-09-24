@@ -17,11 +17,11 @@ public class MedicalInsurance {
         this.companyName = companyName;
     }
 
-    public long getNumberPolicy() {
+    public Long getNumberPolicy() {
         return numberPolicy;
     }
 
-    public void setNumberPolicy(long numberPolicy) {
+    public void setNumberPolicy(Long numberPolicy) {
         this.numberPolicy = numberPolicy;
     }
 

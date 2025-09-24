@@ -19,11 +19,11 @@ public class Invoice {
     private Double totalPatient;
     private Double totalInsurance;    
 
-    public long getInvoiceId() {
+    public Long getInvoiceId() {
         return invoiceId;
     }
 
-    public void setInvoiceId(long invoiceId) {
+    public void setInvoiceId(Long invoiceId) {
         this.invoiceId = invoiceId;
     }
 
@@ -51,11 +51,11 @@ public class Invoice {
         this.patientAge = patientAge;
     }
 
-    public int getPatientDocument() {
+    public Integer getPatientDocument() {
         return patientDocument;
     }
 
-    public void setPatientDocument(int patientDocument) {
+    public void setPatientDocument(Integer patientDocument) {
         this.patientDocument = patientDocument;
     }
 
