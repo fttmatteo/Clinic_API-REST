@@ -1,6 +1,6 @@
 package app.domain.model;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class MedicalOrder {
     private long id;
     private Patient patient;
     private Employee doctor;
-    private LocalDate creationDate;
+    private Date creationDate;
     private List<OrderItem> items = new ArrayList<>();
 
     public long getId() {
@@ -44,11 +44,11 @@ public class MedicalOrder {
         this.doctor = doctor;
     }
 
-    public LocalDate getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 

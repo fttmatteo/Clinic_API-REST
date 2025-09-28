@@ -1,6 +1,6 @@
 package app.domain.model;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 /**
  * Representa la historia clínica de un paciente. Cada registro se compone de
@@ -14,7 +14,7 @@ public class MedicalRecord {
     private long id;
     private Patient patient;
     private Employee doctor;
-    private LocalDateTime dateTime;
+    private Date dateTime;
     private String motive;
     private String symptoms;
     private String diagnosis;
@@ -45,11 +45,11 @@ public class MedicalRecord {
         this.doctor = doctor;
     }
 
-    public LocalDateTime getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 

@@ -1,6 +1,6 @@
 package app.domain.model;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 /**
  * Representa la póliza de seguro médico de un paciente. Contiene el nombre
@@ -19,7 +19,7 @@ public class InsurancePolicy {
     private String companyName;
     private String policyNumber;
     private boolean active;
-    private LocalDate expiryDate;
+    private Date expiryDate;
 
     public long getId() {
         return id;
@@ -53,11 +53,11 @@ public class InsurancePolicy {
         this.active = active;
     }
 
-    public LocalDate getExpiryDate() {
+    public Date getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(LocalDate expiryDate) {
+    public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
     }
 }

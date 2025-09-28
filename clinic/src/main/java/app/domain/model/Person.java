@@ -1,6 +1,6 @@
 package app.domain.model;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 import app.domain.model.enums.Gender;
 
@@ -16,7 +16,7 @@ public class Person {
     private long id;
     private long document;
     private String fullName;
-    private LocalDate birthDate;
+    private Date birthDate;
     private String address;
     private String phone;
     private String email;
@@ -46,11 +46,11 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public LocalDate getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
