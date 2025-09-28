@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
  * Entidad JPA que representa un ítem dentro de una orden médica. Almacena
  * información específica según el tipo de ítem (medicamento,
  * procedimiento o ayuda diagnóstica). Cada ítem está relacionado con
- * una orden mediante una relación muchos-a-uno.
+ * una orden mediante una relación muchos a uno.
  */
 @Entity
 @Table(name = "order_items")

@@ -6,9 +6,7 @@ import java.sql.Timestamp;
  * Representa la historia clínica de un paciente. Cada registro se compone de
  * los datos de la consulta (fecha y hora, motivo, síntomas, diagnóstico)
  * junto con el médico que atendió al paciente y, opcionalmente, la orden
- * médica asociada. Estos registros se almacenan en una base de datos NoSQL
- * utilizando la cédula del paciente como clave y la fecha de atención como
- * subclave.
+ * médica asociada.
  */
 public class MedicalRecord {
     private long id;
