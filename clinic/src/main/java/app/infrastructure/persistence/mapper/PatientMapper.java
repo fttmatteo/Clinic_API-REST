@@ -26,7 +26,7 @@ public class PatientMapper {
             entity.setGender(patient.getGender().name());
         }
         entity.setAddress(patient.getAddress());
-        entity.setPhone(patient.getPhone());
+        entity.setMobilePhone(patient.getPhone());
         entity.setEmail(patient.getEmail());
         if (patient.getEmergencyContact() != null) {
             EmergencyContactEmbeddable contact = new EmergencyContactEmbeddable();
@@ -58,7 +58,7 @@ public class PatientMapper {
             patient.setGender(Gender.valueOf(entity.getGender()));
         }
         patient.setAddress(entity.getAddress());
-        patient.setPhone(entity.getPhone());
+        patient.setPhone(entity.getMobilePhone());
         patient.setEmail(entity.getEmail());
         if (entity.getEmergencyContact() != null) {
             EmergencyContact contact = new EmergencyContact();

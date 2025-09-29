@@ -89,9 +89,6 @@ public class EmployeeValidator extends SimpleValidator {
         if (!value.matches(".*[0-9].*")) {
             throw new InputsException("la contraseña debe contener al menos un número");
         }
-        if (!value.matches(".*[!@#$%^&*()_+\\-=[\\]{};':\"\\\\|,.<>/?].*")) {
-            throw new InputsException("la contraseña debe contener al menos un carácter especial");
-        }
         return value;
     }
 }

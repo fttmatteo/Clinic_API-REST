@@ -38,7 +38,7 @@ public class PatientEntity {
     private String address;
 
     @Column(nullable = false, length = 10)
-    private String phone;
+    private String mobilePhone;
 
     @Column(nullable = false, length = 100)
     private String email;
@@ -87,11 +87,11 @@ public class PatientEntity {
     public void setAddress(String address) {
         this.address = address;
     }
-    public String getPhone() {
-        return phone;
+    public String getMobilePhone() {
+        return mobilePhone;
     }
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
     }
     public String getEmail() {
         return email;
