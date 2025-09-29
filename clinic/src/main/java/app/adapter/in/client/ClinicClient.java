@@ -14,12 +14,13 @@ import org.springframework.stereotype.Controller;
 public class ClinicClient {
 
     private static final String MENU =
+        "---------- MENÚ PRINCIPAL ----------\n" +
         "Seleccione el área con la que desea operar:\n" +
         "1. Recursos Humanos\n" +
         "2. Administrativo\n" +
         "3. Médico\n" +
         "4. Enfermería\n" +
-        "5. Salir";
+        "5. SALIR\n";
 
     private static final Scanner reader = new Scanner(System.in);
 
@@ -61,7 +62,7 @@ public class ClinicClient {
                 return true;
             }
             case "5": {
-                System.out.println("Hasta luego. Cerrando sesión principal.");
+                System.out.println("Hasta luego. Cerrando sesión.");
                 return false;
             }
             default: {
