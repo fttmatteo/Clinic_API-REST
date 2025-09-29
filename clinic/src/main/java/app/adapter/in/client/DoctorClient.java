@@ -25,41 +25,6 @@ import app.application.usecase.DoctorUseCase;
 @Controller
 public class DoctorClient {
 
-    /**
-     * Lista de medicamentos de ejemplo para seleccionar rápidamente al crear
-     * ítems de tipo MEDICINE. El usuario puede seleccionar
-     * uno de ellos ingresando el número correspondiente o escribir un
-     * nombre diferente manualmente.
-     */
-    private static final List<String> DEFAULT_MEDICINES = List.of(
-        "Acetaminofén",
-        "Ibuprofeno",
-        "Amoxicilina",
-        "Omeprazol"
-    );
-
-    /**
-     * Lista de procedimientos de ejemplo para selección rápida al crear
-     * ítems de tipo PROCEDURE. Permite elegir entre algunas opciones
-     * sin necesidad de escribir el nombre completo.
-     */
-    private static final List<String> DEFAULT_PROCEDURES = List.of(
-        "Radiografía",
-        "Ultrasonido",
-        "Electrocardiograma"
-    );
-
-    /**
-     * Lista de ayudas diagnósticas de ejemplo para selección rápida al
-     * crear ítems de tipo DIAGNOSTIC_AID. Ofrece varias opciones de
-     * exámenes y pruebas comunes.
-     */
-    private static final List<String> DEFAULT_DIAGNOSTIC_AIDS = List.of(
-        "Hemograma",
-        "Prueba de glucosa",
-        "Análisis de orina"
-    );
-
     private static final String MENU =
         "Ingrese una opción:\n" +
         "1. Crear orden médica\n" +
@@ -79,6 +44,8 @@ public class DoctorClient {
     private MedicalRecordBuilder recordBuilder;
     @Autowired
     private PatientValidator patientValidator;
+    @Autowired
+    private app.domain.services.InventoryService inventoryService;
 
     public void session() {
         boolean running = true;
@@ -165,51 +132,57 @@ public class DoctorClient {
         String name;
         if (typeUpper.equals("MEDICINE")) {
             System.out.println("Seleccione un medicamento de la lista o ingrese un nombre manualmente:");
-            for (int i = 0; i < DEFAULT_MEDICINES.size(); i++) {
-                System.out.println((i + 1) + ". " + DEFAULT_MEDICINES.get(i));
+            var meds = inventoryService.getMedicines();
+            for (int i = 0; i < meds.size(); i++) {
+                System.out.println((i + 1) + ". " + meds.get(i).getId() + " - " + meds.get(i).getName());
             }
             String inputName = reader.nextLine();
             try {
                 int idx = Integer.parseInt(inputName);
-                if (idx >= 1 && idx <= DEFAULT_MEDICINES.size()) {
-                    name = DEFAULT_MEDICINES.get(idx - 1);
+                if (idx >= 1 && idx <= meds.size()) {
+                    name = meds.get(idx - 1).getName();
                 } else {
                     name = inputName;
                 }
             } catch (NumberFormatException nfe) {
-                name = inputName;
+                var medicine = inventoryService.findMedicineById(inputName);
+                name = (medicine != null) ? medicine.getName() : inputName;
             }
         } else if (typeUpper.equals("PROCEDURE")) {
             System.out.println("Seleccione un procedimiento de la lista o ingrese un nombre manualmente:");
-            for (int i = 0; i < DEFAULT_PROCEDURES.size(); i++) {
-                System.out.println((i + 1) + ". " + DEFAULT_PROCEDURES.get(i));
+            var procs = inventoryService.getProcedures();
+            for (int i = 0; i < procs.size(); i++) {
+                System.out.println((i + 1) + ". " + procs.get(i).getId() + " - " + procs.get(i).getName());
             }
             String inputName = reader.nextLine();
             try {
                 int idx = Integer.parseInt(inputName);
-                if (idx >= 1 && idx <= DEFAULT_PROCEDURES.size()) {
-                    name = DEFAULT_PROCEDURES.get(idx - 1);
+                if (idx >= 1 && idx <= procs.size()) {
+                    name = procs.get(idx - 1).getName();
                 } else {
                     name = inputName;
                 }
             } catch (NumberFormatException nfe) {
-                name = inputName;
+                var procedure = inventoryService.findProcedureById(inputName);
+                name = (procedure != null) ? procedure.getName() : inputName;
             }
         } else if (typeUpper.equals("DIAGNOSTIC_AID")) {
             System.out.println("Seleccione una ayuda diagnóstica de la lista o ingrese un nombre manualmente:");
-            for (int i = 0; i < DEFAULT_DIAGNOSTIC_AIDS.size(); i++) {
-                System.out.println((i + 1) + ". " + DEFAULT_DIAGNOSTIC_AIDS.get(i));
+            var diags = inventoryService.getDiagnosticAids();
+            for (int i = 0; i < diags.size(); i++) {
+                System.out.println((i + 1) + ". " + diags.get(i).getId() + " - " + diags.get(i).getName());
             }
             String inputName = reader.nextLine();
             try {
                 int idx = Integer.parseInt(inputName);
-                if (idx >= 1 && idx <= DEFAULT_DIAGNOSTIC_AIDS.size()) {
-                    name = DEFAULT_DIAGNOSTIC_AIDS.get(idx - 1);
+                if (idx >= 1 && idx <= diags.size()) {
+                    name = diags.get(idx - 1).getName();
                 } else {
                     name = inputName;
                 }
             } catch (NumberFormatException nfe) {
-                name = inputName;
+                var diag = inventoryService.findDiagnosticAidById(inputName);
+                name = (diag != null) ? diag.getName() : inputName;
             }
         } else {
             System.out.println("Nombre del ítem:");
@@ -323,42 +296,51 @@ public class DoctorClient {
 
     private List<OrderItem> createDefaultOrderItems() throws Exception {
         List<OrderItem> defaultItems = new ArrayList<>();
-        defaultItems.add(orderItemBuilder.build(
-            "1",
-            "MEDICINE",
-            DEFAULT_MEDICINES.get(0),
-            "500 mg",
-            "5 días",
-            null,
-            null,
-            "5000",
-            null,
-            null
-        ));
-        defaultItems.add(orderItemBuilder.build(
-            "2",
-            "PROCEDURE",
-            DEFAULT_PROCEDURES.get(0),
-            null,
-            null,
-            "1",
-            "único",
-            "20000",
-            "si",
-            "101"
-        ));
-        defaultItems.add(orderItemBuilder.build(
-            "3",
-            "DIAGNOSTIC_AID",
-            DEFAULT_DIAGNOSTIC_AIDS.get(0),
-            null,
-            null,
-            "1",
-            null,
-            "15000",
-            "no",
-            null
-        ));
+        if (!inventoryService.getMedicines().isEmpty()) {
+            var med = inventoryService.getMedicines().get(0);
+            defaultItems.add(orderItemBuilder.build(
+                "1",
+                "MEDICINE",
+                med.getName(),
+                "500 mg",
+                "5 días",
+                null,
+                null,
+                String.valueOf(med.getCost()),
+                null,
+                null
+            ));
+        }
+        if (!inventoryService.getProcedures().isEmpty()) {
+            var proc = inventoryService.getProcedures().get(0);
+            defaultItems.add(orderItemBuilder.build(
+                String.valueOf(defaultItems.size() + 1),
+                "PROCEDURE",
+                proc.getName(),
+                null,
+                null,
+                "1",
+                "único",
+                String.valueOf(proc.getCost()),
+                "si",
+                "101"
+            ));
+        }
+        if (!inventoryService.getDiagnosticAids().isEmpty()) {
+            var diag = inventoryService.getDiagnosticAids().get(0);
+            defaultItems.add(orderItemBuilder.build(
+                String.valueOf(defaultItems.size() + 1),
+                "DIAGNOSTIC_AID",
+                diag.getName(),
+                null,
+                null,
+                "1",
+                null,
+                String.valueOf(diag.getCost()),
+                "no",
+                null
+            ));
+        }
         return defaultItems;
     }
 }
