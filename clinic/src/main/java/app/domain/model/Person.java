@@ -13,8 +13,8 @@ import app.domain.model.enums.Gender;
  */
 public class Person {
 
-    private long id;
-    private long document;
+    private Long id;
+    private Long document;
     private String fullName;
     private Date birthDate;
     private String address;
@@ -22,19 +22,19 @@ public class Person {
     private String email;
     private Gender gender;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public long getDocument() {
+    public Long getDocument() {
         return document;
     }
 
-    public void setDocument(long document) {
+    public void setDocument(Long document) {
         this.document = document;
     }
 
