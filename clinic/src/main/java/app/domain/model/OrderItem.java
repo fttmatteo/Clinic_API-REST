@@ -7,12 +7,12 @@ import app.domain.model.enums.OrderItemType;
  * ítem (medicamento, procedimiento o ayuda diagnóstica) algunos campos
  * tendrán valor y otros no. Los números de ítem dentro de una orden deben
  * comenzar en 1 y ser únicos. Cuando el ítem corresponde a un procedimiento
- * o ayuda diagnóstica, puede requerir la intervención de un especialista y
+ * o ayuda diagnóstica, puede requerir la Integerervención de un especialista y
  * asociarse a un tipo de especialidad.
  */
 public class OrderItem {
-    private long id;
-    private int itemNumber;
+    private Long id;
+    private Integer itemNumber;
     private OrderItemType type;
     private String name;
     private String dose;
@@ -23,19 +23,19 @@ public class OrderItem {
     private Boolean requiresSpecialist;
     private String specialistTypeId;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getItemNumber() {
+    public Integer getItemNumber() {
         return itemNumber;
     }
 
-    public void setItemNumber(int itemNumber) {
+    public void setItemNumber(Integer itemNumber) {
         this.itemNumber = itemNumber;
     }
 
