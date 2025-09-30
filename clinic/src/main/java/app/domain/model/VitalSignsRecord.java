@@ -9,20 +9,20 @@ import java.sql.Timestamp;
  * posee una marca de tiempo que indica cuándo se tomaron los signos.
  */
 public class VitalSignsRecord {
-    private long id;
+    private Long id;
     private Patient patient;
     private Employee nurse;
     private Timestamp dateTime;
     private String bloodPressure;
-    private double temperature;
-    private int pulse;
-    private int oxygenLevel;
+    private Double temperature;
+    private Integer pulse;
+    private Integer oxygenLevel;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -58,27 +58,27 @@ public class VitalSignsRecord {
         this.bloodPressure = bloodPressure;
     }
 
-    public double getTemperature() {
+    public Double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(double temperature) {
+    public void setTemperature(Double temperature) {
         this.temperature = temperature;
     }
 
-    public int getPulse() {
+    public Integer getPulse() {
         return pulse;
     }
 
-    public void setPulse(int pulse) {
+    public void setPulse(Integer pulse) {
         this.pulse = pulse;
     }
 
-    public int getOxygenLevel() {
+    public Integer getOxygenLevel() {
         return oxygenLevel;
     }
 
-    public void setOxygenLevel(int oxygenLevel) {
+    public void setOxygenLevel(Integer oxygenLevel) {
         this.oxygenLevel = oxygenLevel;
     }
 }
