@@ -15,13 +15,13 @@ import jakarta.persistence.Table;
 public class DiagnosticAidEntity {
 
     @Id
-    @Column(name = "id", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String id;
 
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(nullable = false, length = 255)
     private String name;
 
-    @Column(name = "cost", nullable = false)
+    @Column(nullable = false)
     private Double cost;
 
     public String getId() {

@@ -43,9 +43,17 @@ public class PatientEntity {
     @Column(nullable = false, length = 100)
     private String email;
 
+    @Column(nullable = false, length = 50)
+    private String firstNameEmergencyContact;
 
-    @Embedded
-    private EmergencyContactEmbeddable emergencyContact;
+    @Column(nullable = false, length = 50)
+    private String lastNameEmergencyContact;
+
+    @Column(nullable = false, length = 50)
+    private String relationShipEmergencyContact;
+
+    @Column(nullable = false, length = 10)
+    private String phoneEmergencyContact;
 
     @Embedded
     private InsurancePolicyEmbeddable insurancePolicy;
@@ -99,11 +107,29 @@ public class PatientEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-    public EmergencyContactEmbeddable getEmergencyContact() {
-        return emergencyContact;
+    public String getFirstNameEmergencyContact() {
+        return firstNameEmergencyContact;
     }
-    public void setEmergencyContact(EmergencyContactEmbeddable emergencyContact) {
-        this.emergencyContact = emergencyContact;
+    public void setFirstNameEmergencyContact(String firstNameEmergencyContact) {
+        this.firstNameEmergencyContact = firstNameEmergencyContact;
+    }
+    public String getLastNameEmergencyContact() {
+        return lastNameEmergencyContact;
+    }
+    public void setLastNameEmergencyContact(String lastNameEmergencyContact) {
+        this.lastNameEmergencyContact = lastNameEmergencyContact;
+    }
+    public String getRelationShipEmergencyContact() {
+        return relationShipEmergencyContact;
+    }
+    public void setRelationShipEmergencyContact(String relationShipEmergencyContact) {
+        this.relationShipEmergencyContact = relationShipEmergencyContact;
+    }
+    public String getPhoneEmergencyContact() {
+        return phoneEmergencyContact;
+    }
+    public void setPhoneEmergencyContact(String phoneEmergencyContact) {
+        this.phoneEmergencyContact = phoneEmergencyContact;
     }
     public InsurancePolicyEmbeddable getInsurancePolicy() {
         return insurancePolicy;

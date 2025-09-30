@@ -6,15 +6,42 @@ package app.domain.model;
  * emergencia y la póliza de seguro médico.
  */
 public class Patient extends Person {
-    private EmergencyContact emergencyContact;
+    private String firstNameEmergencyContact;
+    private String lastNameEmergencyContact;
+    private String relationShipEmergencyContact;
+    private String phoneEmergencyContact;
     private InsurancePolicy insurancePolicy;
 
-    public EmergencyContact getEmergencyContact() {
-        return emergencyContact;
+    public String getFirstNameEmergencyContact() {
+        return firstNameEmergencyContact;
     }
 
-    public void setEmergencyContact(EmergencyContact emergencyContact) {
-        this.emergencyContact = emergencyContact;
+    public void setFirstNameEmergencyContact(String firstNameEmergencyContact) {
+        this.firstNameEmergencyContact = firstNameEmergencyContact;
+    }
+
+    public String getLastNameEmergencyContact() {
+        return lastNameEmergencyContact;
+    }
+
+    public void setLastNameEmergencyContact(String lastNameEmergencyContact) {
+        this.lastNameEmergencyContact = lastNameEmergencyContact;
+    }
+
+    public String getRelationShipEmergencyContact() {
+        return relationShipEmergencyContact;
+    }
+
+    public void setRelationShipEmergencyContact(String relationShipEmergencyContact) {
+        this.relationShipEmergencyContact = relationShipEmergencyContact;
+    }
+
+    public String getPhoneEmergencyContact() {
+        return phoneEmergencyContact;
+    }
+
+    public void setPhoneEmergencyContact(String phoneEmergencyContact) {
+        this.phoneEmergencyContact = phoneEmergencyContact;
     }
 
     public InsurancePolicy getInsurancePolicy() {

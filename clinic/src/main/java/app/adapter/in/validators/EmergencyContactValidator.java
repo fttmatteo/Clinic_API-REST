@@ -16,7 +16,7 @@ public class EmergencyContactValidator extends SimpleValidator {
     public String lastNameValidator(String value) throws InputsException {
         return stringValidator("apellidos del contacto de emergencia", value);
     }
-    public String relationshipValidator(String value) throws InputsException {
+    public String relationShipValidator(String value) throws InputsException {
         return stringValidator("relación del contacto de emergencia", value);
     }
     public String phoneValidator(String value) throws InputsException {
