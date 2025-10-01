@@ -6,25 +6,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import app.adapter.in.builder.EmployeeBuilder;
+import app.adapter.in.validators.EmployeeValidator;
 import app.application.usecase.HumanResourcesUseCase;
 import app.domain.model.Employee;
 
 /**
  * Cliente de consola para el personal de recursos humanos.
  * Permite registrar empleados de distintos roles interactuando
- * por línea de comandos. 
+ * por linea de comandos.
  */
 @Controller
 public class HumanResourcesClient {
 
     private static final String MENU =
-        "---------- ÁREA RECURSOS HUMANOS ----------\n" +
-        "Ingrese una opción:\n" +
-        "1. Crear médico\n" +
+        "---------- AREA RECURSOS HUMANOS ----------\n" +
+        "Ingrese una opcion:\n" +
+        "1. Crear medico\n" +
         "2. Crear enfermera\n" +
         "3. Crear personal administrativo\n" +
-        "4. Crear personal de soporte de información\n" +
+        "4. Crear personal de soporte de informacion\n" +
         "5. SALIR\n";
+
+    private static final String INVALID_OPTION_MESSAGE =
+        "Opcion invalida. Por favor elija una opcion del 1 al 5.\n";
 
     private static final Scanner reader = new Scanner(System.in);
 
@@ -33,6 +37,9 @@ public class HumanResourcesClient {
 
     @Autowired
     private EmployeeBuilder employeeBuilder;
+
+    @Autowired
+    private EmployeeValidator employeeValidator;
 
     public void session() {
         boolean running = true;
@@ -43,8 +50,7 @@ public class HumanResourcesClient {
 
     private boolean menu() {
         try {
-            System.out.println(MENU);
-            String option = reader.nextLine();
+            String option = menuOption();
             switch (option) {
             case "1": {
                 Employee employee = readEmployeeData();
@@ -67,11 +73,11 @@ public class HumanResourcesClient {
                 return true;
             }
             case "5": {
-                System.out.println("Cerrando sesión del área recursos humanos...");
+                System.out.println("Cerrando sesion del area recursos humanos...\n");
                 return false;
             }
             default: {
-                System.out.println("Opción inválida. Por favor elija una opción del 1 al 4.");
+                System.out.println(INVALID_OPTION_MESSAGE);
                 return true;
             }
             }
@@ -82,22 +88,58 @@ public class HumanResourcesClient {
     }
 
     private Employee readEmployeeData() throws Exception {
-        System.out.println("Ingrese el nombre completo:");
-        String fullName = reader.nextLine();
-        System.out.println("Ingrese el número de documento:");
-        String document = reader.nextLine();
-        System.out.println("Ingrese la fecha de nacimiento (DD/MM/YYYY):");
-        String birthDate = reader.nextLine();
-        System.out.println("Ingrese la dirección:");
-        String address = reader.nextLine();
-        System.out.println("Ingrese el teléfono (máximo 10 dígitos):");
-        String phone = reader.nextLine();
-        System.out.println("Ingrese el correo electrónico:");
-        String email = reader.nextLine();
-        System.out.println("Ingrese el nombre de usuario:");
-        String userName = reader.nextLine();
-        System.out.println("Ingrese la contraseña:");
-        String password = reader.nextLine();
+        String fullName = promptValidator("Ingrese el nombre completo:", employeeValidator::fullNameValidator);
+        String document = promptValidator("Ingrese el numero de documento:", value -> {
+            long parsed = employeeValidator.documentValidator(value);
+            humanResourcesUseCase.ensureDocumentIsUnique(parsed);
+            return value;
+        });
+        String birthDate = promptValidator("Ingrese la fecha de nacimiento (DD/MM/YYYY):", value -> {
+            employeeValidator.birthDateValidator(value);
+            return value;
+        });
+        String address = promptValidator("Ingrese la direccion:", employeeValidator::addressValidator);
+        String phone = promptValidator("Ingrese el telefono (maximo 10 digitos):", employeeValidator::phoneValidator);
+        String email = promptValidator("Ingrese el correo electronico:", employeeValidator::emailValidator);
+        String userName = promptValidator("Ingrese el nombre de usuario:", value -> {
+            String validated = employeeValidator.userNameValidator(value);
+            humanResourcesUseCase.ensureUserNameIsUnique(validated);
+            return validated;
+        });
+        String password = promptValidator("Ingrese la contraseña:", employeeValidator::passwordValidator);
         return employeeBuilder.build(fullName, document, birthDate, address, phone, email, userName, password);
+    }
+
+    private String menuOption() {
+        String[] validOptions = {"1", "2", "3", "4", "5"};
+        while (true) {
+            System.out.println(MENU);
+            String input = reader.nextLine();
+            String value = input == null ? "" : input.trim();
+            for (String option : validOptions) {
+                if (option.equals(value)) {
+                    return option;
+                }
+            }
+            System.out.println(INVALID_OPTION_MESSAGE);
+        }
+    }
+
+    private <DataType> DataType promptValidator(String prompt, CheckedFunction<String, DataType> mapper) {
+        while (true) {
+            System.out.println(prompt);
+            String input = reader.nextLine();
+            String value = input == null ? "" : input.trim();
+            try {
+                return mapper.apply(value);
+            } catch (Exception ex) {
+                System.out.println("Dato invalido: " + ex.getMessage());
+            }
+        }
+    }
+
+    @FunctionalInterface
+    private interface CheckedFunction<Input, Output> {
+        Output apply(Input value) throws Exception;
     }
 }
