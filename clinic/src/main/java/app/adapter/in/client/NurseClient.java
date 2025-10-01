@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import app.adapter.in.builder.VitalSignsBuilder;
+import app.adapter.in.validators.EmployeeValidator;
+import app.adapter.in.validators.PatientValidator;
+import app.adapter.in.validators.VitalSignsValidator;
 import app.application.usecase.NurseUseCase;
 import app.domain.model.VitalSignsRecord;
 
@@ -17,10 +20,13 @@ import app.domain.model.VitalSignsRecord;
 public class NurseClient {
 
     private static final String MENU =
-        "---------- ÁREA ENFERMERÍA ----------\n" +
-        "Ingrese una opción:\n" +
+        "---------- AREA ENFERMERIA ----------\n" +
+        "Ingrese una opcion:\n" +
         "1. Registrar signos vitales\n" +
         "2. SALIR\n";
+
+    private static final String INVALID_OPTION_MESSAGE =
+        "Opcion invalida. Por favor elija una opcion del 1 al 2.";
 
     private static final Scanner reader = new Scanner(System.in);
 
@@ -28,6 +34,12 @@ public class NurseClient {
     private NurseUseCase nurseUseCase;
     @Autowired
     private VitalSignsBuilder vitalSignsBuilder;
+    @Autowired
+    private EmployeeValidator employeeValidator;
+    @Autowired
+    private PatientValidator patientValidator;
+    @Autowired
+    private VitalSignsValidator vitalSignsValidator;
 
     public void session() {
         boolean running = true;
@@ -38,8 +50,7 @@ public class NurseClient {
 
     private boolean menu() {
         try {
-            System.out.println(MENU);
-            String option = reader.nextLine();
+            String option = askMenuOption();
             switch (option) {
             case "1": {
                 VitalSignsRecord record = readVitalSignsData();
@@ -47,11 +58,11 @@ public class NurseClient {
                 return true;
             }
             case "2": {
-                System.out.println("Cerrando sesión del área enfermería...");
+                System.out.println("Cerrando sesion del area enfermeria...");
                 return false;
             }
             default: {
-                System.out.println("Opción inválida. Por favor elija una opción del 1 al 2.");
+                System.out.println(INVALID_OPTION_MESSAGE);
                 return true;
             }
             }
@@ -62,18 +73,39 @@ public class NurseClient {
     }
 
     private VitalSignsRecord readVitalSignsData() throws Exception {
-        System.out.println("Ingrese el documento de la enfermera:");
-        String nurseDocument = reader.nextLine();
-        System.out.println("Ingrese el documento del paciente:");
-        String patientDocument = reader.nextLine();
-        System.out.println("Ingrese la presión arterial (formato systolic/diastolic, por ejemplo 120/80):");
-        String bloodPressure = reader.nextLine();
-        System.out.println("Ingrese la temperatura (en grados Celsius):");
-        String temperature = reader.nextLine();
-        System.out.println("Ingrese el pulso (latidos por minuto):");
-        String pulse = reader.nextLine();
-        System.out.println("Ingrese el nivel de oxígeno (porcentaje):");
-        String oxygenLevel = reader.nextLine();
+        String nurseDocument = askUntilValid("Ingrese el documento de la enfermera:", value -> {
+            employeeValidator.documentValidator(value);
+            return value;
+        });
+        String patientDocument = askUntilValid("Ingrese el documento del paciente:", value -> {
+            patientValidator.documentValidator(value);
+            return value;
+        });
+        String bloodPressure = askUntilValid(
+            "Ingrese la presion arterial (formato systolic/diastolic, por ejemplo 120/80):",
+            vitalSignsValidator::bloodPressureValidator
+        );
+        String temperature = askUntilValid(
+            "Ingrese la temperatura (en grados Celsius):",
+            value -> {
+                vitalSignsValidator.temperatureValidator(value);
+                return value;
+            }
+        );
+        String pulse = askUntilValid(
+            "Ingrese el pulso (latidos por minuto):",
+            value -> {
+                vitalSignsValidator.pulseValidator(value);
+                return value;
+            }
+        );
+        String oxygenLevel = askUntilValid(
+            "Ingrese el nivel de oxigeno (porcentaje):",
+            value -> {
+                vitalSignsValidator.oxygenLevelValidator(value);
+                return value;
+            }
+        );
         return vitalSignsBuilder.build(
             nurseDocument,
             patientDocument,
@@ -82,5 +114,38 @@ public class NurseClient {
             pulse,
             oxygenLevel
         );
+    }
+
+    private String askMenuOption() {
+        String[] validOptions = {"1", "2"};
+        while (true) {
+            System.out.println(MENU);
+            String input = reader.nextLine();
+            String value = input == null ? "" : input.trim();
+            for (String option : validOptions) {
+                if (option.equals(value)) {
+                    return option;
+                }
+            }
+            System.out.println(INVALID_OPTION_MESSAGE);
+        }
+    }
+
+    private <T> T askUntilValid(String prompt, CheckedFunction<String, T> mapper) {
+        while (true) {
+            System.out.println(prompt);
+            String input = reader.nextLine();
+            String value = input == null ? "" : input.trim();
+            try {
+                return mapper.apply(value);
+            } catch (Exception ex) {
+                System.out.println("Dato invalido: " + ex.getMessage());
+            }
+        }
+    }
+
+    @FunctionalInterface
+    private interface CheckedFunction<I, O> {
+        O apply(I value) throws Exception;
     }
 }

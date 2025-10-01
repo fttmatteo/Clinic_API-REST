@@ -6,21 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 /**
- * Cliente principal de consola para la clínica. Permite seleccionar el rol
- * con el que se desea operar y delega la sesión al cliente específico de
- * cada área (recursos humanos, administrativo, médico o enfermería).
+ * Cliente principal de consola para la clinica. Permite seleccionar el rol
+ * con el que se desea operar y delega la sesion al cliente especifico de
+ * cada area (recursos humanos, administrativo, medico o enfermeria).
  */
 @Controller
 public class ClinicClient {
 
     private static final String MENU =
         "---------- CLINICA ----------\n" +
-        "Seleccione el área con la que desea operar:\n" +
+        "Seleccione el area con la que desea operar:\n" +
         "1. Recursos Humanos\n" +
         "2. Administrativo\n" +
-        "3. Médico\n" +
-        "4. Enfermería\n" +
+        "3. Medico\n" +
+        "4. Enfermeria\n" +
         "5. SALIR\n";
+
+    private static final String INVALID_OPTION_MESSAGE =
+        "Opcion invalida. Por favor elija una opcion del 1 al 5.";
 
     private static final Scanner reader = new Scanner(System.in);
 
@@ -42,8 +45,7 @@ public class ClinicClient {
 
     private boolean menu() {
         try {
-            System.out.println(MENU);
-            String option = reader.nextLine();
+            String option = askMenuOption();
             switch (option) {
             case "1": {
                 humanResourcesClient.session();
@@ -62,17 +64,33 @@ public class ClinicClient {
                 return true;
             }
             case "5": {
-                System.out.println("Cerrando sesión principal...");
+                System.out.println("Cerrando sesion principal...");
                 return false;
             }
             default: {
-                System.out.println("Opción inválida. Por favor elija una opción del 1 al 5.");
+                // Nunca deberiamos llegar aqui porque askMenuOption garantiza un valor valido.
+                System.out.println(INVALID_OPTION_MESSAGE);
                 return true;
             }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return true;
+        }
+    }
+
+    private String askMenuOption() {
+        String[] validOptions = {"1", "2", "3", "4", "5"};
+        while (true) {
+            System.out.println(MENU);
+            String input = reader.nextLine();
+            String value = input == null ? "" : input.trim();
+            for (String option : validOptions) {
+                if (option.equals(value)) {
+                    return option;
+                }
+            }
+            System.out.println(INVALID_OPTION_MESSAGE);
         }
     }
 }

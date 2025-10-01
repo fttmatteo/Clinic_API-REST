@@ -10,28 +10,40 @@ import org.springframework.stereotype.Controller;
 import app.adapter.in.builder.MedicalOrderBuilder;
 import app.adapter.in.builder.MedicalRecordBuilder;
 import app.adapter.in.builder.OrderItemBuilder;
+import app.adapter.in.validators.EmployeeValidator;
+import app.adapter.in.validators.MedicalOrderValidator;
+import app.adapter.in.validators.MedicalRecordValidator;
+import app.adapter.in.validators.OrderItemValidator;
 import app.adapter.in.validators.PatientValidator;
+import app.application.exceptions.InputsException;
+import app.application.usecase.DoctorUseCase;
 import app.domain.model.MedicalOrder;
 import app.domain.model.MedicalRecord;
 import app.domain.model.OrderItem;
 import app.domain.model.Patient;
-import app.application.usecase.DoctorUseCase;
+import app.domain.model.enums.OrderItemType;
+import app.domain.services.InventoryService;
 
 /**
- * Cliente de consola para médicos.
- * Permite crear órdenes médicas e historias clínicas y consultar las
- * órdenes asociadas a un paciente.
+ * Cliente de consola para medicos.
+ * Permite crear ordenes medicas e historias clinicas y consultar las
+ * ordenes asociadas a un paciente.
  */
 @Controller
 public class DoctorClient {
 
     private static final String MENU =
-        "---------- ÁREA MÉDICA ----------\n" +
-        "Ingrese una opción:\n" +
-        "1. Crear orden médica\n" +
-        "2. Registrar historia clínica\n" +
-        "3. Consultar órdenes de un paciente\n" +
+        "---------- AREA MEDICA ----------\n" +
+        "Ingrese una opcion:\n" +
+        "1. Crear orden medica\n" +
+        "2. Registrar historia clinica\n" +
+        "3. Consultar ordenes de un paciente\n" +
         "4. SALIR\n";
+
+    private static final String INVALID_OPTION_MESSAGE =
+        "Opcion invalida. Por favor elija una opcion del 1 al 4.\n";
+
+    private static final String YES_NO_ERROR = "Debe responder si o no.\n";
 
     private static final Scanner reader = new Scanner(System.in);
 
@@ -46,7 +58,15 @@ public class DoctorClient {
     @Autowired
     private PatientValidator patientValidator;
     @Autowired
-    private app.domain.services.InventoryService inventoryService;
+    private EmployeeValidator employeeValidator;
+    @Autowired
+    private OrderItemValidator orderItemValidator;
+    @Autowired
+    private MedicalRecordValidator medicalRecordValidator;
+    @Autowired
+    private MedicalOrderValidator medicalOrderValidator;
+    @Autowired
+    private InventoryService inventoryService;
 
     public void session() {
         boolean running = true;
@@ -57,8 +77,7 @@ public class DoctorClient {
 
     private boolean menu() {
         try {
-            System.out.println(MENU);
-            String option = reader.nextLine();
+            String option = menuOption();
             switch (option) {
             case "1": {
                 MedicalOrder order = readOrderData();
@@ -75,11 +94,11 @@ public class DoctorClient {
                 return true;
             }
             case "4": {
-                System.out.println("Cerrando sesión del área medica...");
+                System.out.println("Cerrando sesion del area medica...\n");
                 return false;
             }
             default: {
-                System.out.println("Opción inválida. Por favor elija una opción del 1 al 4.");
+                System.out.println(INVALID_OPTION_MESSAGE);
                 return true;
             }
             }
@@ -90,31 +109,34 @@ public class DoctorClient {
     }
 
     private MedicalOrder readOrderData() throws Exception {
-        System.out.println("Ingrese el documento del médico que genera la orden:");
-        String doctorDocument = reader.nextLine();
-        System.out.println("Ingrese el documento del paciente:");
-        String patientDocument = reader.nextLine();
+        String doctorDocument = promptValidator("Ingrese el documento del medico que genera la orden:", value -> {
+            employeeValidator.documentValidator(value);
+            return value;
+        });
+        String patientDocument = promptValidator("Ingrese el documento del paciente:", value -> {
+            patientValidator.documentValidator(value);
+            return value;
+        });
 
-        System.out.println("¿Desea usar la lista de ítems predeterminada? (si/no):");
-        String useDefault = reader.nextLine();
+        boolean useDefault = askYesNo("Desea usar la lista de items predeterminada? (si/no):");
         List<OrderItem> items;
-        if (useDefault.equalsIgnoreCase("si") || useDefault.equalsIgnoreCase("s") || useDefault.equalsIgnoreCase("true")) {
+        if (useDefault) {
             items = createDefaultOrderItems();
         } else {
-            System.out.println("Ingrese la cantidad de ítems que tendrá la orden:");
-            String countStr = reader.nextLine();
-            int count;
-            try {
-                count = Integer.parseInt(countStr);
-            } catch (NumberFormatException ex) {
-                throw new Exception("La cantidad de ítems debe ser un número entero");
-            }
-            if (count < 1) {
-                throw new Exception("La orden debe contener al menos un ítem");
-            }
+            int count = promptValidator("Ingrese la cantidad de items que tendra la orden:", value -> {
+                try {
+                    int parsed = Integer.parseInt(value);
+                    if (parsed < 1) {
+                        throw new InputsException("la orden debe contener al menos un item");
+                    }
+                    return parsed;
+                } catch (NumberFormatException ex) {
+                    throw new InputsException("la cantidad de items debe ser un numero entero");
+                }
+            });
             items = new ArrayList<>();
             for (int i = 1; i <= count; i++) {
-                System.out.println("Ingrese los datos para el ítem #" + i);
+                System.out.println("Ingrese los datos para el item #" + i);
                 OrderItem item = readOrderItemData(i);
                 items.add(item);
             }
@@ -123,103 +145,60 @@ public class DoctorClient {
     }
 
     private OrderItem readOrderItemData(int index) throws Exception {
-        System.out.println("Número de ítem:");
-        String itemNumber = reader.nextLine();
-        System.out.println("Tipo de ítem (MEDICINE, PROCEDURE, DIAGNOSTIC_AID):");
-        String type = reader.nextLine();
-        String typeUpper = type.trim().toUpperCase();
-        String name;
-        if (typeUpper.equals("MEDICINE")) {
-            System.out.println("Seleccione un medicamento de la lista o ingrese un nombre manualmente:");
-            var meds = inventoryService.getMedicines();
-            for (int i = 0; i < meds.size(); i++) {
-                System.out.println((i + 1) + ". " + meds.get(i).getId() + " - " + meds.get(i).getName());
-            }
-            String inputName = reader.nextLine();
-            try {
-                int idx = Integer.parseInt(inputName);
-                if (idx >= 1 && idx <= meds.size()) {
-                    name = meds.get(idx - 1).getName();
-                } else {
-                    name = inputName;
-                }
-            } catch (NumberFormatException nfe) {
-                var medicine = inventoryService.findMedicineById(inputName);
-                name = (medicine != null) ? medicine.getName() : inputName;
-            }
-        } else if (typeUpper.equals("PROCEDURE")) {
-            System.out.println("Seleccione un procedimiento de la lista o ingrese un nombre manualmente:");
-            var procs = inventoryService.getProcedures();
-            for (int i = 0; i < procs.size(); i++) {
-                System.out.println((i + 1) + ". " + procs.get(i).getId() + " - " + procs.get(i).getName());
-            }
-            String inputName = reader.nextLine();
-            try {
-                int idx = Integer.parseInt(inputName);
-                if (idx >= 1 && idx <= procs.size()) {
-                    name = procs.get(idx - 1).getName();
-                } else {
-                    name = inputName;
-                }
-            } catch (NumberFormatException nfe) {
-                var procedure = inventoryService.findProcedureById(inputName);
-                name = (procedure != null) ? procedure.getName() : inputName;
-            }
-        } else if (typeUpper.equals("DIAGNOSTIC_AID")) {
-            System.out.println("Seleccione una ayuda diagnóstica de la lista o ingrese un nombre manualmente:");
-            var diags = inventoryService.getDiagnosticAids();
-            for (int i = 0; i < diags.size(); i++) {
-                System.out.println((i + 1) + ". " + diags.get(i).getId() + " - " + diags.get(i).getName());
-            }
-            String inputName = reader.nextLine();
-            try {
-                int idx = Integer.parseInt(inputName);
-                if (idx >= 1 && idx <= diags.size()) {
-                    name = diags.get(idx - 1).getName();
-                } else {
-                    name = inputName;
-                }
-            } catch (NumberFormatException nfe) {
-                var diag = inventoryService.findDiagnosticAidById(inputName);
-                name = (diag != null) ? diag.getName() : inputName;
-            }
-        } else {
-            System.out.println("Nombre del ítem:");
-            name = reader.nextLine();
-        }
+        int itemNumber = promptValidator("Numero de item para el registro #" + index + ":", orderItemValidator::itemNumberValidator);
+        OrderItemType type = promptValidator(
+            "Tipo de item para el registro #" + index + " (MEDICINE, PROCEDURE, DIAGNOSTIC_AID):",
+            orderItemValidator::typeValidator
+        );
+        String name = promptValidator("Nombre del item para el registro #" + index + ":", orderItemValidator::nameValidator);
+
         String dose = null;
         String treatmentDuration = null;
-        String quantity = null;
-        String frequency = null;
-        String requiresSpecialist = null;
-        String specialistTypeId = null;
-        if (typeUpper.equals("MEDICINE")) {
-            System.out.println("Dosis del medicamento:");
-            dose = reader.nextLine();
-            System.out.println("Duración del tratamiento:");
-            treatmentDuration = reader.nextLine();
-        } else if (typeUpper.equals("PROCEDURE")) {
-            System.out.println("Cantidad del procedimiento:");
-            quantity = reader.nextLine();
-            System.out.println("Frecuencia del procedimiento:");
-            frequency = reader.nextLine();
-        } else if (typeUpper.equals("DIAGNOSTIC_AID")) {
-            System.out.println("Cantidad de ayudas diagnósticas:");
-            quantity = reader.nextLine();
+        if (type == OrderItemType.MEDICINE) {
+            dose = promptValidator("Dosis del medicamento:", value -> orderItemValidator.doseValidator(value, type));
+            treatmentDuration = promptValidator(
+                "Duracion del tratamiento:",
+                value -> orderItemValidator.treatmentDurationValidator(value, type)
+            );
         }
-        System.out.println("Costo:");
-        String cost = reader.nextLine();
-        if (typeUpper.equals("PROCEDURE") || typeUpper.equals("DIAGNOSTIC_AID")) {
-            System.out.println("¿Requiere especialista? (si/no):");
-            requiresSpecialist = reader.nextLine();
-            if (requiresSpecialist.equalsIgnoreCase("si") || requiresSpecialist.equalsIgnoreCase("true")) {
-                System.out.println("Ingrese el identificador del tipo de especialidad:");
-                specialistTypeId = reader.nextLine();
+
+        Integer quantityValue = null;
+        if (type == OrderItemType.PROCEDURE || type == OrderItemType.DIAGNOSTIC_AID) {
+            quantityValue = promptValidator("Cantidad:", value -> orderItemValidator.quantityValidator(value, type));
+        }
+        String quantity = quantityValue == null ? null : Integer.toString(quantityValue);
+
+        String frequency = null;
+        if (type == OrderItemType.PROCEDURE) {
+            frequency = promptValidator("Frecuencia del procedimiento:", value -> orderItemValidator.frequencyValidator(value, type));
+        }
+
+        Double costValue = promptValidator("Ingrese el costo:", orderItemValidator::costValidator);
+        String cost = costValue == null ? null : Double.toString(costValue);
+
+        Boolean requiresSpecialistValue = null;
+        String requiresSpecialist = null;
+        if (type == OrderItemType.PROCEDURE || type == OrderItemType.DIAGNOSTIC_AID) {
+            requiresSpecialistValue = promptValidator(
+                "Requiere especialista? (si/no):",
+                value -> orderItemValidator.requiresSpecialistValidator(value, type)
+            );
+            if (requiresSpecialistValue != null) {
+                requiresSpecialist = requiresSpecialistValue ? "si" : "no";
             }
         }
+
+        String specialistTypeId = null;
+        if (Boolean.TRUE.equals(requiresSpecialistValue)) {
+            specialistTypeId = promptValidator(
+                "Ingrese el id del tipo de especialidad:",
+                value -> orderItemValidator.specialistTypeIdValidator(value, type, true)
+            );
+        }
+
         return orderItemBuilder.build(
-            itemNumber,
-            type,
+            Integer.toString(itemNumber),
+            type.name(),
             name,
             dose,
             treatmentDuration,
@@ -232,18 +211,21 @@ public class DoctorClient {
     }
 
     private MedicalRecord readRecordData() throws Exception {
-        System.out.println("Ingrese el documento del médico que registra la historia:");
-        String doctorDocument = reader.nextLine();
-        System.out.println("Ingrese el documento del paciente:");
-        String patientDocument = reader.nextLine();
-        System.out.println("Ingrese el identificador de la orden asociada (dejar en blanco si no aplica):");
-        String orderId = reader.nextLine();
-        System.out.println("Ingrese el motivo de la consulta:");
-        String motive = reader.nextLine();
-        System.out.println("Ingrese los síntomas reportados:");
-        String symptoms = reader.nextLine();
-        System.out.println("Ingrese el diagnóstico:");
-        String diagnosis = reader.nextLine();
+        String doctorDocument = promptValidator("Ingrese el documento del medico que registra la historia:", value -> {
+            employeeValidator.documentValidator(value);
+            return value;
+        });
+        String patientDocument = promptValidator("Ingrese el documento del paciente:", value -> {
+            patientValidator.documentValidator(value);
+            return value;
+        });
+        String orderId = askOptional(
+            "Ingrese el identificador de la orden asociada (dejar en blanco si no aplica):",
+            value -> medicalOrderValidator.idValidator(value)
+        );
+        String motive = promptValidator("Ingrese el motivo de la consulta:", value -> medicalRecordValidator.motiveValidator(value));
+        String symptoms = promptValidator("Ingrese los sintomas reportados:", value -> medicalRecordValidator.symptomsValidator(value));
+        String diagnosis = promptValidator("Ingrese el diagnostico:", value -> medicalRecordValidator.diagnosisValidator(value));
         return recordBuilder.build(
             doctorDocument,
             patientDocument,
@@ -255,14 +237,15 @@ public class DoctorClient {
     }
 
     private void readAndPrintOrders() throws Exception {
-        System.out.println("Ingrese el documento del paciente para consultar sus órdenes:");
-        String document = reader.nextLine();
-        long doc = patientValidator.documentValidator(document);
+        long document = promptValidator(
+            "Ingrese el documento del paciente para consultar sus ordenes:",
+            patientValidator::documentValidator
+        );
         Patient patient = new Patient();
-        patient.setDocument(doc);
+        patient.setDocument(document);
         List<MedicalOrder> orders = doctorUseCase.searchMedicalOrders(patient);
         if (orders == null || orders.isEmpty()) {
-            System.out.println("No se encontraron órdenes para el paciente especificado.");
+            System.out.println("No se encontraron ordenes para el paciente especificado.");
             return;
         }
         printOrders(orders);
@@ -275,15 +258,15 @@ public class DoctorClient {
                 System.out.println("Fecha: " + order.getCreationDate());
             }
             if (order.getDoctor() != null) {
-                System.out.println("Médico: " + order.getDoctor().getDocument());
+                System.out.println("Medico: " + order.getDoctor().getDocument());
             }
             if (order.getPatient() != null) {
                 System.out.println("Paciente: " + order.getPatient().getDocument());
             }
             if (order.getItems() != null && !order.getItems().isEmpty()) {
-                System.out.println("Ítems:");
+                System.out.println("Items:");
                 order.getItems().forEach(item -> {
-                    System.out.println("  Ítem #" + item.getItemNumber() +
+                    System.out.println("  Item #" + item.getItemNumber() +
                                        " | Tipo: " + item.getType() +
                                        " | Nombre: " + item.getName() +
                                        " | Costo: " + item.getCost());
@@ -302,7 +285,7 @@ public class DoctorClient {
                 "MEDICINE",
                 med.getName(),
                 "500 mg",
-                "5 días",
+                "5 dias",
                 null,
                 null,
                 String.valueOf(med.getCost()),
@@ -319,7 +302,7 @@ public class DoctorClient {
                 null,
                 null,
                 "1",
-                "único",
+                "unico",
                 String.valueOf(proc.getCost()),
                 "si",
                 "101"
@@ -341,5 +324,68 @@ public class DoctorClient {
             ));
         }
         return defaultItems;
+    }
+
+    private String menuOption() {
+        String[] validOptions = {"1", "2", "3", "4"};
+        while (true) {
+            System.out.println(MENU);
+            String input = reader.nextLine();
+            String value = input == null ? "" : input.trim();
+            for (String option : validOptions) {
+                if (option.equals(value)) {
+                    return option;
+                }
+            }
+            System.out.println(INVALID_OPTION_MESSAGE);
+        }
+    }
+
+    private boolean askYesNo(String prompt) {
+        return promptValidator(prompt, value -> {
+            String lower = value.toLowerCase();
+            if (lower.equals("si") || lower.equals("s") || lower.equals("true")) {
+                return true;
+            }
+            if (lower.equals("no") || lower.equals("n") || lower.equals("false")) {
+                return false;
+            }
+            throw new InputsException(YES_NO_ERROR);
+        });
+    }
+
+    private String askOptional(String prompt, CheckedFunction<String, ?> validator) {
+        while (true) {
+            System.out.println(prompt);
+            String input = reader.nextLine();
+            String value = input == null ? "" : input.trim();
+            if (value.isEmpty()) {
+                return "";
+            }
+            try {
+                validator.apply(value);
+                return value;
+            } catch (Exception ex) {
+                System.out.println("Dato invalido: " + ex.getMessage());
+            }
+        }
+    }
+
+    private <T> T promptValidator(String prompt, CheckedFunction<String, T> mapper) {
+        while (true) {
+            System.out.println(prompt);
+            String input = reader.nextLine();
+            String value = input == null ? "" : input.trim();
+            try {
+                return mapper.apply(value);
+            } catch (Exception ex) {
+                System.out.println("Dato invalido: " + ex.getMessage());
+            }
+        }
+    }
+
+    @FunctionalInterface
+    private interface CheckedFunction<I, O> {
+        O apply(I value) throws Exception;
     }
 }

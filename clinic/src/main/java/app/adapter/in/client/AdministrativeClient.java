@@ -8,7 +8,11 @@ import org.springframework.stereotype.Controller;
 
 import app.adapter.in.builder.InvoiceBuilder;
 import app.adapter.in.builder.PatientBuilder;
+import app.adapter.in.validators.EmergencyContactValidator;
+import app.adapter.in.validators.InsurancePolicyValidator;
+import app.adapter.in.validators.InvoiceValidator;
 import app.adapter.in.validators.PatientValidator;
+import app.application.exceptions.InputsException;
 import app.application.usecase.AdministrativeUseCase;
 import app.domain.model.Invoice;
 import app.domain.model.MedicalOrder;
@@ -16,18 +20,18 @@ import app.domain.model.Patient;
 
 /**
  * Cliente de consola para el personal administrativo.
- * Permite registrar pacientes, emitir facturas y consultar las órdenes
- * médicas asociadas a un paciente.
+ * Permite registrar pacientes, emitir facturas y consultar las ordenes
+ * medicas asociadas a un paciente.
  */
 @Controller
 public class AdministrativeClient {
 
     private static final String MENU =
-        "---------- AREÁ ADMINISTRATIVA ----------\n" +
-        "Ingrese una opción:\n" +
+        "---------- AREA ADMINISTRATIVA ----------\n" +
+        "Ingrese una opcion:\n" +
         "1. Registrar paciente\n" +
         "2. Crear factura\n" +
-        "3. Consultar órdenes de un paciente\n" +
+        "3. Consultar ordenes de un paciente\n" +
         "4. SALIR\n";
 
     private static final Scanner reader = new Scanner(System.in);
@@ -40,6 +44,12 @@ public class AdministrativeClient {
     private InvoiceBuilder invoiceBuilder;
     @Autowired
     private PatientValidator patientValidator;
+    @Autowired
+    private EmergencyContactValidator emergencyContactValidator;
+    @Autowired
+    private InsurancePolicyValidator insurancePolicyValidator;
+    @Autowired
+    private InvoiceValidator invoiceValidator;
 
     public void session() {
         boolean running = true;
@@ -68,11 +78,11 @@ public class AdministrativeClient {
                 return true;
             }
             case "4": {
-                System.out.println("Cerrando sesión del área administrativa...");
+                System.out.println("Cerrando sesion del area administrativa...\n");
                 return false;
             }
             default: {
-                System.out.println("Opción inválida. Por favor elija una opción del 1 al 4.");
+                System.out.println("Opcion invalida. Por favor elija una opcion del 1 al 4.\n");
                 return true;
             }
             }
@@ -83,36 +93,63 @@ public class AdministrativeClient {
     }
 
     private Patient readPatientData() throws Exception {
-        System.out.println("Ingrese el nombre completo del paciente:");
-        String fullName = reader.nextLine();
-        System.out.println("Ingrese el número de documento:");
-        String document = reader.nextLine();
-        System.out.println("Ingrese la fecha de nacimiento (DD/MM/YYYY):");
-        String birthDate = reader.nextLine();
-        System.out.println("Ingrese el género (MASCULINO, FEMENINO, OTRO):");
-        String gender = reader.nextLine();
-        System.out.println("Ingrese la dirección:");
-        String address = reader.nextLine();
-        System.out.println("Ingrese el teléfono (10 dígitos):");
-        String phone = reader.nextLine();
-        System.out.println("Ingrese el correo electrónico:");
-        String email = reader.nextLine();
-        System.out.println("Ingrese el nombre del contacto de emergencia:");
-        String contactFirstName = reader.nextLine();
-        System.out.println("Ingrese el apellido del contacto de emergencia:");
-        String contactLastName = reader.nextLine();
-        System.out.println("Ingrese la relación del contacto con el paciente:");
-        String contactRelation = reader.nextLine();
-        System.out.println("Ingrese el teléfono del contacto de emergencia:");
-        String contactPhone = reader.nextLine();
-        System.out.println("Ingrese el nombre de la compañía de seguros:");
-        String companyName = reader.nextLine();
-        System.out.println("Ingrese el número de póliza:");
-        String policyNumber = reader.nextLine();
-        System.out.println("Ingrese el estado de la póliza (si/no o true/false):");
-        String policyStatus = reader.nextLine();
-        System.out.println("Ingrese la fecha de vencimiento de la póliza (DD/MM/YYYY):");
-        String policyExpiry = reader.nextLine();
+        String fullName = askUntilValid("Ingrese el nombre completo del paciente:", patientValidator::fullNameValidator);
+        String document = askUntilValid("Ingrese el numero de documento:", input -> {
+            patientValidator.documentValidator(input);
+            return input;
+        });
+        String birthDate = askUntilValid("Ingrese la fecha de nacimiento (DD/MM/YYYY):", input -> {
+            patientValidator.birthDateValidator(input);
+            return input;
+        });
+        String gender = askUntilValid("Ingrese el genero (MASCULINO, FEMENINO, OTRO):", input -> {
+            patientValidator.genderValidator(input);
+            return input;
+        });
+        String address = askUntilValid("Ingrese la direccion:", input -> {
+            patientValidator.addressValidator(input);
+            return input;
+        });
+        String phone = askUntilValid("Ingrese el telefono (10 digitos):", input -> {
+            patientValidator.phoneValidator(input);
+            return input;
+        });
+        String email = askUntilValid("Ingrese el correo electronico:", input -> {
+            patientValidator.emailValidator(input);
+            return input;
+        });
+        String contactFirstName = askUntilValid("Ingrese el nombre del contacto de emergencia:", input -> {
+            emergencyContactValidator.firstNameValidator(input);
+            return input;
+        });
+        String contactLastName = askUntilValid("Ingrese el apellido del contacto de emergencia:", input -> {
+            emergencyContactValidator.lastNameValidator(input);
+            return input;
+        });
+        String contactRelation = askUntilValid("Ingrese la relacion del contacto con el paciente:", input -> {
+            emergencyContactValidator.relationShipValidator(input);
+            return input;
+        });
+        String contactPhone = askUntilValid("Ingrese el telefono del contacto de emergencia:", input -> {
+            emergencyContactValidator.phoneValidator(input);
+            return input;
+        });
+        String companyName = askUntilValid("Ingrese el nombre de la compania de seguros:", input -> {
+            insurancePolicyValidator.companyNameValidator(input);
+            return input;
+        });
+        String policyNumber = askUntilValid("Ingrese el numero de poliza:", input -> {
+            insurancePolicyValidator.policyNumberValidator(input);
+            return input;
+        });
+        String policyStatus = askUntilValid("Ingrese el estado de la poliza (si/no o true/false):", input -> {
+            insurancePolicyValidator.activeValidator(input);
+            return input;
+        });
+        String policyExpiry = askUntilValid("Ingrese la fecha de vencimiento de la poliza (DD/MM/YYYY):", input -> {
+            insurancePolicyValidator.expiryDateValidator(input);
+            return input;
+        });
 
         return patientBuilder.build(
             fullName,
@@ -134,30 +171,34 @@ public class AdministrativeClient {
     }
 
     private Invoice readInvoiceData() throws Exception {
-        System.out.println("Ingrese el ID del paciente:");
-        String patientId = reader.nextLine();
-        System.out.println("Ingrese el documento del médico (deje en blanco si no aplica):");
-        String doctorDoc = reader.nextLine();
-        System.out.println("Ingrese el nombre del producto o servicio:");
-        String productName = reader.nextLine();
-        System.out.println("Ingrese el monto:");
-        String productAmount = reader.nextLine();
-        System.out.println("¿Es un medicamento? (si/no):");
-        String isMedicine = reader.nextLine();
-        System.out.println("Ingrese el identificador de la orden (dejar en blanco si no aplica):");
-        String orderId = reader.nextLine();
-        return invoiceBuilder.build(patientId, doctorDoc, productName, productAmount, isMedicine, orderId);
+        String patientId = askUntilValid("Ingrese el ID del paciente:", input -> {
+            invoiceValidator.patientIdValidator(input);
+            return input;
+        });
+        String doctorDoc = askOptional("Ingrese el documento del medico (deje en blanco si no aplica):", invoiceValidator::doctorDocumentValidator);
+        String productName = askUntilValid("Ingrese el nombre del producto o servicio:", invoiceValidator::productNameValidator);
+        String productAmount = askUntilValid("Ingrese el monto:", input -> {
+            invoiceValidator.amountValidator(input);
+            return input;
+        });
+        boolean isMedicine = askUntilValid("Es un medicamento? (si/no):", invoiceValidator::isMedicineValidator);
+        String orderId = "";
+        if (isMedicine) {
+            orderId = askUntilValid("Ingrese el identificador de la orden:", input -> {
+                invoiceValidator.orderIdValidator(input);
+                return input;
+            });
+        }
+        return invoiceBuilder.build(patientId, doctorDoc, productName, productAmount, Boolean.toString(isMedicine), orderId);
     }
 
     private void readAndPrintOrders() throws Exception {
-        System.out.println("Ingrese el documento del paciente para consultar sus órdenes:");
-        String document = reader.nextLine();
-        long doc = patientValidator.documentValidator(document);
+        long document = askUntilValid("Ingrese el documento del paciente para consultar sus ordenes:", patientValidator::documentValidator);
         Patient patient = new Patient();
-        patient.setDocument(doc);
+        patient.setDocument(document);
         List<MedicalOrder> orders = administrativeUseCase.searchMedicalOrders(patient);
         if (orders == null || orders.isEmpty()) {
-            System.out.println("No se encontraron órdenes para el paciente especificado.");
+            System.out.println("No se encontraron ordenes para el paciente especificado.");
             return;
         }
         printOrders(orders);
@@ -170,15 +211,15 @@ public class AdministrativeClient {
                 System.out.println("Fecha: " + order.getCreationDate());
             }
             if (order.getDoctor() != null) {
-                System.out.println("Médico: " + order.getDoctor().getDocument());
+                System.out.println("Medico: " + order.getDoctor().getDocument());
             }
             if (order.getPatient() != null) {
                 System.out.println("Paciente: " + order.getPatient().getDocument());
             }
             if (order.getItems() != null && !order.getItems().isEmpty()) {
-                System.out.println("Ítems:");
+                System.out.println("Items:");
                 order.getItems().forEach(item -> {
-                    System.out.println("  Ítem #" + item.getItemNumber() +
+                    System.out.println("  Item #" + item.getItemNumber() +
                                        " | Tipo: " + item.getType() +
                                        " | Nombre: " + item.getName() +
                                        " | Costo: " + item.getCost());
@@ -186,5 +227,40 @@ public class AdministrativeClient {
             }
             System.out.println("-----------------------------------");
         }
+    }
+
+    private <T> T askUntilValid(String prompt, CheckedFunction<String, T> mapper) {
+        while (true) {
+            System.out.println(prompt);
+            String input = reader.nextLine();
+            String value = input == null ? "" : input.trim();
+            try {
+                return mapper.apply(value);
+            } catch (InputsException ex) {
+                System.out.println("Dato invalido: " + ex.getMessage());
+            }
+        }
+    }
+
+    private String askOptional(String prompt, CheckedFunction<String, ?> validator) {
+        while (true) {
+            System.out.println(prompt);
+            String input = reader.nextLine();
+            String value = input == null ? "" : input.trim();
+            if (value.isEmpty()) {
+                return "";
+            }
+            try {
+                validator.apply(value);
+                return value;
+            } catch (InputsException ex) {
+                System.out.println("Dato invalido: " + ex.getMessage());
+            }
+        }
+    }
+
+    @FunctionalInterface
+    private interface CheckedFunction<I, O> {
+        O apply(I value) throws InputsException;
     }
 }
