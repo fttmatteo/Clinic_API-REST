@@ -8,9 +8,7 @@ import app.infrastructure.persistence.entities.PatientEntity;
 
 /**
  * Mapper para convertir entre {@link Patient} del dominio y
- * {@link PatientEntity} de la capa de persistencia. Maneja la
- * conversión de los componentes embebidos de contacto de emergencia
- * y póliza de seguro.
+ * {@link PatientEntity} de la capa de persistencia.
  */
 public class PatientMapper {
     public static PatientEntity toEntity(Patient patient) {

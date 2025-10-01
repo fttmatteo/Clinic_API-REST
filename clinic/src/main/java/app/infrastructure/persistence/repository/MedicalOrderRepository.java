@@ -10,8 +10,7 @@ import app.infrastructure.persistence.entities.PatientEntity;
 
 /**
  * Repositorio JPA para la entidad {@link MedicalOrderEntity}. Permite
- * consultar órdenes por paciente, además de las operaciones básicas
- * proporcionadas por JpaRepository.
+ * consultar órdenes por paciente.
  */
 @Repository
 public interface MedicalOrderRepository extends JpaRepository<MedicalOrderEntity, Long> {

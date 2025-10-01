@@ -7,8 +7,7 @@ import app.infrastructure.persistence.entities.EmployeeEntity;
 
 /**
  * Repositorio JPA para la entidad {@link EmployeeEntity}. Permite
- * consultar empleados por documento y nombre de usuario, además de las
- * operaciones CRUD provistas por JpaRepository.
+ * consultar empleados por documento y nombre de usuario.
  */
 @Repository
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
