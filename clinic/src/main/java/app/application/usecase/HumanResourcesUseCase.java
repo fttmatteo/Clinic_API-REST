@@ -38,11 +38,11 @@ public class HumanResourcesUseCase {
         createEmployee.create(employee);
     }
 
-    public void ensureDocumentIsUnique(long document) throws Exception {
+    public void documentIsUnique(long document) throws Exception {
         createEmployee.ensureDocumentIsUnique(document);
     }
 
-    public void ensureUserNameIsUnique(String userName) throws Exception {
+    public void userNameIsUnique(String userName) throws Exception {
         createEmployee.ensureUserNameIsUnique(userName);
     }
 }
