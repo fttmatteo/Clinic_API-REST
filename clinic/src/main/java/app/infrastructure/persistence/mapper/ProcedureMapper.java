@@ -1,6 +1,6 @@
 package app.infrastructure.persistence.mapper;
 
-import app.domain.model.inventory.Procedure;
+import app.domain.model.Procedure;
 import app.infrastructure.persistence.entities.ProcedureEntity;
 
 /**

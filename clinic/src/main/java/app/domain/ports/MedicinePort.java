@@ -2,7 +2,7 @@ package app.domain.ports;
 
 import java.util.List;
 
-import app.domain.model.inventory.Medicine;
+import app.domain.model.Medicine;
 
 /**
  * Puerto de persistencia para operaciones relacionadas con los

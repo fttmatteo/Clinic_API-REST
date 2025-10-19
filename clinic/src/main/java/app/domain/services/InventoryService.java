@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.domain.model.inventory.Medicine;
-import app.domain.model.inventory.Procedure;
-import app.domain.model.inventory.DiagnosticAid;
+import app.domain.model.DiagnosticAid;
+import app.domain.model.Medicine;
+import app.domain.model.Procedure;
 
 /**
  * Servicio de dominio encargado de exponer el catálogo de medicamentos,

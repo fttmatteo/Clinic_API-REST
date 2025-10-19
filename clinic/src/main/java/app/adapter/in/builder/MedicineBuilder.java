@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.adapter.in.validators.MedicineValidator;
-import app.domain.model.inventory.Medicine;
+import app.domain.model.Medicine;
 
 /**
  * Builder para construir instancias de {@link Medicine} a partir de

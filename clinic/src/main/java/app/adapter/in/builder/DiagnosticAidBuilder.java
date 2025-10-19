@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.adapter.in.validators.DiagnosticAidValidator;
-import app.domain.model.inventory.DiagnosticAid;
+import app.domain.model.DiagnosticAid;
 
 /**
  * Builder para crear instancias de {@link DiagnosticAid} a partir de

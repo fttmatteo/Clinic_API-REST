@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 /**
  * Entidad JPA para las ayudas diagnósticas. Se utiliza para mapear
- * objetos {@link app.domain.model.inventory.DiagnosticAid} a registros
+ * objetos {@link app.domain.model.DiagnosticAid} a registros
  * en la base de datos.
  */
 @Entity
@@ -15,13 +15,13 @@ import jakarta.persistence.Table;
 public class DiagnosticAidEntity {
 
     @Id
-    @Column(name = "id", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String id;
 
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(nullable = false, length = 255)
     private String name;
 
-    @Column(name = "cost", nullable = false)
+    @Column(nullable = false)
     private Double cost;
 
     public String getId() {

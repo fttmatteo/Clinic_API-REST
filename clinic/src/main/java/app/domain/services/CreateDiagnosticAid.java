@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.application.exceptions.BusinessException;
-import app.domain.model.inventory.DiagnosticAid;
+import app.domain.model.DiagnosticAid;
 import app.domain.ports.DiagnosticAidPort;
 
 /**

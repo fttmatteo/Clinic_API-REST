@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.adapter.in.validators.ProcedureValidator;
-import app.domain.model.inventory.Procedure;
+import app.domain.model.Procedure;
 
 /**
  * Builder para construir objetos {@link Procedure} a partir de datos

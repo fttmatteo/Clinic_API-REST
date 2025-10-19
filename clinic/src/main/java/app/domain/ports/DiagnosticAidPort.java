@@ -2,7 +2,7 @@ package app.domain.ports;
 
 import java.util.List;
 
-import app.domain.model.inventory.DiagnosticAid;
+import app.domain.model.DiagnosticAid;
 
 /**
  * Puerto de persistencia para operaciones relacionadas con las ayudas

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import app.adapter.in.validators.EmergencyContactValidator;
 import app.adapter.in.validators.InsurancePolicyValidator;
 import app.adapter.in.validators.PatientValidator;
-import app.domain.model.EmergencyContact;
 import app.domain.model.InsurancePolicy;
 import app.domain.model.Patient;
 
@@ -50,12 +49,10 @@ public class PatientBuilder {
         patient.setAddress(patientValidator.addressValidator(address));
         patient.setPhone(patientValidator.phoneValidator(phone));
         patient.setEmail(patientValidator.emailValidator(email));
-        EmergencyContact contact = new EmergencyContact();
-        contact.setFirstName(contactValidator.firstNameValidator(contactFirstName));
-        contact.setLastName(contactValidator.lastNameValidator(contactLastName));
-        contact.setRelationship(contactValidator.relationshipValidator(contactRelation));
-        contact.setPhone(contactValidator.phoneValidator(contactPhone));
-        patient.setEmergencyContact(contact);
+        patient.setFirstNameEmergencyContact(contactValidator.firstNameValidator(contactFirstName));
+        patient.setLastNameEmergencyContact(contactValidator.lastNameValidator(contactLastName));
+        patient.setRelationShipEmergencyContact(contactValidator.relationShipValidator(contactRelation));
+        patient.setPhoneEmergencyContact(contactValidator.phoneValidator(contactPhone));
         InsurancePolicy policy = new InsurancePolicy();
         policy.setCompanyName(insuranceValidator.companyNameValidator(companyName));
         policy.setPolicyNumber(insuranceValidator.policyNumberValidator(policyNumber));

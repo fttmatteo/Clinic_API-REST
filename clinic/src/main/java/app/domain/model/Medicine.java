@@ -1,4 +1,4 @@
-package app.domain.model.inventory;
+package app.domain.model;
 
 /**
  * Representa un medicamento disponible en el inventario de la clínica.

@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 /**
  * Entidad JPA que representa un procedimiento médico.  Esta entidad
- * corresponde con el modelo de dominio {@link app.domain.model.inventory.Procedure}.
+ * corresponde con el modelo de dominio {@link app.domain.model.Procedure}.
  */
 @Entity
 @Table(name = "procedures")

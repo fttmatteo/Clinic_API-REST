@@ -1,4 +1,4 @@
-package app.domain.model.inventory;
+package app.domain.model;
 
 /**
  * Representa una ayuda diagnóstica (como análisis de laboratorio o

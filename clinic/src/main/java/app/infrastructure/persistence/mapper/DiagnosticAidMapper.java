@@ -1,6 +1,6 @@
 package app.infrastructure.persistence.mapper;
 
-import app.domain.model.inventory.DiagnosticAid;
+import app.domain.model.DiagnosticAid;
 import app.infrastructure.persistence.entities.DiagnosticAidEntity;
 
 /**

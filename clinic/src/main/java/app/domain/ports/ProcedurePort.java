@@ -2,7 +2,7 @@ package app.domain.ports;
 
 import java.util.List;
 
-import app.domain.model.inventory.Procedure;
+import app.domain.model.Procedure;
 
 /**
  * Puerto de persistencia para operaciones relacionadas con los

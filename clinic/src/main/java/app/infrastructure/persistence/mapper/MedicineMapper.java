@@ -1,6 +1,6 @@
 package app.infrastructure.persistence.mapper;
 
-import app.domain.model.inventory.Medicine;
+import app.domain.model.Medicine;
 import app.infrastructure.persistence.entities.MedicineEntity;
 
 /**

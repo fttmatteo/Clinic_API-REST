@@ -44,10 +44,26 @@ public class PatientValidator extends SimpleValidator {
 
     public Gender genderValidator(String value) throws InputsException {
         stringValidator("género", value);
-        try {
-            return Gender.valueOf(value.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new InputsException("el género debe ser masculino, femenino u otro");
+        String v = value.trim().toLowerCase();
+
+        for (Gender g : Gender.values()) {
+            if (g.name().equalsIgnoreCase(v)) {
+                return g;
+            }
+        }
+
+        switch (v) {
+            case "masculino":
+            case "m":
+                return Gender.MALE;
+            case "femenino":
+            case "f":
+                return Gender.FEMALE;
+            case "otro":
+            case "o":
+                return Gender.OTHER;
+            default:
+                throw new InputsException("el género debe ser masculino, femenino u otro");
         }
     }
 

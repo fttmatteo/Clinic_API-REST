@@ -20,9 +20,9 @@ import app.adapter.in.rest.request.DiagnosticAidRequest;
 import app.application.exceptions.BusinessException;
 import app.application.exceptions.InputsException;
 import app.application.usecase.InformationSupportUseCase;
-import app.domain.model.inventory.Medicine;
-import app.domain.model.inventory.Procedure;
-import app.domain.model.inventory.DiagnosticAid;
+import app.domain.model.DiagnosticAid;
+import app.domain.model.Medicine;
+import app.domain.model.Procedure;
 
 /**
  * Controlador REST para el personal de soporte de información.  Permite

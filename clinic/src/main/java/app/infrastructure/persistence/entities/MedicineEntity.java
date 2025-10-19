@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 /**
  * Entidad JPA que representa un medicamento en la base de datos.  Se
- * corresponde con la clase de dominio {@link app.domain.model.inventory.Medicine}.
+ * corresponde con la clase de dominio {@link app.domain.model.Medicine}.
  */
 @Entity
 @Table(name = "medicines")
