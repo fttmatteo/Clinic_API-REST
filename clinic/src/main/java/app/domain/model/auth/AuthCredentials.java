@@ -1,5 +1,10 @@
 package app.domain.model.auth;
 
+/**
+ * Representa las credenciales de autenticación proporcionadas por el
+ * usuario en el proceso de inicio de sesión. Contiene el nombre de
+ * usuario y la contraseña sin cifrar.
+ */
 public class AuthCredentials {
     private String username;
     private String password;
