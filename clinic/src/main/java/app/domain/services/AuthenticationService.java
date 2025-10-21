@@ -31,13 +31,13 @@ public class AuthenticationService {
     public TokenResponse authenticate(AuthCredentials credentials) throws Exception {
         Employee query = new Employee();
         query.setUserName(credentials.getUsername());
-        Employee user = employeePort.findByUserName(query);
-        if (user == null) {
+        Employee employee = employeePort.findByUserName(query);
+        if (employee == null) {
             throw new BusinessException("Usuario no encontrado");
         }
-        if (!passwordEncoder.matches(credentials.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(credentials.getPassword(), employee.getPassword())) {
             throw new BusinessException("Contraseña incorrecta");
         }
-        return authenticationPort.authenticate(credentials, String.valueOf(user.getRole()));
+        return authenticationPort.authenticate(credentials, String.valueOf(employee.getRole()));
     }
 }
