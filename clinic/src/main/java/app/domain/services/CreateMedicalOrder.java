@@ -17,6 +17,9 @@ import app.domain.model.enums.Role;
 import app.domain.ports.EmployeePort;
 import app.domain.ports.MedicalOrderPort;
 import app.domain.ports.PatientPort;
+import app.domain.model.Medicine;
+import app.domain.model.Procedure;
+import app.domain.model.DiagnosticAid;
 
 /**
  * Servicio de dominio para la creación de órdenes médicas. Aplica las reglas
@@ -35,6 +38,8 @@ public class CreateMedicalOrder {
     private PatientPort patientPort;
     @Autowired
     private MedicalOrderPort orderPort;
+    @Autowired
+    private InventoryService inventoryService;
 
     public void create(MedicalOrder order) throws Exception {
         Employee doctor = employeePort.findByDocument(order.getDoctor());
@@ -52,12 +57,61 @@ public class CreateMedicalOrder {
         }
         boolean hasDiagnosticAid = false;
         Set<Integer> usedItemNumbers = new HashSet<>();
+        Set<String> usedItemTypeAndId = new HashSet<>();
         for (OrderItem item : order.getItems()) {
             if (!usedItemNumbers.add(item.getItemNumber())) {
                 throw new BusinessException("No se puede repetir el número de ítem dentro de la misma orden");
             }
             if (item.getType() == OrderItemType.DIAGNOSTIC_AID) {
                 hasDiagnosticAid = true;
+            }
+            if (item.getType() == OrderItemType.MEDICINE) {
+                Medicine med = inventoryService.findMedicineById(item.getName());
+                if (med == null) {
+                    throw new BusinessException("No existe el medicamento con identificador " + item.getName());
+                }
+                String key = item.getType().name() + ":" + med.getId();
+                if (!usedItemTypeAndId.add(key)) {
+                    throw new BusinessException("No se puede recetar el mismo medicamento más de una vez en la misma orden");
+                }
+                item.setName(med.getName());
+                item.setCost(med.getCost());
+            } else if (item.getType() == OrderItemType.PROCEDURE) {
+                Procedure proc = inventoryService.findProcedureById(item.getName());
+                if (proc == null) {
+                    throw new BusinessException("No existe el procedimiento con identificador " + item.getName());
+                }
+                String key = item.getType().name() + ":" + proc.getId();
+                if (!usedItemTypeAndId.add(key)) {
+                    throw new BusinessException("No se puede recetar el mismo procedimiento más de una vez en la misma orden");
+                }
+                item.setName(proc.getName());
+                if (item.getQuantity() != null && item.getQuantity() > 0) {
+                    item.setCost(proc.getCost() * item.getQuantity());
+                } else {
+                    item.setCost(proc.getCost());
+                }
+            } else if (item.getType() == OrderItemType.DIAGNOSTIC_AID) {
+                DiagnosticAid aid = inventoryService.findDiagnosticAidById(item.getName());
+                if (aid == null) {
+                    throw new BusinessException("No existe la ayuda diagnóstica con identificador " + item.getName());
+                }
+                String key = item.getType().name() + ":" + aid.getId();
+                if (!usedItemTypeAndId.add(key)) {
+                    throw new BusinessException("No se puede recetar la misma ayuda diagnóstica más de una vez en la misma orden");
+                }
+                item.setName(aid.getName());
+                if (item.getQuantity() != null && item.getQuantity() > 0) {
+                    item.setCost(aid.getCost() * item.getQuantity());
+                } else {
+                    item.setCost(aid.getCost());
+                }
+            }
+        }
+        int expectedSize = order.getItems().size();
+        for (int i = 1; i <= expectedSize; i++) {
+            if (!usedItemNumbers.contains(i)) {
+                throw new BusinessException("Los números de ítem deben empezar en 1 y ser consecutivos");
             }
         }
         if (hasDiagnosticAid) {
