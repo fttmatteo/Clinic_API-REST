@@ -31,6 +31,16 @@ import app.domain.model.DiagnosticAid;
 @Service
 public class CreateMedicalOrder {
 
+    /**
+     * Registro de claves de idempotencia para la creación de órdenes. La clave se
+     * construye a partir del identificador del médico, del paciente y de la
+     * combinación de ítems (tipo y código de referencia) de la orden. Almacena
+     * la marca de tiempo del último procesamiento para evitar duplicar órdenes
+     * por múltiples envíos en un intervalo corto de tiempo. Este mapa se
+     * comparte por toda la aplicación mientras esté en memoria.
+     */
+    private static final java.util.concurrent.ConcurrentHashMap<String, Long> recentOrderKeys = new java.util.concurrent.ConcurrentHashMap<>();
+
     @Autowired
     private EmployeePort employeePort;
     @Autowired
@@ -41,6 +51,29 @@ public class CreateMedicalOrder {
     private InventoryService inventoryService;
 
     public void create(MedicalOrder order) throws Exception {
+        try {
+            Long doctorDocKey = order.getDoctor() != null ? order.getDoctor().getDocument() : null;
+            Long patientDocKey = order.getPatient() != null ? order.getPatient().getDocument() : null;
+            java.util.List<String> itemKeys = new java.util.ArrayList<>();
+            if (order.getItems() != null) {
+                for (OrderItem item : order.getItems()) {
+                    String typeKey = item.getType() != null ? item.getType().name() : "";
+                    String ref = item.getName() != null ? item.getName() : "";
+                    itemKeys.add(typeKey + ":" + ref);
+                }
+            }
+            java.util.Collections.sort(itemKeys);
+            String idempotencyKey = (doctorDocKey != null ? doctorDocKey : "") + "|" +
+                                    (patientDocKey != null ? patientDocKey : "") + "|" +
+                                    String.join(",", itemKeys);
+            long now = System.currentTimeMillis();
+            Long last = recentOrderKeys.get(idempotencyKey);
+            if (last != null && (now - last) < 5 * 60 * 1000) {
+                throw new BusinessException("Ya existe una orden con la misma información enviada recientemente");
+            }
+            recentOrderKeys.put(idempotencyKey, now);
+        } catch (Exception ex) {
+        }
         Employee doctor = employeePort.findByDocument(order.getDoctor());
         if (doctor == null || !Role.DOCTOR.equals(doctor.getRole())) {
             throw new BusinessException("Las órdenes solo las pueden crear médicos");
