@@ -9,7 +9,7 @@ package app.adapter.in.rest.request;
 public class OrderItemRequest {
     private String itemNumber;
     private String type;
-    private String name;
+    private String referenceId;
     private String dose;
     private String treatmentDuration;
     private String quantity;
@@ -30,11 +30,11 @@ public class OrderItemRequest {
     public void setType(String type) {
         this.type = type;
     }
-    public String getName() {
-        return name;
+    public String getReferenceId() {
+        return referenceId;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
     }
     public String getDose() {
         return dose;
