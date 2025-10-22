@@ -52,8 +52,8 @@ public class OrderItemValidator extends SimpleValidator {
         }
     }
 
-    public String nameValidator(String value) throws InputsException {
-        return stringValidator("nombre del ítem", value);
+    public String referenceIdValidator(String value) throws InputsException {
+        return stringValidator("identificador del ítem", value);
     }
 
     public String doseValidator(String value, OrderItemType type) throws InputsException {
