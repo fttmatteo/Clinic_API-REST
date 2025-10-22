@@ -3,17 +3,18 @@ package app.infrastructure.persistence.entities;
 import java.sql.Date;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 /**
  * Entidad JPA que representa a un paciente. Almacena información
- * personal y además incluye datos de contacto de emergencia y de la póliza
- * de seguro mediante componentes embebidos. 
+ * personal y además incluye datos de contacto de emergencia y la póliza de
+ * seguro asociada mediante una relación uno a uno. 
  */
 @Entity
 @Table(name = "patients")
@@ -55,8 +56,9 @@ public class PatientEntity {
     @Column(nullable = false, length = 10)
     private String phoneEmergencyContact;
 
-    @Embedded
-    private InsurancePolicyEmbeddable insurancePolicy;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "insurance_id", nullable = false)
+    private InsurancePolicyEntity insurancePolicy;
 
 
     public Long getId() {
@@ -131,10 +133,10 @@ public class PatientEntity {
     public void setPhoneEmergencyContact(String phoneEmergencyContact) {
         this.phoneEmergencyContact = phoneEmergencyContact;
     }
-    public InsurancePolicyEmbeddable getInsurancePolicy() {
+    public InsurancePolicyEntity getInsurancePolicy() {
         return insurancePolicy;
     }
-    public void setInsurancePolicy(InsurancePolicyEmbeddable insurancePolicy) {
+    public void setInsurancePolicy(InsurancePolicyEntity insurancePolicy) {
         this.insurancePolicy = insurancePolicy;
     }
 }
