@@ -17,7 +17,7 @@ public class OrderItemBuilder {
     @Autowired
     private OrderItemValidator validator;
 
-    public OrderItem build(String itemNumber, String type, String name,
+    public OrderItem build(String itemNumber, String type, String referenceId,
                            String dose, String treatmentDuration,
                            String quantity, String frequency,
                            String cost, String requiresSpecialist,
@@ -26,7 +26,7 @@ public class OrderItemBuilder {
         OrderItemType itemType = validator.typeValidator(type);
         item.setItemNumber(validator.itemNumberValidator(itemNumber));
         item.setType(itemType);
-        item.setName(validator.nameValidator(name));
+        item.setName(validator.referenceIdValidator(referenceId));
         item.setDose(validator.doseValidator(dose, itemType));
         item.setTreatmentDuration(validator.treatmentDurationValidator(treatmentDuration, itemType));
         item.setQuantity(validator.quantityValidator(quantity, itemType));
