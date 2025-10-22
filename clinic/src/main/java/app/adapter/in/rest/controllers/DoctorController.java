@@ -57,7 +57,7 @@ public class DoctorController {
                     OrderItem item = orderItemBuilder.build(
                             itemReq.getItemNumber(),
                             itemReq.getType(),
-                            itemReq.getName(),
+                            itemReq.getReferenceId(),
                             itemReq.getDose(),
                             itemReq.getTreatmentDuration(),
                             itemReq.getQuantity(),
