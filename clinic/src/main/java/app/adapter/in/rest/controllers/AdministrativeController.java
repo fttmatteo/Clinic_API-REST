@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ import app.domain.model.Patient;
  */
 @RestController
 @RequestMapping("/administrative")
+@PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
 public class AdministrativeController {
 
     @Autowired
@@ -43,6 +45,7 @@ public class AdministrativeController {
     private AdministrativeUseCase administrativeUseCase;
 
     @PostMapping("/patients")
+        @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
     public ResponseEntity<?> createPatient(@RequestBody PatientRequest request) {
         try {
             Patient patient = patientBuilder.build(
@@ -74,6 +77,7 @@ public class AdministrativeController {
     }
 
     @PostMapping("/invoices")
+        @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
     public ResponseEntity<?> createInvoice(@RequestBody InvoiceRequest request) {
         try {
             Invoice invoice = invoiceBuilder.build(
@@ -96,6 +100,7 @@ public class AdministrativeController {
     }
 
     @GetMapping("/orders/{patientId}")
+        @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
     public ResponseEntity<?> searchOrders(@PathVariable String patientId) {
         try {
             Patient patient = new Patient();
