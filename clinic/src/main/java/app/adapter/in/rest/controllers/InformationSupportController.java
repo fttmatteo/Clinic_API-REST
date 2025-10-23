@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,7 @@ import app.domain.model.Procedure;
  */
 @RestController
 @RequestMapping("/support")
+@PreAuthorize("hasRole('INFORMATION_SUPPORT')")
 public class InformationSupportController {
 
     @Autowired
@@ -43,6 +45,7 @@ public class InformationSupportController {
     private InformationSupportUseCase supportUseCase;
 
     @PostMapping("/medicines")
+        @PreAuthorize("hasRole('INFORMATION_SUPPORT')")
     public ResponseEntity<?> createMedicine(@RequestBody MedicineRequest request) {
         try {
             Medicine medicine = medicineBuilder.build(request.getId(), request.getName(), request.getCost());
@@ -58,6 +61,7 @@ public class InformationSupportController {
     }
 
     @GetMapping("/medicines")
+        @PreAuthorize("hasRole('INFORMATION_SUPPORT')")
     public ResponseEntity<?> getMedicines() {
         try {
             List<Medicine> list = supportUseCase.getMedicines();
@@ -68,6 +72,7 @@ public class InformationSupportController {
     }
 
     @PostMapping("/procedures")
+        @PreAuthorize("hasRole('INFORMATION_SUPPORT')")
     public ResponseEntity<?> createProcedure(@RequestBody ProcedureRequest request) {
         try {
             Procedure procedure = procedureBuilder.build(request.getId(), request.getName(), request.getCost());
@@ -83,6 +88,7 @@ public class InformationSupportController {
     }
 
     @GetMapping("/procedures")
+        @PreAuthorize("hasRole('INFORMATION_SUPPORT')")
     public ResponseEntity<?> getProcedures() {
         try {
             List<Procedure> list = supportUseCase.getProcedures();
@@ -93,6 +99,7 @@ public class InformationSupportController {
     }
 
     @PostMapping("/diagnostic-aids")
+        @PreAuthorize("hasRole('INFORMATION_SUPPORT')")
     public ResponseEntity<?> createDiagnosticAid(@RequestBody DiagnosticAidRequest request) {
         try {
             DiagnosticAid aid = diagnosticAidBuilder.build(request.getId(), request.getName(), request.getCost());
@@ -108,6 +115,7 @@ public class InformationSupportController {
     }
 
     @GetMapping("/diagnostic-aids")
+        @PreAuthorize("hasRole('INFORMATION_SUPPORT')")
     public ResponseEntity<?> getDiagnosticAids() {
         try {
             List<DiagnosticAid> list = supportUseCase.getDiagnosticAids();
