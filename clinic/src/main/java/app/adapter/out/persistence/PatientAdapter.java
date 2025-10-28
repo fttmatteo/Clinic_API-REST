@@ -38,5 +38,8 @@ public class PatientAdapter implements PatientPort {
         PatientEntity entity = PatientMapper.toEntity(patient);
         patientRepository.save(entity);
         patient.setId(entity.getId());
+        if (patient.getInsurancePolicy() != null && entity.getInsurancePolicy() != null) {
+            patient.getInsurancePolicy().setId(entity.getInsurancePolicy().getId());
+        }
     }
 }

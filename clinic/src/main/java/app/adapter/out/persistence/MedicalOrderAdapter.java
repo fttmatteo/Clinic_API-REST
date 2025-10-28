@@ -30,6 +30,7 @@ public class MedicalOrderAdapter implements MedicalOrderPort {
         MedicalOrderEntity entity = MedicalOrderMapper.toEntity(order);
         orderRepository.save(entity);
         order.setId(entity.getId());
+        order.setCreationDate(entity.getCreationDate());
     }
 
     @Override

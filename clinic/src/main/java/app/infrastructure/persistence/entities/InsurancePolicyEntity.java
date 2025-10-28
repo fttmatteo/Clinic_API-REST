@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
  * vencimiento.
  */
 @Entity
-@Table(name = "insurance_policies")
+@Table(name = "insurance")
 public class InsurancePolicyEntity {
 
     @Id

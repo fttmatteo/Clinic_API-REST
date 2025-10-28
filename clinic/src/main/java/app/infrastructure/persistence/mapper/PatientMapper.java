@@ -3,7 +3,7 @@ package app.infrastructure.persistence.mapper;
 import app.domain.model.InsurancePolicy;
 import app.domain.model.Patient;
 import app.domain.model.enums.Gender;
-import app.infrastructure.persistence.entities.InsurancePolicyEmbeddable;
+import app.infrastructure.persistence.entities.InsurancePolicyEntity;
 import app.infrastructure.persistence.entities.PatientEntity;
 
 /**
@@ -29,12 +29,12 @@ public class PatientMapper {
         entity.setRelationShipEmergencyContact(patient.getRelationShipEmergencyContact());
         entity.setPhoneEmergencyContact(patient.getPhoneEmergencyContact());
         if (patient.getInsurancePolicy() != null) {
-            InsurancePolicyEmbeddable policy = new InsurancePolicyEmbeddable();
-            policy.setCompanyName(patient.getInsurancePolicy().getCompanyName());
-            policy.setPolicyNumber(patient.getInsurancePolicy().getPolicyNumber());
-            policy.setActive(patient.getInsurancePolicy().isActive());
-            policy.setExpiryDate(patient.getInsurancePolicy().getExpiryDate());
-            entity.setInsurancePolicy(policy);
+            InsurancePolicyEntity policyEntity = new InsurancePolicyEntity();
+            policyEntity.setCompanyName(patient.getInsurancePolicy().getCompanyName());
+            policyEntity.setPolicyNumber(patient.getInsurancePolicy().getPolicyNumber());
+            policyEntity.setActive(patient.getInsurancePolicy().isActive());
+            policyEntity.setExpiryDate(patient.getInsurancePolicy().getExpiryDate());
+            entity.setInsurancePolicy(policyEntity);
         }
         return entity;
     }
