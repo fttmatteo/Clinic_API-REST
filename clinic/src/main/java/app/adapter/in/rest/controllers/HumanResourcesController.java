@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -134,14 +136,9 @@ public class HumanResourcesController {
         }
     }
 
-    /**
-     * Endpoint para eliminar un empleado por su número de cédula. Solo puede
-     * ejecutarse por personal de recursos humanos. Retorna 204 No Content en
-     * caso de éxito.
-     */
-    @org.springframework.web.bind.annotation.DeleteMapping("/{document}")
+    @DeleteMapping("/{document}")
         @PreAuthorize("hasRole('HUMAN_RESOURCES')")
-    public ResponseEntity<?> deleteEmployee(@org.springframework.web.bind.annotation.PathVariable String document) {
+    public ResponseEntity<?> deleteEmployee(@PathVariable String document) {
         try {
             long doc = employeeValidator.documentValidator(document);
             humanResourcesUseCase.deleteEmployee(doc);

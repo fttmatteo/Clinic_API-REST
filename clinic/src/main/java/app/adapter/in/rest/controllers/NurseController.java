@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.adapter.in.builder.VitalSignsBuilder;
+import app.adapter.in.rest.request.OrderExecutionRequest;
 import app.adapter.in.rest.request.VitalSignsRequest;
 import app.application.exceptions.BusinessException;
 import app.application.exceptions.InputsException;
@@ -56,27 +58,18 @@ public class NurseController {
         }
     }
 
-    /**
-     * Endpoint para registrar la administración de un medicamento o la
-     * realización de un procedimiento indicado en una orden médica. La
-     * enfermera debe proporcionar su cédula, la cantidad aplicada y las
-     * observaciones opcionales. La ruta identifica la orden y el ítem
-     * correspondiente.
-     */
     @PostMapping("/orders/{orderId}/items/{itemNumber}/execute")
         @PreAuthorize("hasRole('NURSE')")
     public ResponseEntity<?> executeOrderItem(
-            @org.springframework.web.bind.annotation.PathVariable String orderId,
-            @org.springframework.web.bind.annotation.PathVariable String itemNumber,
-            @RequestBody app.adapter.in.rest.request.OrderExecutionRequest request) {
+            @PathVariable String orderId,
+            @PathVariable String itemNumber,
+            @RequestBody OrderExecutionRequest request) {
         try {
-            // Construir el registro de ejecución
             var record = orderExecutionBuilder.build(
                     request.getNurseDocument(),
                     request.getAmount(),
                     request.getNotes()
             );
-            // Convertir identificadores
             Long oId = new app.adapter.in.validators.SimpleValidator() {
             }.longValidator("identificador de la orden", orderId);
             Integer iNum = new app.adapter.in.validators.SimpleValidator() {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.adapter.in.builder.InvoiceBuilder;
 import app.adapter.in.builder.PatientBuilder;
+import app.adapter.in.rest.request.AppointmentRequest;
 import app.adapter.in.rest.request.InvoiceRequest;
 import app.adapter.in.rest.request.PatientRequest;
 import app.adapter.in.validators.PatientValidator;
@@ -120,12 +122,9 @@ public class AdministrativeController {
         }
     }
 
-    /**
-     * Crea una nueva cita entre un paciente y un médico.
-     */
     @PostMapping("/appointments")
         @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
-    public ResponseEntity<?> createAppointment(@RequestBody app.adapter.in.rest.request.AppointmentRequest request) {
+    public ResponseEntity<?> createAppointment(@RequestBody AppointmentRequest request) {
         try {
             var appointment = appointmentBuilder.build(
                     request.getPatientId(),
@@ -143,14 +142,10 @@ public class AdministrativeController {
         }
     }
 
-    /**
-     * Lista las citas de un paciente por su identificador.
-     */
     @GetMapping("/appointments/patient/{patientId}")
         @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
     public ResponseEntity<?> listAppointmentsByPatient(@PathVariable String patientId) {
         try {
-            // Validar identificador del paciente utilizando AppointmentValidator
             long id = appointmentValidator.patientIdValidator(patientId);
             app.domain.model.Patient patient = new app.domain.model.Patient();
             patient.setId(id);
@@ -163,9 +158,6 @@ public class AdministrativeController {
         }
     }
 
-    /**
-     * Lista las citas de un médico por su número de cédula.
-     */
     @GetMapping("/appointments/doctor/{doctorDocument}")
         @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
     public ResponseEntity<?> listAppointmentsByDoctor(@PathVariable String doctorDocument) {
@@ -182,10 +174,7 @@ public class AdministrativeController {
         }
     }
 
-    /**
-     * Cancela una cita por su identificador.
-     */
-    @org.springframework.web.bind.annotation.DeleteMapping("/appointments/{appointmentId}")
+    @DeleteMapping("/appointments/{appointmentId}")
         @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
     public ResponseEntity<?> cancelAppointment(@PathVariable String appointmentId) {
         try {
