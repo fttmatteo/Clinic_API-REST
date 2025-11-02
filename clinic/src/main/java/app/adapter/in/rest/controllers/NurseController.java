@@ -30,6 +30,9 @@ public class NurseController {
     @Autowired
     private NurseUseCase nurseUseCase;
 
+    @Autowired
+    private app.adapter.in.builder.OrderExecutionBuilder orderExecutionBuilder;
+
     @PostMapping("/vital-signs")
         @PreAuthorize("hasRole('NURSE')")
     public ResponseEntity<?> recordVitalSigns(@RequestBody VitalSignsRequest request) {
@@ -43,6 +46,42 @@ public class NurseController {
                     request.getOxygenLevel()
             );
             nurseUseCase.recordVitalSigns(record);
+            return ResponseEntity.status(HttpStatus.CREATED).body(record);
+        } catch (InputsException ie) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
+        } catch (BusinessException be) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(be.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    /**
+     * Endpoint para registrar la administración de un medicamento o la
+     * realización de un procedimiento indicado en una orden médica. La
+     * enfermera debe proporcionar su cédula, la cantidad aplicada y las
+     * observaciones opcionales. La ruta identifica la orden y el ítem
+     * correspondiente.
+     */
+    @PostMapping("/orders/{orderId}/items/{itemNumber}/execute")
+        @PreAuthorize("hasRole('NURSE')")
+    public ResponseEntity<?> executeOrderItem(
+            @org.springframework.web.bind.annotation.PathVariable String orderId,
+            @org.springframework.web.bind.annotation.PathVariable String itemNumber,
+            @RequestBody app.adapter.in.rest.request.OrderExecutionRequest request) {
+        try {
+            // Construir el registro de ejecución
+            var record = orderExecutionBuilder.build(
+                    request.getNurseDocument(),
+                    request.getAmount(),
+                    request.getNotes()
+            );
+            // Convertir identificadores
+            Long oId = new app.adapter.in.validators.SimpleValidator() {
+            }.longValidator("identificador de la orden", orderId);
+            Integer iNum = new app.adapter.in.validators.SimpleValidator() {
+            }.integerValidator("número de ítem", itemNumber);
+            nurseUseCase.executeOrderItem(record, oId, iNum);
             return ResponseEntity.status(HttpStatus.CREATED).body(record);
         } catch (InputsException ie) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());

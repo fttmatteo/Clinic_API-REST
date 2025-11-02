@@ -31,6 +31,9 @@ public class HumanResourcesController {
     @Autowired
     private HumanResourcesUseCase humanResourcesUseCase;
 
+    @Autowired
+    private app.adapter.in.validators.EmployeeValidator employeeValidator;
+
     @PostMapping("/doctor")
         @PreAuthorize("hasRole('HUMAN_RESOURCES')")
     public ResponseEntity<?> createDoctor(@RequestBody EmployeeRequest request) {
@@ -122,6 +125,27 @@ public class HumanResourcesController {
             );
             humanResourcesUseCase.createInformationSupport(employee);
             return ResponseEntity.status(HttpStatus.CREATED).body(employee);
+        } catch (InputsException ie) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
+        } catch (BusinessException be) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(be.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    /**
+     * Endpoint para eliminar un empleado por su número de cédula. Solo puede
+     * ejecutarse por personal de recursos humanos. Retorna 204 No Content en
+     * caso de éxito.
+     */
+    @org.springframework.web.bind.annotation.DeleteMapping("/{document}")
+        @PreAuthorize("hasRole('HUMAN_RESOURCES')")
+    public ResponseEntity<?> deleteEmployee(@org.springframework.web.bind.annotation.PathVariable String document) {
+        try {
+            long doc = employeeValidator.documentValidator(document);
+            humanResourcesUseCase.deleteEmployee(doc);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (InputsException ie) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
         } catch (BusinessException be) {
