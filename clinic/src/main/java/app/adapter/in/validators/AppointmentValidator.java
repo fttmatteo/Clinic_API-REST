@@ -17,8 +17,8 @@ import app.application.exceptions.InputsException;
 @Component
 public class AppointmentValidator extends SimpleValidator {
 
-    public long patientIdValidator(String value) throws InputsException {
-        return longValidator("identificador del paciente", value);
+    public long patientDocumentValidator(String value) throws InputsException {
+        return longValidator("documento del paciente", value);
     }
 
     public long doctorDocumentValidator(String value) throws InputsException {

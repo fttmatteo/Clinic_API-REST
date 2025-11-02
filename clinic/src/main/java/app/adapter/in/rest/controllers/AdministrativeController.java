@@ -127,7 +127,7 @@ public class AdministrativeController {
     public ResponseEntity<?> createAppointment(@RequestBody AppointmentRequest request) {
         try {
             var appointment = appointmentBuilder.build(
-                    request.getPatientId(),
+                    request.getPatientDocument(),
                     request.getDoctorDocument(),
                     request.getDateTime()
             );
@@ -142,13 +142,13 @@ public class AdministrativeController {
         }
     }
 
-    @GetMapping("/appointments/patient/{patientId}")
+    @GetMapping("/appointments/patient/{patientDocument}")
         @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
-    public ResponseEntity<?> listAppointmentsByPatient(@PathVariable String patientId) {
+    public ResponseEntity<?> listAppointmentsByPatient(@PathVariable String patientDocument) {
         try {
-            long id = appointmentValidator.patientIdValidator(patientId);
+            long document = appointmentValidator.patientDocumentValidator(patientDocument);
             app.domain.model.Patient patient = new app.domain.model.Patient();
-            patient.setId(id);
+            patient.setDocument(document);
             var list = appointmentUseCase.listByPatient(patient);
             return ResponseEntity.ok(list);
         } catch (InputsException ie) {

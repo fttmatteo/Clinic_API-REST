@@ -21,10 +21,10 @@ public class AppointmentBuilder {
     @Autowired
     private AppointmentValidator appointmentValidator;
 
-    public Appointment build(String patientId, String doctorDocument, String dateTime) throws Exception {
+    public Appointment build(String patientDocument, String doctorDocument, String dateTime) throws Exception {
         Appointment appointment = new Appointment();
         Patient patient = new Patient();
-        patient.setId(appointmentValidator.patientIdValidator(patientId));
+        patient.setDocument(appointmentValidator.patientDocumentValidator(patientDocument));
         appointment.setPatient(patient);
         Employee doctor = new Employee();
         doctor.setDocument(appointmentValidator.doctorDocumentValidator(doctorDocument));

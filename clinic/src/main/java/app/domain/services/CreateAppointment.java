@@ -32,7 +32,7 @@ public class CreateAppointment {
     private EmployeePort employeePort;
 
     public void create(Appointment appointment) throws Exception {
-        Patient patient = patientPort.findById(appointment.getPatient());
+        Patient patient = patientPort.findByDocument(appointment.getPatient());
         if (patient == null) {
             throw new BusinessException("el paciente de la cita no existe");
         }

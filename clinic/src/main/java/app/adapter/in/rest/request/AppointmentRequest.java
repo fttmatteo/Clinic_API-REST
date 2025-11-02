@@ -6,15 +6,15 @@ package app.adapter.in.rest.request;
  * fecha y hora programada en formato ISO 8601.
  */
 public class AppointmentRequest {
-    private String patientId;
+    private String patientDocument;
     private String doctorDocument;
     private String dateTime;
 
-    public String getPatientId() {
-        return patientId;
+    public String getPatientDocument() {
+        return patientDocument;
     }
-    public void setPatientId(String patientId) {
-        this.patientId = patientId;
+    public void setPatientDocument(String patientDocument) {
+        this.patientDocument = patientDocument;
     }
     public String getDoctorDocument() {
         return doctorDocument;

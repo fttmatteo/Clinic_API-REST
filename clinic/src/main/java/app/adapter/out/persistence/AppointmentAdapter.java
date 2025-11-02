@@ -1,6 +1,7 @@
 package app.adapter.out.persistence;
 
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,8 +52,16 @@ public class AppointmentAdapter implements AppointmentPort {
 
     @Override
     public List<Appointment> findByPatient(Patient patient) throws Exception {
-        List<AppointmentEntity> entities = appointmentRepository
-                .findByPatient(PatientMapper.toEntity(patient));
+        List<AppointmentEntity> entities;
+        if (patient == null) {
+            entities = Collections.emptyList();
+        } else if (patient.getId() != null) {
+            entities = appointmentRepository.findByPatient(PatientMapper.toEntity(patient));
+        } else if (patient.getDocument() != null) {
+            entities = appointmentRepository.findByPatientDocument(patient.getDocument());
+        } else {
+            entities = Collections.emptyList();
+        }
         return entities.stream().map(AppointmentMapper::toDomain).collect(Collectors.toList());
     }
 
