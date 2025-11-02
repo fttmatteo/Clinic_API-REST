@@ -9,32 +9,21 @@ import app.domain.model.enums.OrderItemType;
 
 /**
  * Builder para construir instancias de {@link OrderItem} a partir de los
- * datos recibidos en una petición. Utiliza {@link OrderItemValidator} para
- * validar los campos según el tipo de ítem.
+ * datos recibidos en una peticion. Solo valida el tipo del item y el
+ * identificador del insumo, el resto de informacion se completa desde el
+ * inventario.
  */
 @Component
 public class OrderItemBuilder {
     @Autowired
     private OrderItemValidator validator;
 
-    public OrderItem build(String itemNumber, String type, String referenceId,
-                           String dose, String treatmentDuration,
-                           String quantity, String frequency,
-                           String cost, String requiresSpecialist,
-                           String specialistTypeId) throws Exception {
+    public OrderItem build(String type, String referenceId, int itemNumber) throws Exception {
         OrderItem item = new OrderItem();
         OrderItemType itemType = validator.typeValidator(type);
-        item.setItemNumber(validator.itemNumberValidator(itemNumber));
+        item.setItemNumber(itemNumber);
         item.setType(itemType);
         item.setName(validator.referenceIdValidator(referenceId));
-        item.setDose(validator.doseValidator(dose, itemType));
-        item.setTreatmentDuration(validator.treatmentDurationValidator(treatmentDuration, itemType));
-        item.setQuantity(validator.quantityValidator(quantity, itemType));
-        item.setFrequency(validator.frequencyValidator(frequency, itemType));
-        item.setCost(validator.costValidator(cost));
-        Boolean requires = validator.requiresSpecialistValidator(requiresSpecialist, itemType);
-        item.setRequiresSpecialist(requires);
-        item.setSpecialistTypeId(validator.specialistTypeIdValidator(specialistTypeId, itemType, requires));
         return item;
     }
 }
