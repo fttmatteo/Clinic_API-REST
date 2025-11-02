@@ -24,7 +24,12 @@ public class PatientValidator extends SimpleValidator {
     }
 
     public long documentValidator(String value) throws InputsException {
-        return longValidator("número de identificación", value);
+        long doc = longValidator("número de identificación", value);
+        // Validar que el documento no exceda los 10 dígitos permitidos
+        if (String.valueOf(Math.abs(doc)).length() > 10) {
+            throw new InputsException("la cédula no puede exceder 10 dígitos");
+        }
+        return doc;
     }
 
     public Date birthDateValidator(String value) throws InputsException {
