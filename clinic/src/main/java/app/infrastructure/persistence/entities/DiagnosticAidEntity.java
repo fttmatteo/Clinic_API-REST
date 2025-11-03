@@ -24,6 +24,12 @@ public class DiagnosticAidEntity {
     @Column(nullable = false)
     private Double cost;
 
+    @Column(name = "default_quantity")
+    private Integer defaultQuantity;
+
+    @Column(name = "default_requires_specialist")
+    private Boolean defaultRequiresSpecialist;
+
     public String getId() {
         return id;
     }
@@ -46,5 +52,21 @@ public class DiagnosticAidEntity {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    public Integer getDefaultQuantity() {
+        return defaultQuantity;
+    }
+
+    public void setDefaultQuantity(Integer defaultQuantity) {
+        this.defaultQuantity = defaultQuantity;
+    }
+
+    public Boolean getDefaultRequiresSpecialist() {
+        return defaultRequiresSpecialist;
+    }
+
+    public void setDefaultRequiresSpecialist(Boolean defaultRequiresSpecialist) {
+        this.defaultRequiresSpecialist = defaultRequiresSpecialist;
     }
 }
