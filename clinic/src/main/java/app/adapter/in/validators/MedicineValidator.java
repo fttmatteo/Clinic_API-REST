@@ -20,4 +20,10 @@ public class MedicineValidator extends SimpleValidator {
     public Double costValidator(String value) throws InputsException {
         return doubleValidator("costo del medicamento", value);
     }
+    public String doseValidator(String value) throws InputsException {
+        return stringValidator("dosis por defecto del medicamento", value);
+    }
+    public String treatmentDurationValidator(String value) throws InputsException {
+        return stringValidator("duracion del tratamiento por defecto del medicamento", value);
+    }
 }
