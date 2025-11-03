@@ -14,6 +14,8 @@ public class MedicineMapper {
         entity.setId(domain.getId());
         entity.setName(domain.getName());
         entity.setCost(domain.getCost());
+        entity.setDefaultDose(domain.getDefaultDose());
+        entity.setDefaultTreatmentDuration(domain.getDefaultTreatmentDuration());
         return entity;
     }
 
@@ -23,6 +25,8 @@ public class MedicineMapper {
         domain.setId(entity.getId());
         domain.setName(entity.getName());
         domain.setCost(entity.getCost());
+        domain.setDefaultDose(entity.getDefaultDose());
+        domain.setDefaultTreatmentDuration(entity.getDefaultTreatmentDuration());
         return domain;
     }
 }
