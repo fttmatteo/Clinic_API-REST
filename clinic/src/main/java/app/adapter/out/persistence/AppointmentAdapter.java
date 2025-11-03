@@ -67,8 +67,16 @@ public class AppointmentAdapter implements AppointmentPort {
 
     @Override
     public List<Appointment> findByDoctor(Employee doctor) throws Exception {
-        List<AppointmentEntity> entities = appointmentRepository
-                .findByDoctor(EmployeeMapper.toEntity(doctor));
+        List<AppointmentEntity> entities;
+        if (doctor == null) {
+            entities = Collections.emptyList();
+        } else if (doctor.getId() != null) {
+            entities = appointmentRepository.findByDoctor(EmployeeMapper.toEntity(doctor));
+        } else if (doctor.getDocument() != null) {
+            entities = appointmentRepository.findByDoctorDocument(doctor.getDocument());
+        } else {
+            entities = Collections.emptyList();
+        }
         return entities.stream().map(AppointmentMapper::toDomain).collect(Collectors.toList());
     }
 
