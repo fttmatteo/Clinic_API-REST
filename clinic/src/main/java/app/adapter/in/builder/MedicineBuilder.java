@@ -16,11 +16,13 @@ public class MedicineBuilder {
     @Autowired
     private MedicineValidator validator;
 
-    public Medicine build(String id, String name, String cost) throws Exception {
+    public Medicine build(String id, String name, String cost, String dose, String treatmentDuration) throws Exception {
         Medicine medicine = new Medicine();
         medicine.setId(validator.idValidator(id));
         medicine.setName(validator.nameValidator(name));
         medicine.setCost(validator.costValidator(cost));
+        medicine.setDefaultDose(validator.doseValidator(dose));
+        medicine.setDefaultTreatmentDuration(validator.treatmentDurationValidator(treatmentDuration));
         return medicine;
     }
 }
