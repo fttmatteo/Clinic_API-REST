@@ -101,6 +101,12 @@ public class CreateMedicalOrder {
                         throw new BusinessException("No se puede recetar el mismo medicamento mas de una vez en la misma orden");
                     }
                     item.setName(med.getName());
+                    item.setDose(med.getDefaultDose());
+                    item.setTreatmentDuration(med.getDefaultTreatmentDuration());
+                    item.setQuantity(null);
+                    item.setFrequency(null);
+                    item.setRequiresSpecialist(Boolean.FALSE);
+                    item.setSpecialistTypeId(null);
                     item.setCost(med.getCost());
                 } else if (item.getType() == OrderItemType.PROCEDURE) {
                     Procedure proc = inventoryService.findProcedureById(item.getName());
@@ -112,8 +118,16 @@ public class CreateMedicalOrder {
                         throw new BusinessException("No se puede recetar el mismo procedimiento mas de una vez en la misma orden");
                     }
                     item.setName(proc.getName());
-                    if (item.getQuantity() != null && item.getQuantity() > 0) {
-                        item.setCost(proc.getCost() * item.getQuantity());
+                    Integer defaultQuantity = proc.getDefaultQuantity();
+                    item.setQuantity(defaultQuantity);
+                    item.setFrequency(proc.getDefaultFrequency());
+                    Boolean defaultRequiresSpecialist = proc.getDefaultRequiresSpecialist();
+                    item.setRequiresSpecialist(defaultRequiresSpecialist);
+                    item.setDose(null);
+                    item.setTreatmentDuration(null);
+                    item.setSpecialistTypeId(null);
+                    if (defaultQuantity != null && defaultQuantity > 0) {
+                        item.setCost(proc.getCost() * defaultQuantity);
                     } else {
                         item.setCost(proc.getCost());
                     }
@@ -127,8 +141,16 @@ public class CreateMedicalOrder {
                         throw new BusinessException("No se puede recetar la misma ayuda diagnostica mas de una vez en la misma orden");
                     }
                     item.setName(aid.getName());
-                    if (item.getQuantity() != null && item.getQuantity() > 0) {
-                        item.setCost(aid.getCost() * item.getQuantity());
+                    Integer defaultQuantity = aid.getDefaultQuantity();
+                    item.setQuantity(defaultQuantity);
+                    Boolean defaultRequiresSpecialist = aid.getDefaultRequiresSpecialist();
+                    item.setRequiresSpecialist(defaultRequiresSpecialist);
+                    item.setFrequency(null);
+                    item.setDose(null);
+                    item.setTreatmentDuration(null);
+                    item.setSpecialistTypeId(null);
+                    if (defaultQuantity != null && defaultQuantity > 0) {
+                        item.setCost(aid.getCost() * defaultQuantity);
                     } else {
                         item.setCost(aid.getCost());
                     }
