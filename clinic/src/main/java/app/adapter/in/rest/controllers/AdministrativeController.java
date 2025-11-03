@@ -104,6 +104,23 @@ public class AdministrativeController {
         }
     }
 
+    @GetMapping("/invoices/patient/{patientDocument}")
+        @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
+    public ResponseEntity<?> listInvoicesByPatientDocument(@PathVariable String patientDocument) {
+        try {
+            Patient patient = new Patient();
+            patient.setDocument(patientValidator.documentValidator(patientDocument));
+            List<Invoice> invoices = administrativeUseCase.searchInvoicesByPatient(patient);
+            return ResponseEntity.ok(invoices);
+        } catch (InputsException ie) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
+        } catch (BusinessException be) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(be.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @GetMapping("/orders/{patientId}")
         @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
     public ResponseEntity<?> searchOrders(@PathVariable String patientId) {

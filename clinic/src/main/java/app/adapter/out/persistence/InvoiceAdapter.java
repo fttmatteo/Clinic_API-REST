@@ -1,5 +1,9 @@
 package app.adapter.out.persistence;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +37,16 @@ public class InvoiceAdapter implements InvoicePort {
         Long patientId = patient.getId();
         if (patientId == null) return 0;
         return invoiceRepository.sumCopayByPatientIdAndYear(patientId, year);
+    }
+
+    @Override
+    public List<Invoice> findByPatient(Patient patient) throws Exception {
+        if (patient == null || patient.getId() == null) {
+            return Collections.emptyList();
+        }
+        List<InvoiceEntity> entities = invoiceRepository.findDetailedByPatientId(patient.getId());
+        return entities.stream()
+                .map(InvoiceMapper::toDomain)
+                .collect(Collectors.toList());
     }
 }

@@ -72,7 +72,11 @@ public class PatientValidator extends SimpleValidator {
     }
 
     public String addressValidator(String value) throws InputsException {
-        return stringValidator("dirección", value);
+        stringValidator("dirección", value);
+        if (value.length() > 30) {
+            throw new InputsException("la dirección no puede exceder 30 caracteres");
+        }
+        return value;
     }
 
     public String phoneValidator(String value) throws InputsException {
