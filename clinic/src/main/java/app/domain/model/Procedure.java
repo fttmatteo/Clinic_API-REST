@@ -10,6 +10,9 @@ public class Procedure {
     private String id;
     private String name;
     private Double cost;
+    private Integer defaultQuantity;
+    private String defaultFrequency;
+    private Boolean defaultRequiresSpecialist;
 
     public String getId() {
         return id;
@@ -33,5 +36,29 @@ public class Procedure {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    public Integer getDefaultQuantity() {
+        return defaultQuantity;
+    }
+
+    public void setDefaultQuantity(Integer defaultQuantity) {
+        this.defaultQuantity = defaultQuantity;
+    }
+
+    public String getDefaultFrequency() {
+        return defaultFrequency;
+    }
+
+    public void setDefaultFrequency(String defaultFrequency) {
+        this.defaultFrequency = defaultFrequency;
+    }
+
+    public Boolean getDefaultRequiresSpecialist() {
+        return defaultRequiresSpecialist;
+    }
+
+    public void setDefaultRequiresSpecialist(Boolean defaultRequiresSpecialist) {
+        this.defaultRequiresSpecialist = defaultRequiresSpecialist;
     }
 }
