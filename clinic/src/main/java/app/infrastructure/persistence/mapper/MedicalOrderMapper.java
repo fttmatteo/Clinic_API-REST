@@ -3,10 +3,8 @@ package app.infrastructure.persistence.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.domain.model.Employee;
 import app.domain.model.MedicalOrder;
 import app.domain.model.OrderItem;
-import app.domain.model.Patient;
 import app.infrastructure.persistence.entities.EmployeeEntity;
 import app.infrastructure.persistence.entities.MedicalOrderEntity;
 import app.infrastructure.persistence.entities.OrderItemEntity;
