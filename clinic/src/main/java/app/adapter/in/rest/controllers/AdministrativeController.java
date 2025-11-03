@@ -91,9 +91,6 @@ public class AdministrativeController {
             Invoice invoice = invoiceBuilder.build(
                     request.getPatientId(),
                     request.getDoctorDocument(),
-                    request.getProductName(),
-                    request.getProductAmount(),
-                    request.getIsMedicine(),
                     request.getOrderId()
             );
             administrativeUseCase.createInvoice(invoice);
