@@ -16,11 +16,15 @@ public class ProcedureBuilder {
     @Autowired
     private ProcedureValidator validator;
 
-    public Procedure build(String id, String name, String cost) throws Exception {
+    public Procedure build(String id, String name, String cost, String quantity,
+                           String frequency, String requiresSpecialist) throws Exception {
         Procedure procedure = new Procedure();
         procedure.setId(validator.idValidator(id));
         procedure.setName(validator.nameValidator(name));
         procedure.setCost(validator.costValidator(cost));
+        procedure.setDefaultQuantity(validator.quantityValidator(quantity));
+        procedure.setDefaultFrequency(validator.frequencyValidator(frequency));
+        procedure.setDefaultRequiresSpecialist(validator.requiresSpecialistValidator(requiresSpecialist));
         return procedure;
     }
 }

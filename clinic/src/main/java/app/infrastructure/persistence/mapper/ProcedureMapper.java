@@ -14,6 +14,9 @@ public class ProcedureMapper {
         entity.setId(domain.getId());
         entity.setName(domain.getName());
         entity.setCost(domain.getCost());
+        entity.setDefaultQuantity(domain.getDefaultQuantity());
+        entity.setDefaultFrequency(domain.getDefaultFrequency());
+        entity.setDefaultRequiresSpecialist(domain.getDefaultRequiresSpecialist());
         return entity;
     }
 
@@ -23,6 +26,9 @@ public class ProcedureMapper {
         domain.setId(entity.getId());
         domain.setName(entity.getName());
         domain.setCost(entity.getCost());
+        domain.setDefaultQuantity(entity.getDefaultQuantity());
+        domain.setDefaultFrequency(entity.getDefaultFrequency());
+        domain.setDefaultRequiresSpecialist(entity.getDefaultRequiresSpecialist());
         return domain;
     }
 }

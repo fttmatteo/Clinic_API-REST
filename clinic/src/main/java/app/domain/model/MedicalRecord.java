@@ -12,11 +12,6 @@ public class MedicalRecord {
     private Long id;
     private Patient patient;
     private Employee doctor;
-    /**
-     * Fecha y hora de la consulta (clave de la historia clínica). Se emplea
-     * {@link java.sql.Timestamp} para almacenar tanto la fecha como la hora
-     * exacta del registro y facilitar su almacenamiento en la base de datos.
-     */
     private Timestamp dateTime;
     private String motive;
     private String symptoms;

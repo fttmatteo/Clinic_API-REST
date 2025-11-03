@@ -12,6 +12,8 @@ public class Medicine {
     private String id;
     private String name;
     private Double cost;
+    private String defaultDose;
+    private String defaultTreatmentDuration;
 
     public String getId() {
         return id;
@@ -35,5 +37,21 @@ public class Medicine {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    public String getDefaultDose() {
+        return defaultDose;
+    }
+
+    public void setDefaultDose(String defaultDose) {
+        this.defaultDose = defaultDose;
+    }
+
+    public String getDefaultTreatmentDuration() {
+        return defaultTreatmentDuration;
+    }
+
+    public void setDefaultTreatmentDuration(String defaultTreatmentDuration) {
+        this.defaultTreatmentDuration = defaultTreatmentDuration;
     }
 }

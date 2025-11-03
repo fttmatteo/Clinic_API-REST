@@ -23,6 +23,12 @@ public class MedicineEntity {
     @Column(name = "cost", nullable = false)
     private Double cost;
 
+    @Column(name = "default_dose", length = 100)
+    private String defaultDose;
+
+    @Column(name = "default_treatment_duration", length = 100)
+    private String defaultTreatmentDuration;
+
     public String getId() {
         return id;
     }
@@ -45,5 +51,21 @@ public class MedicineEntity {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    public String getDefaultDose() {
+        return defaultDose;
+    }
+
+    public void setDefaultDose(String defaultDose) {
+        this.defaultDose = defaultDose;
+    }
+
+    public String getDefaultTreatmentDuration() {
+        return defaultTreatmentDuration;
+    }
+
+    public void setDefaultTreatmentDuration(String defaultTreatmentDuration) {
+        this.defaultTreatmentDuration = defaultTreatmentDuration;
     }
 }

@@ -23,6 +23,15 @@ public class ProcedureEntity {
     @Column(name = "cost", nullable = false)
     private Double cost;
 
+    @Column(name = "default_quantity")
+    private Integer defaultQuantity;
+
+    @Column(name = "default_frequency", length = 100)
+    private String defaultFrequency;
+
+    @Column(name = "default_requires_specialist")
+    private Boolean defaultRequiresSpecialist;
+
     public String getId() {
         return id;
     }
@@ -45,5 +54,29 @@ public class ProcedureEntity {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    public Integer getDefaultQuantity() {
+        return defaultQuantity;
+    }
+
+    public void setDefaultQuantity(Integer defaultQuantity) {
+        this.defaultQuantity = defaultQuantity;
+    }
+
+    public String getDefaultFrequency() {
+        return defaultFrequency;
+    }
+
+    public void setDefaultFrequency(String defaultFrequency) {
+        this.defaultFrequency = defaultFrequency;
+    }
+
+    public Boolean getDefaultRequiresSpecialist() {
+        return defaultRequiresSpecialist;
+    }
+
+    public void setDefaultRequiresSpecialist(Boolean defaultRequiresSpecialist) {
+        this.defaultRequiresSpecialist = defaultRequiresSpecialist;
     }
 }

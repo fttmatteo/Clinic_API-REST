@@ -9,6 +9,8 @@ public class MedicineRequest {
     private String id;
     private String name;
     private String cost;
+    private String dose;
+    private String treatmentDuration;
 
     public String getId() {
         return id;
@@ -27,5 +29,17 @@ public class MedicineRequest {
     }
     public void setCost(String cost) {
         this.cost = cost;
+    }
+    public String getDose() {
+        return dose;
+    }
+    public void setDose(String dose) {
+        this.dose = dose;
+    }
+    public String getTreatmentDuration() {
+        return treatmentDuration;
+    }
+    public void setTreatmentDuration(String treatmentDuration) {
+        this.treatmentDuration = treatmentDuration;
     }
 }

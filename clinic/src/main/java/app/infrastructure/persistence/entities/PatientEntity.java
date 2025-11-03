@@ -35,7 +35,7 @@ public class PatientEntity {
     @Column(nullable = false, length = 10)
     private String gender;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 30)
     private String address;
 
     @Column(nullable = false, length = 10)

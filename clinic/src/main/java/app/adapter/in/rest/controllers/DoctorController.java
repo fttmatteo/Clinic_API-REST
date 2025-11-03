@@ -56,18 +56,12 @@ public class DoctorController {
         try {
             List<OrderItem> items = new ArrayList<>();
             if (request.getItems() != null) {
+                int nextItemNumber = 1;
                 for (OrderItemRequest itemReq : request.getItems()) {
                     OrderItem item = orderItemBuilder.build(
-                            itemReq.getItemNumber(),
                             itemReq.getType(),
                             itemReq.getReferenceId(),
-                            itemReq.getDose(),
-                            itemReq.getTreatmentDuration(),
-                            itemReq.getQuantity(),
-                            itemReq.getFrequency(),
-                            itemReq.getCost(),
-                            itemReq.getRequiresSpecialist(),
-                            itemReq.getSpecialistTypeId()
+                            nextItemNumber++
                     );
                     items.add(item);
                 }

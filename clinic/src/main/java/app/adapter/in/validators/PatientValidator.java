@@ -24,7 +24,11 @@ public class PatientValidator extends SimpleValidator {
     }
 
     public long documentValidator(String value) throws InputsException {
-        return longValidator("número de identificación", value);
+        long doc = longValidator("número de identificación", value);
+        if (String.valueOf(Math.abs(doc)).length() > 10) {
+            throw new InputsException("la cédula no puede exceder 10 dígitos");
+        }
+        return doc;
     }
 
     public Date birthDateValidator(String value) throws InputsException {
@@ -68,7 +72,11 @@ public class PatientValidator extends SimpleValidator {
     }
 
     public String addressValidator(String value) throws InputsException {
-        return stringValidator("dirección", value);
+        stringValidator("dirección", value);
+        if (value.length() > 30) {
+            throw new InputsException("la dirección no puede exceder 30 caracteres");
+        }
+        return value;
     }
 
     public String phoneValidator(String value) throws InputsException {

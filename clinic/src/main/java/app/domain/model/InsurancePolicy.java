@@ -10,11 +10,6 @@ import java.sql.Date;
  * paciente deberá asumir la totalidad del costo de los servicios.
  */
 public class InsurancePolicy {
-    /**
-     * Identificador interno de la póliza. Este identificador se utiliza para
-     * mapear la entidad con la base de datos. Un valor de cero indica que
-     * todavía no ha sido persistida.
-     */
     private Long id;
     private String companyName;
     private String policyNumber;

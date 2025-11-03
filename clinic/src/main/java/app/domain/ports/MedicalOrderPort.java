@@ -14,4 +14,5 @@ public interface MedicalOrderPort {
     void save(MedicalOrder order) throws Exception;
     MedicalOrder findById(MedicalOrder order) throws Exception;
     List<MedicalOrder> findByPatient(Patient patient) throws Exception;
+    MedicalOrder findByOrderNumber(String orderNumber) throws Exception;
 }

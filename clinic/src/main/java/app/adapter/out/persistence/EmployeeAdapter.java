@@ -38,4 +38,12 @@ public class EmployeeAdapter implements EmployeePort {
         employeeRepository.save(entity);
         employee.setId(entity.getId());
     }
+
+        @Override
+    public void deleteByDocument(Long document) throws Exception {
+        EmployeeEntity entity = employeeRepository.findByDocument(document);
+        if (entity != null) {
+            employeeRepository.delete(entity);
+        }
+    }
 }

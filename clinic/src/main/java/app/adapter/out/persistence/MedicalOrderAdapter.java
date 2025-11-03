@@ -50,4 +50,9 @@ public class MedicalOrderAdapter implements MedicalOrderPort {
         }
         return orders;
     }
+    @Override
+    public MedicalOrder findByOrderNumber(String orderNumber) throws Exception {
+        Optional<MedicalOrderEntity> opt = orderRepository.findByOrderNumber(orderNumber);
+        return opt.map(MedicalOrderMapper::toDomain).orElse(null);
+    }
 }

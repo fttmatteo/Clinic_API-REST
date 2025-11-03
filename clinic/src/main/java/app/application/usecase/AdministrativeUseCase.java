@@ -10,6 +10,7 @@ import app.domain.model.MedicalOrder;
 import app.domain.model.Patient;
 import app.domain.services.CreateInvoice;
 import app.domain.services.CreatePatient;
+import app.domain.services.SearchInvoices;
 import app.domain.services.SearchMedicalOrdersByPatient;
 
 /**
@@ -26,6 +27,8 @@ public class AdministrativeUseCase {
     private CreateInvoice createInvoice;
     @Autowired
     private SearchMedicalOrdersByPatient searchOrders;
+    @Autowired
+    private SearchInvoices searchInvoices;
 
     public void createPatient(Patient patient) throws Exception {
         createPatient.create(patient);
@@ -37,5 +40,9 @@ public class AdministrativeUseCase {
 
     public List<MedicalOrder> searchMedicalOrders(Patient patient) throws Exception {
         return searchOrders.search(patient);
+    }
+
+    public List<Invoice> searchInvoicesByPatient(Patient patient) throws Exception {
+        return searchInvoices.byPatient(patient);
     }
 }

@@ -48,7 +48,13 @@ public class InformationSupportController {
         @PreAuthorize("hasRole('INFORMATION_SUPPORT')")
     public ResponseEntity<?> createMedicine(@RequestBody MedicineRequest request) {
         try {
-            Medicine medicine = medicineBuilder.build(request.getId(), request.getName(), request.getCost());
+            Medicine medicine = medicineBuilder.build(
+                    request.getId(),
+                    request.getName(),
+                    request.getCost(),
+                    request.getDose(),
+                    request.getTreatmentDuration()
+            );
             supportUseCase.createMedicine(medicine);
             return ResponseEntity.status(HttpStatus.CREATED).body(medicine);
         } catch (InputsException ie) {
@@ -75,7 +81,14 @@ public class InformationSupportController {
         @PreAuthorize("hasRole('INFORMATION_SUPPORT')")
     public ResponseEntity<?> createProcedure(@RequestBody ProcedureRequest request) {
         try {
-            Procedure procedure = procedureBuilder.build(request.getId(), request.getName(), request.getCost());
+            Procedure procedure = procedureBuilder.build(
+                    request.getId(),
+                    request.getName(),
+                    request.getCost(),
+                    request.getQuantity(),
+                    request.getFrequency(),
+                    request.getRequiresSpecialist()
+            );
             supportUseCase.createProcedure(procedure);
             return ResponseEntity.status(HttpStatus.CREATED).body(procedure);
         } catch (InputsException ie) {
@@ -102,7 +115,13 @@ public class InformationSupportController {
         @PreAuthorize("hasRole('INFORMATION_SUPPORT')")
     public ResponseEntity<?> createDiagnosticAid(@RequestBody DiagnosticAidRequest request) {
         try {
-            DiagnosticAid aid = diagnosticAidBuilder.build(request.getId(), request.getName(), request.getCost());
+            DiagnosticAid aid = diagnosticAidBuilder.build(
+                    request.getId(),
+                    request.getName(),
+                    request.getCost(),
+                    request.getQuantity(),
+                    request.getRequiresSpecialist()
+            );
             supportUseCase.createDiagnosticAid(aid);
             return ResponseEntity.status(HttpStatus.CREATED).body(aid);
         } catch (InputsException ie) {

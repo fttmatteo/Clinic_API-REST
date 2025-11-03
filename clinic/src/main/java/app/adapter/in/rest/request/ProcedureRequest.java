@@ -7,6 +7,9 @@ public class ProcedureRequest {
     private String id;
     private String name;
     private String cost;
+    private String quantity;
+    private String frequency;
+    private String requiresSpecialist;
 
     public String getId() {
         return id;
@@ -25,5 +28,23 @@ public class ProcedureRequest {
     }
     public void setCost(String cost) {
         this.cost = cost;
+    }
+    public String getQuantity() {
+        return quantity;
+    }
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+    public String getFrequency() {
+        return frequency;
+    }
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
+    public String getRequiresSpecialist() {
+        return requiresSpecialist;
+    }
+    public void setRequiresSpecialist(String requiresSpecialist) {
+        this.requiresSpecialist = requiresSpecialist;
     }
 }

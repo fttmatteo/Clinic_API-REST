@@ -3,10 +3,10 @@ package app.domain.model;
 import java.sql.Date;
 
 /**
- * Representa una factura emitida por la clínica. Una factura incluye al
- * paciente, al médico tratante, la orden médica asociada (si corresponde),
- * el nombre del producto o servicio facturado y el monto total. Cuando se
- * factura un medicamento, siempre debe existir una orden médica asociada.
+ * Representa una factura emitida por la clínica. Cada factura incluye al
+ * paciente, al médico tratante, la orden clínica asociada, el nombre del
+ * producto o servicio facturado y el monto total. La orden asociada provee
+ * el detalle clínico que respalda la factura.
  */
 public class Invoice {
     private Long id;

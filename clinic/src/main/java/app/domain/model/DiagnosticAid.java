@@ -12,6 +12,8 @@ public class DiagnosticAid {
     private String id;
     private String name;
     private Double cost;
+    private Integer defaultQuantity;
+    private Boolean defaultRequiresSpecialist;
 
     public String getId() {
         return id;
@@ -35,5 +37,21 @@ public class DiagnosticAid {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    public Integer getDefaultQuantity() {
+        return defaultQuantity;
+    }
+
+    public void setDefaultQuantity(Integer defaultQuantity) {
+        this.defaultQuantity = defaultQuantity;
+    }
+
+    public Boolean getDefaultRequiresSpecialist() {
+        return defaultRequiresSpecialist;
+    }
+
+    public void setDefaultRequiresSpecialist(Boolean defaultRequiresSpecialist) {
+        this.defaultRequiresSpecialist = defaultRequiresSpecialist;
     }
 }

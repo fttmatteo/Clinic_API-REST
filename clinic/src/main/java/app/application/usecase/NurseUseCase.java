@@ -16,7 +16,14 @@ public class NurseUseCase {
     @Autowired
     private CreateVitalSignsRecord createVitalSignsRecord;
 
+    @Autowired
+    private app.domain.services.CreateOrderExecutionRecord createOrderExecutionRecord;
+
     public void recordVitalSigns(VitalSignsRecord record) throws Exception {
         createVitalSignsRecord.create(record);
+    }
+
+    public void executeOrderItem(app.domain.model.OrderExecutionRecord record, Long orderId, Integer itemNumber) throws Exception {
+        createOrderExecutionRecord.create(record, orderId, itemNumber);
     }
 }

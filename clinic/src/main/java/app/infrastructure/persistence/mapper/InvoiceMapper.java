@@ -1,9 +1,6 @@
 package app.infrastructure.persistence.mapper;
 
-import app.domain.model.Employee;
 import app.domain.model.Invoice;
-import app.domain.model.MedicalOrder;
-import app.domain.model.Patient;
 import app.infrastructure.persistence.entities.EmployeeEntity;
 import app.infrastructure.persistence.entities.InvoiceEntity;
 import app.infrastructure.persistence.entities.MedicalOrderEntity;
@@ -48,14 +45,10 @@ public class InvoiceMapper {
         Invoice invoice = new Invoice();
         invoice.setId(entity.getId());
         if (entity.getPatient() != null) {
-            Patient patient = new Patient();
-            patient.setId(entity.getPatient().getId());
-            invoice.setPatient(patient);
+            invoice.setPatient(PatientMapper.toDomain(entity.getPatient()));
         }
         if (entity.getDoctor() != null) {
-            Employee doctor = new Employee();
-            doctor.setId(entity.getDoctor().getId());
-            invoice.setDoctor(doctor);
+            invoice.setDoctor(EmployeeMapper.toDomain(entity.getDoctor()));
         }
         invoice.setProductName(entity.getProductName());
         invoice.setProductAmount(entity.getProductAmount());
@@ -63,9 +56,7 @@ public class InvoiceMapper {
         invoice.setCopay(entity.getCopay());
         invoice.setBilledToInsurer(entity.getBilledToInsurer());
         if (entity.getOrder() != null) {
-            MedicalOrder order = new MedicalOrder();
-            order.setId(entity.getOrder().getId());
-            invoice.setOrder(order);
+            invoice.setOrder(MedicalOrderMapper.toDomain(entity.getOrder()));
         }
         invoice.setDate(entity.getDate());
         return invoice;

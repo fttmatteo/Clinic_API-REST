@@ -14,32 +14,29 @@ import app.domain.model.Patient;
 /**
  * Builder para {@link Invoice}. Crea una factura a partir de los datos
  * recibidos y realiza las conversiones necesarias. La validación de los
- * datos se delega a {@link InvoiceValidator}.
+ * datos se delega a {@link InvoiceValidator}. El paciente se identifica por
+ * su documento y siempre se exige una orden clínica asociada que permita
+ * obtener el detalle médico.
  */
 @Component
 public class InvoiceBuilder {
     @Autowired
     private InvoiceValidator invoiceValidator;
-    public Invoice build(String patientId, String doctorDocument, String productName,
-                         String productAmount, String isMedicine, String orderId) throws Exception {
+    public Invoice build(String patientId, String doctorDocument, String orderId) throws Exception {
         Invoice invoice = new Invoice();
         Patient patient = new Patient();
-        patient.setId(invoiceValidator.patientIdValidator(patientId));
+        long document = invoiceValidator.patientDocumentValidator(patientId);
+        patient.setDocument(document);
+        patient.setId(document);
         invoice.setPatient(patient);
         if (doctorDocument != null && !doctorDocument.trim().isEmpty()) {
             Employee doctor = new Employee();
             doctor.setDocument(invoiceValidator.doctorDocumentValidator(doctorDocument));
             invoice.setDoctor(doctor);
         }
-        invoice.setProductName(invoiceValidator.productNameValidator(productName));
-        invoice.setProductAmount(invoiceValidator.amountValidator(productAmount));
-        boolean medicine = invoiceValidator.isMedicineValidator(isMedicine);
-        invoice.setMedicine(medicine);
-        if (medicine) {
-            MedicalOrder order = new MedicalOrder();
-            order.setId(invoiceValidator.orderIdValidator(orderId));
-            invoice.setOrder(order);
-        }
+        MedicalOrder order = new MedicalOrder();
+        order.setOrderNumber(invoiceValidator.orderNumberValidator(orderId));
+        invoice.setOrder(order);
         invoice.setDate(new Date(System.currentTimeMillis()));
         return invoice;
     }

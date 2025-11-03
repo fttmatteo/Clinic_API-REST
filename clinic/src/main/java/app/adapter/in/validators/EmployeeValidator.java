@@ -29,7 +29,11 @@ public class EmployeeValidator extends SimpleValidator {
     }
 
     public long documentValidator(String value) throws InputsException {
-        return longValidator("número de cédula", value);
+        long doc = longValidator("número de cédula", value);
+        if (String.valueOf(Math.abs(doc)).length() > 10) {
+            throw new InputsException("la cédula no puede exceder 10 dígitos");
+        }
+        return doc;
     }
 
     public Date birthDateValidator(String value) throws InputsException {
@@ -88,6 +92,9 @@ public class EmployeeValidator extends SimpleValidator {
         }
         if (!value.matches(".*[0-9].*")) {
             throw new InputsException("la contraseña debe contener al menos un número");
+        }
+        if (!value.matches(".*[^A-Za-z0-9].*")) {
+            throw new InputsException("la contraseña debe contener al menos un carácter especial");
         }
         return value;
     }

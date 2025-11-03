@@ -3,10 +3,8 @@ package app.infrastructure.persistence.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.domain.model.Employee;
 import app.domain.model.MedicalOrder;
 import app.domain.model.OrderItem;
-import app.domain.model.Patient;
 import app.infrastructure.persistence.entities.EmployeeEntity;
 import app.infrastructure.persistence.entities.MedicalOrderEntity;
 import app.infrastructure.persistence.entities.OrderItemEntity;
@@ -23,6 +21,7 @@ public class MedicalOrderMapper {
         if (order == null) return null;
         MedicalOrderEntity entity = new MedicalOrderEntity();
         entity.setId(order.getId());
+        entity.setOrderNumber(order.getOrderNumber());
         if (order.getPatient() != null) {
             PatientEntity patientEntity = new PatientEntity();
             patientEntity.setId(order.getPatient().getId());
@@ -50,15 +49,12 @@ public class MedicalOrderMapper {
         if (entity == null) return null;
         MedicalOrder order = new MedicalOrder();
         order.setId(entity.getId());
+        order.setOrderNumber(entity.getOrderNumber());
         if (entity.getPatient() != null) {
-            Patient patient = new Patient();
-            patient.setId(entity.getPatient().getId());
-            order.setPatient(patient);
+            order.setPatient(PatientMapper.toDomain(entity.getPatient()));
         }
         if (entity.getDoctor() != null) {
-            Employee doctor = new Employee();
-            doctor.setId(entity.getDoctor().getId());
-            order.setDoctor(doctor);
+            order.setDoctor(EmployeeMapper.toDomain(entity.getDoctor()));
         }
         order.setCreationDate(entity.getCreationDate());
         if (entity.getItems() != null) {

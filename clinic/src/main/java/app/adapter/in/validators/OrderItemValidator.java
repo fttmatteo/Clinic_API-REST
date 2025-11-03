@@ -6,24 +6,15 @@ import app.application.exceptions.InputsException;
 import app.domain.model.enums.OrderItemType;
 
 /**
- * Validador para los campos de un ítem de orden. Dependiendo del tipo de
- * ítem se aplican reglas diferentes. Por ejemplo, un medicamento debe
- * indicar dosis y duración, mientras que un procedimiento requiere
- * cantidad, frecuencia y puede requerir un especialista.
+ * Validador para los campos de un item de orden. Se limita a validar que el
+ * tipo del item corresponda a un valor permitido y que el identificador de
+ * inventario no sea vacio.
  */
 @Component
 public class OrderItemValidator extends SimpleValidator {
 
-    public int itemNumberValidator(String value) throws InputsException {
-        int number = integerValidator("número de ítem", value);
-        if (number < 1) {
-            throw new InputsException("el número de ítem debe ser mayor o igual a 1");
-        }
-        return number;
-    }
-
     public OrderItemType typeValidator(String value) throws InputsException {
-        stringValidator("tipo de ítem", value);
+        stringValidator("tipo de item", value);
 
         String norm = java.text.Normalizer.normalize(value.trim().toLowerCase(), java.text.Normalizer.Form.NFD)
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
@@ -47,66 +38,12 @@ public class OrderItemValidator extends SimpleValidator {
                 try {
                     return OrderItemType.valueOf(value.trim().toUpperCase());
                 } catch (IllegalArgumentException e) {
-                    throw new InputsException("el tipo de ítem debe ser medicamento, procedimiento o ayuda diagnóstica.");
+                    throw new InputsException("el tipo de item debe ser medicamento, procedimiento o ayuda diagnostica.");
                 }
         }
     }
 
     public String referenceIdValidator(String value) throws InputsException {
-        return stringValidator("identificador del ítem", value);
-    }
-
-    public String doseValidator(String value, OrderItemType type) throws InputsException {
-        if (type == OrderItemType.MEDICINE) {
-            return stringValidator("dosis del medicamento", value);
-        }
-        return null;
-    }
-
-    public String treatmentDurationValidator(String value, OrderItemType type) throws InputsException {
-        if (type == OrderItemType.MEDICINE) {
-            return stringValidator("duración del tratamiento", value);
-        }
-        return null;
-    }
-
-    public Integer quantityValidator(String value, OrderItemType type) throws InputsException {
-        if (type == OrderItemType.PROCEDURE || type == OrderItemType.DIAGNOSTIC_AID) {
-            return integerValidator("cantidad", value);
-        }
-        return null;
-    }
-
-    public String frequencyValidator(String value, OrderItemType type) throws InputsException {
-        if (type == OrderItemType.PROCEDURE) {
-            return stringValidator("frecuencia del procedimiento", value);
-        }
-        return null;
-    }
-
-    public Double costValidator(String value) throws InputsException {
-        return doubleValidator("costo", value);
-    }
-
-    public Boolean requiresSpecialistValidator(String value, OrderItemType type) throws InputsException {
-        if (type == OrderItemType.PROCEDURE || type == OrderItemType.DIAGNOSTIC_AID) {
-            stringValidator("requiere especialista", value);
-            String lower = value.toLowerCase();
-            if (lower.equals("si") || lower.equals("true")) {
-                return true;
-            }
-            if (lower.equals("no") || lower.equals("false")) {
-                return false;
-            }
-            throw new InputsException("requiere especialista debe ser si/no o true/false");
-        }
-        return null;
-    }
-
-    public String specialistTypeIdValidator(String value, OrderItemType type, Boolean requiresSpecialist) throws InputsException {
-        if ((type == OrderItemType.PROCEDURE || type == OrderItemType.DIAGNOSTIC_AID) && Boolean.TRUE.equals(requiresSpecialist)) {
-            return stringValidator("id del tipo de especialidad", value);
-        }
-        return null;
+        return stringValidator("identificador del item", value);
     }
 }

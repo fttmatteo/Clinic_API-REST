@@ -14,6 +14,8 @@ public class DiagnosticAidMapper {
         entity.setId(domain.getId());
         entity.setName(domain.getName());
         entity.setCost(domain.getCost());
+        entity.setDefaultQuantity(domain.getDefaultQuantity());
+        entity.setDefaultRequiresSpecialist(domain.getDefaultRequiresSpecialist());
         return entity;
     }
     public static DiagnosticAid toDomain(DiagnosticAidEntity entity) {
@@ -22,6 +24,8 @@ public class DiagnosticAidMapper {
         domain.setId(entity.getId());
         domain.setName(entity.getName());
         domain.setCost(entity.getCost());
+        domain.setDefaultQuantity(entity.getDefaultQuantity());
+        domain.setDefaultRequiresSpecialist(entity.getDefaultRequiresSpecialist());
         return domain;
     }
 }

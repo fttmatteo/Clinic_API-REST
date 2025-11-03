@@ -30,6 +30,15 @@ public class MedicalOrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Número de orden de negocio. Es una cadena numérica de hasta seis
+     * dígitos que identifica de forma única la orden en el dominio del
+     * negocio. Se marca como única y no nula a nivel de base de datos
+     * para evitar duplicados. No se utiliza como clave primaria.
+     */
+    @Column(name = "order_number", nullable = false, unique = true, length = 6)
+    private String orderNumber;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id", nullable = false)
     private PatientEntity patient;
@@ -44,6 +53,14 @@ public class MedicalOrderEntity {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OrderItemEntity> items = new ArrayList<>();
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
 
     public Long getId() {
         return id;

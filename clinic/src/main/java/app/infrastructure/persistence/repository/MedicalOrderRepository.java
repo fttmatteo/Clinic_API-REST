@@ -15,4 +15,5 @@ import app.infrastructure.persistence.entities.PatientEntity;
 @Repository
 public interface MedicalOrderRepository extends JpaRepository<MedicalOrderEntity, Long> {
     List<MedicalOrderEntity> findByPatient(PatientEntity patient);
+    java.util.Optional<MedicalOrderEntity> findByOrderNumber(String orderNumber);
 }

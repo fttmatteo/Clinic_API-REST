@@ -16,11 +16,14 @@ public class DiagnosticAidBuilder {
     @Autowired
     private DiagnosticAidValidator validator;
 
-    public DiagnosticAid build(String id, String name, String cost) throws Exception {
+    public DiagnosticAid build(String id, String name, String cost, String quantity,
+                               String requiresSpecialist) throws Exception {
         DiagnosticAid aid = new DiagnosticAid();
         aid.setId(validator.idValidator(id));
         aid.setName(validator.nameValidator(name));
         aid.setCost(validator.costValidator(cost));
+        aid.setDefaultQuantity(validator.quantityValidator(quantity));
+        aid.setDefaultRequiresSpecialist(validator.requiresSpecialistValidator(requiresSpecialist));
         return aid;
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.adapter.in.builder.InvoiceBuilder;
 import app.adapter.in.builder.PatientBuilder;
+import app.adapter.in.rest.request.AppointmentRequest;
 import app.adapter.in.rest.request.InvoiceRequest;
 import app.adapter.in.rest.request.PatientRequest;
 import app.adapter.in.validators.PatientValidator;
@@ -39,6 +41,12 @@ public class AdministrativeController {
     private PatientBuilder patientBuilder;
     @Autowired
     private InvoiceBuilder invoiceBuilder;
+    @Autowired
+    private app.adapter.in.builder.AppointmentBuilder appointmentBuilder;
+    @Autowired
+    private app.application.usecase.AppointmentUseCase appointmentUseCase;
+    @Autowired
+    private app.adapter.in.validators.AppointmentValidator appointmentValidator;
     @Autowired
     private PatientValidator patientValidator;
     @Autowired
@@ -83,9 +91,6 @@ public class AdministrativeController {
             Invoice invoice = invoiceBuilder.build(
                     request.getPatientId(),
                     request.getDoctorDocument(),
-                    request.getProductName(),
-                    request.getProductAmount(),
-                    request.getIsMedicine(),
                     request.getOrderId()
             );
             administrativeUseCase.createInvoice(invoice);
@@ -94,6 +99,23 @@ public class AdministrativeController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
         } catch (BusinessException be) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(be.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/invoices/patient/{patientDocument}")
+        @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
+    public ResponseEntity<?> listInvoicesByPatientDocument(@PathVariable String patientDocument) {
+        try {
+            Patient patient = new Patient();
+            patient.setDocument(patientValidator.documentValidator(patientDocument));
+            List<Invoice> invoices = administrativeUseCase.searchInvoicesByPatient(patient);
+            return ResponseEntity.ok(invoices);
+        } catch (InputsException ie) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
+        } catch (BusinessException be) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(be.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
@@ -109,6 +131,74 @@ public class AdministrativeController {
             return ResponseEntity.ok(orders);
         } catch (InputsException ie) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/appointments")
+        @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
+    public ResponseEntity<?> createAppointment(@RequestBody AppointmentRequest request) {
+        try {
+            var appointment = appointmentBuilder.build(
+                    request.getPatientDocument(),
+                    request.getDoctorDocument(),
+                    request.getDateTime()
+            );
+            appointmentUseCase.createAppointment(appointment);
+            return ResponseEntity.status(HttpStatus.CREATED).body(appointment);
+        } catch (InputsException ie) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
+        } catch (BusinessException be) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(be.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/appointments/patient/{patientDocument}")
+        @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
+    public ResponseEntity<?> listAppointmentsByPatient(@PathVariable String patientDocument) {
+        try {
+            long document = appointmentValidator.patientDocumentValidator(patientDocument);
+            app.domain.model.Patient patient = new app.domain.model.Patient();
+            patient.setDocument(document);
+            var list = appointmentUseCase.listByPatient(patient);
+            return ResponseEntity.ok(list);
+        } catch (InputsException ie) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/appointments/doctor/{doctorDocument}")
+        @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
+    public ResponseEntity<?> listAppointmentsByDoctor(@PathVariable String doctorDocument) {
+        try {
+            long doc = appointmentValidator.doctorDocumentValidator(doctorDocument);
+            app.domain.model.Employee doctor = new app.domain.model.Employee();
+            doctor.setDocument(doc);
+            var list = appointmentUseCase.listByDoctor(doctor);
+            return ResponseEntity.ok(list);
+        } catch (InputsException ie) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/appointments/{appointmentId}")
+        @PreAuthorize("hasRole('PERSONAL_ADMINISTRATIVE')")
+    public ResponseEntity<?> cancelAppointment(@PathVariable String appointmentId) {
+        try {
+            long id = appointmentValidator.longValidator("identificador de la cita", appointmentId);
+            appointmentUseCase.cancelAppointment(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (InputsException ie) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
+        } catch (BusinessException be) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(be.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

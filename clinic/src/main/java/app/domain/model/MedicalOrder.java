@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class MedicalOrder {
     private Long id;
+    private String orderNumber;
     private Patient patient;
     private Employee doctor;
     private Date creationDate;
@@ -26,6 +27,14 @@ public class MedicalOrder {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     public Patient getPatient() {
