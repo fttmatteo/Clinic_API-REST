@@ -234,8 +234,8 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
   "doctorDocument":"900100200",
   "patientId":"100200300",
   "items":[
-    {{ "type":"MEDICINE","referenceId":"MED-001" }},
-    {{ "type":"PROCEDURE","referenceId":"PROC-001" }}
+    { "type":"MEDICINE","referenceId":"MED-001" },
+    { "type":"PROCEDURE","referenceId":"PROC-001" }
   ]
 }
 ```
@@ -330,7 +330,7 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 
 ---
 
-## 🧪 Pruebas (verificado)
+## 🧪 Pruebas
 El proyecto incluye la dependencia `spring-boot-starter-test`. Ejecute:
 ```bash
 mvn test
