@@ -1,5 +1,7 @@
 package app.adapter.in.rest.controllers;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -142,7 +144,7 @@ public class HumanResourcesController {
         try {
             long doc = employeeValidator.documentValidator(document);
             humanResourcesUseCase.deleteEmployee(doc);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.ok(Map.of("message", "empleado eliminado"));
         } catch (InputsException ie) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
         } catch (BusinessException be) {
