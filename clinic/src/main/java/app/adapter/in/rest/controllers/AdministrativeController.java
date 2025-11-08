@@ -1,6 +1,7 @@
 package app.adapter.in.rest.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -194,7 +195,7 @@ public class AdministrativeController {
         try {
             long id = appointmentValidator.longValidator("identificador de la cita", appointmentId);
             appointmentUseCase.cancelAppointment(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.ok(Map.of("message", "cita cancelada"));
         } catch (InputsException ie) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ie.getMessage());
         } catch (BusinessException be) {
