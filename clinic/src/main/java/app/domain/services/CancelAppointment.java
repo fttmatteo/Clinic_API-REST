@@ -22,6 +22,9 @@ public class CancelAppointment {
         if (existing == null) {
             throw new BusinessException("la cita a cancelar no existe");
         }
+        if ("CANCELLED".equalsIgnoreCase(existing.getStatus())) {
+            throw new BusinessException("la cita ya se encuentra cancelada");
+        }
         existing.setStatus("CANCELLED");
         appointmentPort.save(existing);
     }
