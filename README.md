@@ -172,12 +172,12 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 ```json
 { 
   "fullName": "Nombre Apellido",
-  "document": "1234567890",
+  "document": 1234567890,
   "birthDate": "01/01/1990",
   "address": "Calle 123",
-  "phone": "3001234567",
+  "phone": 3001234567,
   "email": "usuario@correo.com",
-  "userName": "usuario",
+  "userName": "usuario2025",
   "password": "A!123456789"
 }
 ```
@@ -190,55 +190,57 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 - **DELETE** `/administrative/appointments/{appointmentId}` — Cancelar cita
 - **POST** `/administrative/invoices` — Crear factura (body: `InvoiceRequest`)
 - **GET** `/administrative/invoices/patient/{patientDocument}` — Listar facturas por paciente
-- **GET** `/administrative/orders/{patientId}` — Buscar órdenes por paciente
+- **GET** `/administrative/orders/{patientDocument}` — Buscar órdenes por paciente
 
 **`PatientRequest`:**
 ```json
 {
   "fullName":"Juan Pérez",
-  "document":"100200300",
+  "document":100200300,
   "birthDate":"01/01/1990",
   "gender":"M",
   "address":"Calle 45 #10-20",
-  "phone":"3001234567",
+  "phone":3001234567,
   "email":"juan@correo.com",
-  "insurancePolicy":"SÍ/NO",
-  "insuranceType":"Contributivo",
-  "companyName":"Aseguradora X",
-  "policyNumber":"POL-123",
-  "policyStatus":"ACTIVA",
-  "policyExpiry":"2026-12-31"
+  "contactFirstName":"Primer Nombre Contacto",
+  "contactLastName":"Segundo Nombre Contacto",
+  "contactRelation":"Relación Contacto",
+  "contactPhone":3001234567,
+  "companyName":"Nombre Compañia De Seguros",
+  "policyNumber":4567,
+  "policyStatus":"si",
+  "policyExpiry":"21/10/2026"
 }
 ```
 
 **`AppointmentRequest`:**
 ```json
 {
-  "patientDocument":"100200300",
-  "doctorDocument":"900100200",
-  "dateTime":"2025-11-03 09:00:00"
+  "patientDocument":100200300,
+  "doctorDocument":900100200,
+  "dateTime":"2025-11-03 09:00"
 }
 ```
 
 **`InvoiceRequest`:**
 ```json
 {
-  "patientId":"100200300",
-  "doctorDocument":"900100200",
-  "orderId":"ORD-001"
+  "patientId":100200300,
+  "doctorDocument":900100200,
+  "orderId":123456
 }
 ```
 
 ### Médico — `/doctor` (rol: DOCTOR)
 - **POST** `/doctor/orders` — Crear orden médica (body: `MedicalOrderRequest`)
-- **GET** `/doctor/orders/{patientId}` — Consultar órdenes del paciente
+- **GET** `/doctor/orders/{patientDocument}` — Consultar órdenes del paciente
 - **POST** `/doctor/records` — Crear registro clínico (body: `MedicalRecordRequest`)
 
 **`MedicalOrderRequest`:**
 ```json
 {
-  "doctorDocument":"900100200",
-  "patientId":"100200300",
+  "doctorDocument":900100200,
+  "patientId":100200300,
   "items":[
     { "type":"MEDICINE","referenceId":"MED-001" },
     { "type":"PROCEDURE","referenceId":"PROC-001" }
@@ -249,9 +251,9 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 **`MedicalRecordRequest`:**
 ```json
 {
-  "doctorDocument":"900100200",
-  "patientId":"100200300",
-  "orderId":"ORD-001",
+  "doctorDocument":900100200,
+  "patientId":100200300,
+  "orderId":1,
   "motive":"Dolor de cabeza",
   "symptoms":"Cefalea, fiebre",
   "diagnosis":"Migraña"
@@ -265,12 +267,21 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 **`VitalSignsRequest`:**
 ```json
 {
-  "nurseDocument":"700300400",
-  "patientId":"100200300",
+  "nurseDocument":700300400,
+  "patientId":100200300,
   "bloodPressure":"120/80",
-  "temperature":"36.5",
-  "pulse":"75",
-  "oxygenLevel":"98"
+  "temperature":36.5,
+  "pulse":75,
+  "oxygenLevel":98
+}
+```
+
+**`OrderExecutionRequest`:**
+```json
+{
+  "nurseDocument":700300400,
+  "amount":"2.5",
+  "notes":"Aplicación sin novedades"
 }
 ```
 
@@ -333,14 +344,6 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 * **Órdenes**: número de orden único; relación **orden–ítem** única; múltiples ítems por orden (medicamentos/procedimientos/ayudas) numerados desde 1.
 * **Exclusividad de ayudas diagnósticas**: si se solicita una ayuda diagnóstica **no** se recetan medicamentos/procedimientos en esa misma atención; tras resultado, se genera un nuevo registro con diagnóstico y posibles recetas.
 * **Facturación**: si póliza activa → copago $50.000 y resto a aseguradora; tope anual de copagos $1’000.000 por paciente; sin póliza o inactiva → paga el total.
-
----
-
-## 🧪 Pruebas
-El proyecto incluye la dependencia `spring-boot-starter-test`. Ejecute:
-```bash
-mvn test
-```
 
 ---
 
