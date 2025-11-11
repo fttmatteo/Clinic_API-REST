@@ -1,10 +1,14 @@
-# INTEGRANTES DEL PROYECTO CONSTRUCCIÓN DE SOFTWARE
+# Clínic – API REST (Spring Boot)
+
+![Endpoints del API](images/api-endpoints.png)
+
+## Integrantes del proyecto
 - **Mateo Valencia Ardila**
 - **Juan Camilo Cabrera Roa**
 - **Kevin Daniel Aguirre Oquendo**
 - **Samuel Vera Miranda**
 
-# Clínic – API REST (Spring Boot)
+---
 
 Clinic es una API REST para la gestión operativa de una clínica, implementada con Spring Boot 3 (Java 17) bajo Arquitectura Hexagonal. Expone casos de uso para pacientes, empleados, citas, historia clínica (incluye signos vitales), órdenes médicas y su ejecución, procedimientos, medicamentos, ayudas diagnósticas e invoices.
 
