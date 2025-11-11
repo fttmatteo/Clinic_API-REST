@@ -1,6 +1,6 @@
 # Clínic – API REST (Spring Boot)
 
-<p align="center">
+<p align="left">
   <img src="/clinic/images/api-endpoints.png" alt="Endpoints del API" width="500"/>
 </p>
 
