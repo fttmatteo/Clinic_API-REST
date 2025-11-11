@@ -163,10 +163,6 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 
 ## 📚 Endpoints
 
-<p align="left">
-  <img src="/clinic/images/api-endpoints.png" alt="Endpoints del API" width="500"/>
-</p>
-
 ### Gestión de personal (RR. HH.) — `/employees` (rol: HUMAN_RESOURCES)
 - **POST** `/employees/doctor` — Crear médico (body: `EmployeeRequest`)
 - **POST** `/employees/nurse` — Crear enfermero (body: `EmployeeRequest`)
