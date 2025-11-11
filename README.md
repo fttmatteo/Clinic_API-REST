@@ -1,6 +1,6 @@
 # Clínic – API REST (Spring Boot)
 
-![Endpoints del API](images/api-endpoints.png)
+![Endpoints del API](/clinic/images/api-endpoints.png)
 
 ## Integrantes del proyecto
 - **Mateo Valencia Ardila**
