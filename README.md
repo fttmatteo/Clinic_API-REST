@@ -1,7 +1,7 @@
 ## [English version](#English)
 
 ---
-# ESPAÑOL
+## ESPAÑOL
 # Clínic – API REST (Spring Boot)
 
 Clinic es una API REST para la gestión operativa de una clínica, implementada con Spring Boot 3 (Java 17) bajo Arquitectura Hexagonal. Expone casos de uso para pacientes, empleados, citas, historia clínica (incluye signos vitales), órdenes médicas y su ejecución, procedimientos, medicamentos, ayudas diagnósticas e invoices.
@@ -353,8 +353,8 @@ MIT
 **Última actualización:** 2025-11-23 18:00
 
 ---
----
-# ENGLISH
+
+## ENGLISH
 # Clinic – REST API (Spring Boot)
 
 Clinic is a REST API for the operational management of a clinic, implemented with Spring Boot 3 (Java 17) using a Hexagonal Architecture. It exposes use cases for patients, employees, appointments, medical records (including vital signs), medical orders and their execution, procedures, medications, diagnostic aids, and invoices.
