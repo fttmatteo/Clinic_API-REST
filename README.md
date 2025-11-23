@@ -193,39 +193,39 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 **`PatientRequest`:**
 ```json
 {
-  "fullName":"Juan Pérez",
-  "document":100200300,
-  "birthDate":"01/01/1990",
-  "gender":"M",
-  "address":"Calle 45 #10-20",
-  "phone":3001234567,
-  "email":"juan@correo.com",
-  "contactFirstName":"Primer Nombre Contacto",
-  "contactLastName":"Segundo Nombre Contacto",
-  "contactRelation":"Relación Contacto",
-  "contactPhone":3001234567,
-  "companyName":"Nombre Compañia De Seguros",
-  "policyNumber":4567,
-  "policyStatus":"si",
-  "policyExpiry":"21/10/2026"
+  "fullName": "Juan Pérez",
+  "document": 100200300,
+  "birthDate": "01/01/1990",
+  "gender": "M",
+  "address": "Calle 45 #10-20",
+  "phone": 3001234567,
+  "email": "juan@correo.com",
+  "contactFirstName": "Primer Nombre Contacto",
+  "contactLastName": "Segundo Nombre Contacto",
+  "contactRelation": "Relación Contacto",
+  "contactPhone": 3001234567,
+  "companyName": "Nombre Compañia De Seguros",
+  "policyNumber": 4567,
+  "policyStatus": "si",
+  "policyExpiry": "21/10/2026"
 }
 ```
 
 **`AppointmentRequest`:**
 ```json
 {
-  "patientDocument":100200300,
-  "doctorDocument":900100200,
-  "dateTime":"2025-11-03 09:00"
+  "patientDocument": 100200300,
+  "doctorDocument": 900100200,
+  "dateTime": "03/11/2025 09:00"
 }
 ```
 
 **`InvoiceRequest`:**
 ```json
 {
-  "patientId":100200300,
-  "doctorDocument":900100200,
-  "orderId":123456
+  "patientId": 100200300,
+  "doctorDocument": 900100200,
+  "orderId": 123456
 }
 ```
 
@@ -237,11 +237,11 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 **`MedicalOrderRequest`:**
 ```json
 {
-  "doctorDocument":900100200,
-  "patientId":100200300,
+  "doctorDocument": 900100200,
+  "patientId": 100200300,
   "items":[
-    { "type":"MEDICINE","referenceId":"MED-001" },
-    { "type":"PROCEDURE","referenceId":"PROC-001" }
+    { "type": "MEDICINE", "referenceId": "MED-001" },
+    { "type": "PROCEDURE", "referenceId": "PROC-001" }
   ]
 }
 ```
@@ -249,12 +249,12 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 **`MedicalRecordRequest`:**
 ```json
 {
-  "doctorDocument":900100200,
-  "patientId":100200300,
-  "orderId":1,
-  "motive":"Dolor de cabeza",
-  "symptoms":"Cefalea, fiebre",
-  "diagnosis":"Migraña"
+  "doctorDocument": 900100200,
+  "patientId": 100200300,
+  "orderId": 1,
+  "motive": "Dolor de cabeza",
+  "symptoms": "Cefalea, fiebre",
+  "diagnosis": "Migraña"
 }
 ```
 
@@ -265,21 +265,21 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 **`VitalSignsRequest`:**
 ```json
 {
-  "nurseDocument":700300400,
-  "patientId":100200300,
-  "bloodPressure":"120/80",
-  "temperature":36.5,
-  "pulse":75,
-  "oxygenLevel":98
+  "nurseDocument": 700300400,
+  "patientId": 100200300,
+  "bloodPressure": "120/80",
+  "temperature": 36.5,
+  "pulse": 75,
+  "oxygenLevel": 98
 }
 ```
 
 **`OrderExecutionRequest`:**
 ```json
 {
-  "nurseDocument":700300400,
-  "amount":"2.5",
-  "notes":"Aplicación sin novedades"
+  "nurseDocument": 700300400,
+  "amount": "2.5",
+  "notes": "Aplicación sin novedades"
 }
 ```
 
@@ -294,34 +294,34 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 **`MedicineRequest`:**
 ```json
 {
-  "id":"MED-005",
-  "name":"Acetaminofén 500 mg",
-  "cost":"1200.00",
-  "dose":"1 tableta cada 8h",
-  "treatmentDuration":"5 dias"
+  "id": "MED-005",
+  "name": "Acetaminofén 500 mg",
+  "cost": "1200.00",
+  "dose": "1 tableta cada 8h",
+  "treatmentDuration": "5 dias"
 }
 ```
 
 **`ProcedureRequest`:**
 ```json
 {
-  "id":"PROC-001",
-  "name":"Radiografía de tórax",
-  "cost":"25000.00",
-  "quantity":"1",
-  "frequency":"ÚNICA",
-  "requiresSpecialist":"false"
+  "id": "PROC-001",
+  "name": "Radiografía de tórax",
+  "cost": "25000.00",
+  "quantity": "1",
+  "frequency": "ÚNICA",
+  "requiresSpecialist": "false"
 }
 ```
 
 **`DiagnosticAidRequest`:**
 ```json
 {
-  "id":"DA-001",
-  "name":"Hemograma completo",
-  "cost":"18000.00",
-  "quantity":"1",
-  "requiresSpecialist":"false"
+  "id": "DA-001",
+  "name": "Hemograma completo",
+  "cost": "18000.00",
+  "quantity": "1",
+  "requiresSpecialist": "false"
 }
 ```
 
@@ -546,21 +546,21 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 **`PatientRequest`:**
 ```json
 { 
-"fullName":"Juan Pérez", 
-"document":100200300, 
-"birthDate":"01/01/1990", 
-"gender":"M", 
-"address":"Calle 45 #10-20", 
-"phone":3001234567,
-"email: juan@correo.com",
-"contactFirstName": First Name,
-"contactLastName": Second Name,
-"contactRelation": Contact Relationship",
+"fullName": "Juan Pérez", 
+"document": 100200300, 
+"birthDate": "01/01/1990", 
+"gender": "M", 
+"address": "Calle 45 #10-20", 
+"phone": 3001234567,
+"email": "juan@correo.com",
+"contactFirstName": "First Name",
+"contactLastName": "Second Name",
+"contactRelation": "Contact Relationship",
 "contactPhone": 3001234567,
-"companyName": Insurance Company Name,
+"companyName": "Insurance Company Name",
 "policyNumber": 4567,
-"policyStatus": yes",
-"policyExpiry": 21/10/2026"
+"policyStatus": "yes",
+"policyExpiry": "21/10/2026"
 }
 ```
 
@@ -569,7 +569,7 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 {
 "patientDocument": 100200300,
 "doctorDocument": 900100200,
-"dateTime": 2025-11-03 09:00"
+"dateTime": "03/11/2025 09:00"
 }
 ```
 
@@ -577,8 +577,8 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 ```json
 {
 "patientId": 100200300,
-"doctorDocument":900100200,
-"orderId":123456
+"doctorDocument": 900100200,
+"orderId": 123456
 }
 ```
 
@@ -590,11 +590,11 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 **`MedicalOrderRequest`:**
 ```json
 {
-"doctorDocument":900100200,
-"patientId":100200300,
+"doctorDocument": 900100200,
+"patientId": 100200300,
 "items":[
-{ "type":"MEDICINE","referenceId":"MED-001" },
-{ "type":"PROCEDURE","referenceId":"PROC-001" }
+  { "type": "MEDICINE", "referenceId": "MED-001" },
+  { "type": "PROCEDURE", "referenceId": "PROC-001" }
 ]
 }
 ```
@@ -602,12 +602,12 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 **`MedicalRecordRequest`:**
 ```json
 {
-"doctorDocument":900100200,
-"patientId":100200300,
-"orderId":1,
-"motive":"Headache",
-"symptoms":"Headache, fever",
-"diagnosis":"Migraine"
+"doctorDocument": 900100200,
+"patientId": 100200300,
+"orderId": 1,
+"motive": "Headache",
+"symptoms": "Headache, fever",
+"diagnosis": "Migraine"
 }
 ```
 
@@ -618,21 +618,21 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 **`VitalSignsRequest`:**
 ```json
 {
-"nurseDocument":700300400,
-"patientId":100200300,
-"bloodPressure":120/80",
-"temperature":36.5,
-"pulse":75,
-"oxygenLevel":98
+"nurseDocument": 700300400,
+"patientId": 100200300,
+"bloodPressure": "120/80",
+"temperature": 36.5,
+"pulse": 75,
+"oxygenLevel": 98
 }
 ```
 
 **`OrderExecutionRequest`:**
 ```json
 {
-"nurseDocument":700300400,
-"amount":2.5",
-"notes":"Application no updates"
+"nurseDocument": 700300400,
+"amount": "2.5",
+"notes": "Application no updates"
 }
 ```
 
@@ -647,34 +647,34 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 **`MedicineRequest`:**
 ```json
 {
-"idMED-005",
-"nameAcetaminophen 500 mg",
-"cost1200.00",
-"dose1 tablet every 8 hours",
-"treatmentDuration5 days"
+"id": "MED-005",
+"name": "Acetaminophen 500 mg",
+"cost": "1200.00",
+"dose": "1 tablet every 8 hours",
+"treatmentDuration": "5 days"
 }
 ```
 
 **`ProcedureRequest`:**
 ```json
 {
-"idPROC-001",
-"nameChest X-ray",
-"cost25000.00",
-"quantity1",
-"frequencyUNIQUE",
-"requiresSpecialistfalse"
+"id": "PROC-001",
+"name": "Chest X-ray",
+"cost": "25000.00",
+"quantity": "1",
+"frequency": "UNIQUE",
+"requiresSpecialist": "false"
 }
 ```
 
 **`DiagnosticAidRequest`:**
 ```json
 {
-"idDA-001",
-"nameComplete Blood Count",
-"cost18000.00",
-"quantity1",
-"requiresSpecialistfalse"
+"id": "DA-001",
+"name": "Complete Blood Count",
+"cost": "18000.00",
+"quantity": 1,
+"requiresSpecialist": "false"
 }
 ```
 
