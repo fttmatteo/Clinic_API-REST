@@ -392,35 +392,35 @@ Security is handled with JWT (JJWT, HS256) and role-based authorization (DOCTOR,
 ## 🗂 Structure
 ```
 clinic/ 
-├─ src/main/java/app 
-│ ├─ adapter/ 
-│ │ ├─ in/ 
-│ │ │ ├─ builder/ 
-│ │ │ ├─ rest/ 
-│ │ │ │ ├─ controllers/ 
-│ │ │ │ └─ request/ 
-│ │ │ └─ validators/ 
-│ │ └─ out/ 
-│ │ ├─ persistence/ 
-│ │ └─ security/ 
-│ ├─ application/ 
-│ │ ├─ exceptions/ 
-│ │ └─ usecase/ 
-│ ├─ domain/ 
-│ │ ├─ model/ 
-│ │ │ ├─ auth/ 
-│ │ │ └─ enums/ 
-│ │ ├─ ports/ 
-│ │ └─ services/ 
-│ └─ infrastructure/ 
-│ ├─ persistence/ 
-│ │ ├─ entities 
-│ │ ├─ mapper 
-│ │ └─ repository 
-│ └─ security/ 
-└─ src/main/resources 
-├─ application.properties
-└─ data.sql
+ ├─ src/main/java/app 
+ │   ├─ adapter/ 
+ │   │   ├─ in/ 
+ │   │   │   ├─ builder/ 
+ │   │   │   ├─ rest/ 
+ │   │   │   │   ├─ controllers/ 
+ │   │   │   │   └─ request/ 
+ │   │   │   └─ validators/ 
+ │   │   └─ out/ 
+ │   │       ├─ persistence/ 
+ │   │       └─ security/ 
+ │   ├─ application/ 
+ │   │   ├─ exceptions/ 
+ │   │   └─ usecase/ 
+ │   ├─ domain/ 
+ │   │   ├─ model/ 
+ │   │   │   ├─ auth/ 
+ │   │   │   └─ enums/ 
+ │   │   ├─ ports/ 
+ │   │   └─ services/ 
+ │   └─ infrastructure/ 
+ │       ├─ persistence/ 
+ │       │   ├─ entities 
+ │       │   ├─ mapper 
+ │       │   └─ repository 
+ │       └─ security/ 
+ └─ src/main/resources 
+     ├─ application.properties
+     └─ data.sql
 ```
 
 ---
@@ -473,7 +473,7 @@ When creating the database for the first time, insert an HR administrator direct
 ```sql
 INSERT INTO employees (address,birth_date,document,email,full_name,password,phone,role,user_name)
 VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789',3000000001,'HUMAN_RESOURCES','ADMIN');
-``
+```
 
 > **Password and hashing:** The system uses **BCrypt**. If you enter the password in plain text as above, it will be detected and automatically saved encrypted on the **first login**.
 
@@ -483,15 +483,15 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 
 > The service listens on **[http://localhost:8080](http://localhost:8080)** (Spring Boot default if `server.port` is not defined).
 
-**POST** `/auth/login` — Log in
-**Body (JSON):**
-```json
-{ "username": "ADMIN", "password": "A!123456789" }
-```
-**Response (JSON):**
-```json
-{ "token": "eyJhbGciOi..." }
-```
+  **POST** `/auth/login` — Log in
+  **Body (JSON):**
+  ```json
+  { "username": "ADMIN", "password": "A!123456789" }
+  ```
+  **Response (JSON):**
+  ```json
+  { "token": "eyJhbGciOi..." }
+  ```
 
 * Use the token in `Authorization: Bearer <JWT>` to call the endpoints.
 
@@ -501,12 +501,12 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 
 ## Roles and routes
 
-- `/auth/**` → public.
-- `/employees/**` → `HUMAN_RESOURCES`. 
-- `/administrative/**` → `PERSONAL_ADMINISTRATIVE`. 
-- `/doctor/**` → `DOCTOR`. 
-- `/nurse/**` → `NURSE`. 
-- `/support/**` → `INFORMATION_SUPPORT`.
+  - `/auth/**` → public.
+  - `/employees/**` → `HUMAN_RESOURCES`. 
+  - `/administrative/**` → `PERSONAL_ADMINISTRATIVE`. 
+  - `/doctor/**` → `DOCTOR`. 
+  - `/nurse/**` → `NURSE`. 
+  - `/support/**` → `INFORMATION_SUPPORT`.
 
 ---
 
@@ -522,14 +522,14 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 **`EmployeeRequest`:**
 ```json
 {
-"fullName": "First Name Last Name",
-"document": 1234567890, 
-"birthDate": "01/01/1990", 
-"address": "123rd Street", 
-"phone": 3001234567, 
-"email": "user@mail.com", 
-"userName": "user2025", 
-"password": "A!123456789"
+  "fullName": "First Name Last Name",
+  "document": 1234567890, 
+  "birthDate": "01/01/1990", 
+  "address": "123rd Street", 
+  "phone": 3001234567, 
+  "email": "user@mail.com", 
+  "userName": "user2025", 
+  "password": "A!123456789"
 }
 ```
 
@@ -546,39 +546,39 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 **`PatientRequest`:**
 ```json
 { 
-"fullName": "Juan Pérez", 
-"document": 100200300, 
-"birthDate": "01/01/1990", 
-"gender": "M", 
-"address": "Calle 45 #10-20", 
-"phone": 3001234567,
-"email": "juan@correo.com",
-"contactFirstName": "First Name",
-"contactLastName": "Second Name",
-"contactRelation": "Contact Relationship",
-"contactPhone": 3001234567,
-"companyName": "Insurance Company Name",
-"policyNumber": 4567,
-"policyStatus": "yes",
-"policyExpiry": "21/10/2026"
+  "fullName": "Juan Pérez", 
+  "document": 100200300, 
+  "birthDate": "01/01/1990", 
+  "gender": "M", 
+  "address": "Calle 45 #10-20", 
+  "phone": 3001234567,
+  "email": "juan@correo.com",
+  "contactFirstName": "First Name",
+  "contactLastName": "Second Name",
+  "contactRelation": "Contact Relationship",
+  "contactPhone": 3001234567,
+  "companyName": "Insurance Company Name",
+  "policyNumber": 4567,
+  "policyStatus": "yes",
+  "policyExpiry": "21/10/2026"
 }
 ```
 
 **`AppointmentRequest`:**
 ```json
 {
-"patientDocument": 100200300,
-"doctorDocument": 900100200,
-"dateTime": "03/11/2025 09:00"
+  "patientDocument": 100200300,
+  "doctorDocument": 900100200,
+  "dateTime": "03/11/2025 09:00"
 }
 ```
 
 **`InvoiceRequest`:**
 ```json
 {
-"patientId": 100200300,
-"doctorDocument": 900100200,
-"orderId": 123456
+  "patientId": 100200300,
+  "doctorDocument": 900100200,
+  "orderId": 123456
 }
 ```
 
@@ -590,24 +590,24 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 **`MedicalOrderRequest`:**
 ```json
 {
-"doctorDocument": 900100200,
-"patientId": 100200300,
-"items":[
-  { "type": "MEDICINE", "referenceId": "MED-001" },
-  { "type": "PROCEDURE", "referenceId": "PROC-001" }
-]
+  "doctorDocument": 900100200,
+  "patientId": 100200300,
+  "items":[
+    { "type": "MEDICINE", "referenceId": "MED-001" },
+    { "type": "PROCEDURE", "referenceId": "PROC-001" }
+  ]
 }
 ```
 
 **`MedicalRecordRequest`:**
 ```json
 {
-"doctorDocument": 900100200,
-"patientId": 100200300,
-"orderId": 1,
-"motive": "Headache",
-"symptoms": "Headache, fever",
-"diagnosis": "Migraine"
+  "doctorDocument": 900100200,
+  "patientId": 100200300,
+  "orderId": 1,
+  "motive": "Headache",
+  "symptoms": "Headache, fever",
+  "diagnosis": "Migraine"
 }
 ```
 
@@ -618,21 +618,21 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 **`VitalSignsRequest`:**
 ```json
 {
-"nurseDocument": 700300400,
-"patientId": 100200300,
-"bloodPressure": "120/80",
-"temperature": 36.5,
-"pulse": 75,
-"oxygenLevel": 98
+  "nurseDocument": 700300400,
+  "patientId": 100200300,
+  "bloodPressure": "120/80",
+  "temperature": 36.5,
+  "pulse": 75,
+  "oxygenLevel": 98
 }
 ```
 
 **`OrderExecutionRequest`:**
 ```json
 {
-"nurseDocument": 700300400,
-"amount": "2.5",
-"notes": "Application no updates"
+  "nurseDocument": 700300400,
+  "amount": "2.5",
+  "notes": "Application no updates"
 }
 ```
 
@@ -647,11 +647,11 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 **`MedicineRequest`:**
 ```json
 {
-"id": "MED-005",
-"name": "Acetaminophen 500 mg",
-"cost": "1200.00",
-"dose": "1 tablet every 8 hours",
-"treatmentDuration": "5 days"
+  "id": "MED-005",
+  "name": "Acetaminophen 500 mg",
+  "cost": "1200.00",
+  "dose": "1 tablet every 8 hours",
+  "treatmentDuration": "5 days"
 }
 ```
 
@@ -670,11 +670,11 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 **`DiagnosticAidRequest`:**
 ```json
 {
-"id": "DA-001",
-"name": "Complete Blood Count",
-"cost": "18000.00",
-"quantity": 1,
-"requiresSpecialist": "false"
+  "id": "DA-001",
+  "name": "Complete Blood Count",
+  "cost": "18000.00",
+  "quantity": 1,
+  "requiresSpecialist": "false"
 }
 ```
 
