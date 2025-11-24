@@ -1,13 +1,14 @@
-## [English version](#English)
-## [Descargar colección postman](https://github.com/fttmatteo/Clinic_API-REST/blob/main/clinic/postman/fullCollection.json)
+## [English Version](#English)
 
 ---
-## ESPAÑOL
+## Español
 # Clínic – API REST (Spring Boot)
 
 Clinic es una API REST para la gestión operativa de una clínica, implementada con Spring Boot 3 (Java 17) bajo Arquitectura Hexagonal. Expone casos de uso para pacientes, empleados, citas, historia clínica (incluye signos vitales), órdenes médicas y su ejecución, procedimientos, medicamentos, ayudas diagnósticas e invoices.
 
 La seguridad se maneja con JWT (JJWT, HS256) y autorización por roles (DOCTOR, NURSE, PERSONAL_ADMINISTRATIVE, HUMAN_RESOURCES, INFORMATION_SUPPORT). La persistencia usa JPA/Hibernate con MySQL (se incluye H2 para entornos locales de prueba). El diseño desacopla el dominio de la infraestructura mediante puertos y adaptadores (adapter/in para REST/validación y adapter/out para seguridad/JPA), lo que facilita pruebas y evolución.
+
+## [Colección Postman](./clinic/postman/fullCollection.json)
 
 ---
 
@@ -355,12 +356,14 @@ MIT
 
 ---
 
-## ENGLISH
+## English
 # Clinic – REST API (Spring Boot)
 
 Clinic is a REST API for the operational management of a clinic, implemented with Spring Boot 3 (Java 17) using a Hexagonal Architecture. It exposes use cases for patients, employees, appointments, medical records (including vital signs), medical orders and their execution, procedures, medications, diagnostic aids, and invoices.
 
 Security is handled with JWT (JJWT, HS256) and role-based authorization (DOCTOR, NURSE, ADMINISTRATIVE_STAFF, HUMAN_RESOURCES, INFORMATION_SUPPORT). Persistence uses JPA/Hibernate with MySQL (H2 is included for local test environments). The design decouples the domain from the infrastructure using ports and adapters (adapter/in for REST/validation and adapter/out for security/JPA), which facilitates testing and evolution.
+
+## [Collection Postman](./clinic/postman/fullCollection.json)
 
 ---
 
