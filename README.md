@@ -128,6 +128,15 @@ VALUES ('direccion','1999-01-01',1000000001,'correo@dominio.com','nombre','A!123
 
 ---
 
+## Colección de postman
+
+Este repositorio incluye una colección de Postman con todas las rutas de la API.  
+Puedes descargarla directamente aquí:
+
+➡️ [Colección Postman (JSON)](/clinic/postman/fullCollection.json?raw=1)
+
+---
+
 ## 🔐 Autenticación y autorización
 
 > El servicio escucha en **[http://localhost:8080](http://localhost:8080)** (valor por defecto de Spring Boot si no se define `server.port`).
@@ -480,6 +489,15 @@ VALUES ('address','1999-01-01',1000000001,'email@domain.com','name','A!123456789
 ```
 
 > **Password and hashing:** The system uses **BCrypt**. If you enter the password in plain text as above, it will be detected and automatically saved encrypted on the **first login**.
+
+---
+
+## Postman collection
+
+This repository includes a Postman collection with all API routes.  
+You can download it directly here:
+
+➡️ [Postman Collection (JSON)](/clinic/postman/fullCollection.json?raw=1)
 
 ---
 
