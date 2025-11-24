@@ -1,5 +1,5 @@
 ## [English version](#English)
-## [Descargar colección postman](https://github.com/USUARIO/REPO/blob/main/clinic/postman/fullCollection.json?raw=1))
+## [Descargar colección postman](https://github.com/fttmatteo/Clinic_API-REST/blob/main/clinic/postman/fullCollection.json)
 
 ---
 ## ESPAÑOL
